@@ -1,0 +1,266 @@
+package com.brein.util;
+
+import com.brein.api.BreinBase;
+import com.brein.api.BreinException;
+import com.brein.domain.BreinConfig;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+
+/**
+ * Utility class
+ */
+public class BreinUtil {
+
+    /**
+     * Logger instance
+     */
+    // public static Logger LOG = LoggerFactory.getLogger(BreinUtil.class);
+
+    private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    private static final Mac mac;
+
+    private static final Random RANDOM = new Random();
+
+    static {
+
+        try {
+            mac = Mac.getInstance("HmacSHA256");
+        } catch (NoSuchAlgorithmException var1) {
+            throw new IllegalStateException("Unable to find needed algorithm!", var1);
+        }
+    }
+
+    /**
+     * Verifies if the object contains a value
+     * Return false in case of:
+     * - null
+     * - empty strings
+     *
+     * @param object to check
+     * @return true if object contains data
+     */
+    public static boolean containsValue(final Object object) {
+
+        if (object == null) {
+            return false;
+        }
+
+        if (object.getClass() == String.class) {
+            final String strObj = (String) object;
+            return strObj.length() > 0;
+        }
+
+        return true;
+    }
+
+    /**
+     * Helper method to generate a random string
+     *
+     * @return string
+     */
+    public static String randomString() {
+        final int len = 1 + RANDOM.nextInt(100);
+
+        return randomString(len);
+    }
+
+    /**
+     * Helper methods generates a random string by len
+     *
+     * @param len of the requested string
+     * @return random string
+     */
+    public static String randomString(final int len) {
+        final StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(AB.charAt(RANDOM.nextInt(AB.length())));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Creates a secret by given len
+     *
+     * @param length of the secret
+     * @return created secret
+     */
+    public static String generateSecret(final int length) {
+        final SecureRandom random = new SecureRandom();
+
+        final byte[] bytes = new byte[length / 8];
+        random.nextBytes(bytes);
+
+        // return android.util.Base64.encodeToString(bytes, Base64.URL_SAFE);
+
+        return Base64.encodeBytes(bytes);
+    }
+
+    /**
+     * generates the signature
+     *
+     * @param message
+     * @param secret
+     * @return
+     */
+    public static String generateSignature(final String message, final String secret) {
+
+        if (message == null) {
+            throw new BreinException("Illegal value for message in method generateSignature");
+        }
+
+        if (secret == null) {
+            throw new BreinException("Illegal value for secret in method generateSignature");
+        }
+
+        try {
+            byte[] e = secret.getBytes(Charset.forName("UTF-8"));
+            SecretKeySpec secretKey = new SecretKeySpec(e, "HmacSHA256");
+            mac.init(secretKey);
+            byte[] hmacData = mac.doFinal(message.getBytes(Charset.forName("UTF-8")));
+
+            // return Base64.encodeToString(hmacData, Base64.DEFAULT);
+            // return android.util.Base64.encodeToString(hmacData, Base64.URL_SAFE);
+
+            return Base64.encodeBytes(hmacData);
+
+        } catch (InvalidKeyException var5) {
+            throw new IllegalStateException("Unable to create signature!", var5);
+        }
+
+    }
+
+    /**
+     * Validates if the URL is correct.
+     *
+     * @param url to check
+     * @return true if ok otherwise false
+     */
+    public static boolean isUrlValid(final String url) {
+       return true;
+    }
+
+    public static boolean isUrlValidNotWorkingOnAndroid(final String url) {
+
+        try {
+            final URL u = new URL(url);
+            HttpURLConnection huc = (HttpURLConnection) u.openConnection();
+            huc.setRequestMethod("POST");
+            huc.setRequestProperty("User-Agent",
+                    "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)");
+
+            // Todo: this has caused issues on Android
+            huc.connect();
+            return true;
+
+        } catch (final IOException e) {
+
+            // this must be an error case!
+            return false;
+        }
+    }
+
+    /**
+     * checks if the url is valid -> if not an exception will be thrown
+     *
+     * @param fullyQualifiedUrl url with endpoint
+     */
+    public static void validateUrl(final String fullyQualifiedUrl) throws BreinException {
+
+        final boolean validUrl = isUrlValid(fullyQualifiedUrl);
+        if (!validUrl) {
+            final String msg = "URL: " + fullyQualifiedUrl + " is not valid!";
+            // Log.d("BreinUtil", msg);
+            throw new BreinException(msg);
+        }
+    }
+
+    /**
+     * validates the activity object
+     *
+     * @param breinBase object to validate
+     */
+    public static void validateBreinBase(final BreinBase breinBase) {
+        if (null == breinBase) {
+            // Log.d("BreinUtil", "Object is null");
+            throw new BreinException(BreinException.BREIN_BASE_VALIDATION_FAILED);
+        }
+    }
+
+    /**
+     * validates the configuration object
+     *
+     * @param breinBase activity or lookup object
+     */
+    public static void validateConfig(final BreinBase breinBase) {
+
+        final BreinConfig breinConfig = breinBase.getConfig();
+        if (null == breinConfig) {
+            // Log.d("BreinUtil", "within doRequestAsynch - breinConfig is null");
+            throw new BreinException(BreinException.CONFIG_VALIDATION_FAILED);
+        }
+    }
+
+    /**
+     * retrieves the fully qualified url (base + endpoint)
+     *
+     * @param breinBase activity or lookup object
+     * @return full url
+     */
+    public static String getFullyQualifiedUrl(final BreinBase breinBase) {
+        final BreinConfig breinConfig = breinBase.getConfig();
+
+        final String url = breinConfig.getUrl();
+        if (null == url) {
+            // Log.d("BreinUtil", "url is null");
+            throw new BreinException(BreinException.URL_IS_NULL);
+        }
+
+        final String endPoint = breinBase.getEndPoint();
+        return url + endPoint;
+    }
+
+    /**
+     * retrieves the request body depending of the object
+     *
+     * @param breinBase object to use
+     * @return request as json string
+     */
+    public static String getRequestBody(final BreinBase breinBase) {
+
+        final String requestBody = breinBase.prepareJsonRequest();
+        if (!BreinUtil.containsValue(requestBody)) {
+            // Log.d("BreinUtil", "url is null");
+            throw new BreinException(BreinException.REQUEST_BODY_FAILED);
+        }
+        return requestBody;
+    }
+
+    /**
+     * Invokes validation of BreinBase object, configuration and url.
+     *
+     * @param breinBase activity or lookup object
+     */
+    public static void validate(final BreinBase breinBase) {
+
+        // validation of activity and config
+        validateBreinBase(breinBase);
+        validateConfig(breinBase);
+
+        // validate URL, might throw an exception...
+        // validateUrl(getFullyQualifiedUrl(breinBase));
+    }
+
+
+}

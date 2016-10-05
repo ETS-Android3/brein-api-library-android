@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="brein-api-library-android">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/brein-api-library-android/libs/brein-api-library-android.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

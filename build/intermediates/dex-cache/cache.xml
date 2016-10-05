@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.0_f84f3e255a8daa917b8637fb5a6998f87c2dc024.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.2.0_0fa0624aeeccc62ada89d0dea2b7b2a31a862b60.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.2.0_0e3f059ec7663ead1f545003422eca5608b55fac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f9b41622897665678d31d78e57a361cb0cebcb0d">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-24.2.0_bb31af1cc62d05012b83e33bc06aa66643097cf7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.0_cd1822fe9512e68d2d98ea4c49d7caf2a4310799.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.2.0_e76da3685b4c6b7b82b354ceefa4d544d974264d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-24.2.0_f7270a21e220938bd215ca3889add953afa9bdfa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-24.2.0_94177612306f9358f121b97889411ec0033d5077.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.0/support-annotations-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6be858a75633b1f0a2d24cad740db57775cb6871">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/support-annotations-24.2.0_d76b7804946dcc63a90f9e305de1206d7547226f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.2/f1bc476cc167b18e66c297df599b2377131a8947/gson-2.6.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="f1bc476cc167b18e66c297df599b2377131a8947">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/gson-2.6.2_5663ccb8da6d94f592450529848a1da8eb59208c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/brein-api-library-android/brein-api-library-android/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="aadfd35e009a7b4420c66217da114a3696c8549a">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/brein-api-library-android-brein-api-library-android-unspecified_514988db17959e5f4c81bbefead0cc127a1a9569.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fcc945a86ebcbf527429acb8216ec7dae2c06417">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-24.2.0_592cfeec86a9e48bcffc7bc8e7cb8e4259f7404b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.0_55b877468ecc9d4ec0fe97ca2fa05b1f412494ed.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="60d7b23621d31e6f42f4f76f16af467e57a20cda">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.0_035d33495556a95b3646e20cb3d19a8a93658ac2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/brein-api-library-android/brein-api-library-android/unspecified/jars/libs/brein-api-library-android.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="dcc7a1e5e29600e7148751b3127a2837b046ccd4">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/brein-api-library-android_15209a1933970a2c0b07a5dafd4c484f47cf114b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.0_d60268c10301e33f773ebe81b3d85449f8049242.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-24.2.0_4e401a1c9c5ce3f0ab1014263e5beded3b9a0d5f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="24.0.2"
+        sha1="771b3cc0e597b54da25f8086ba73180c59c6bc71">
+        <dex dex="/Users/marco/Projects/Breinify/02_Code/Repository/brein-api-library/brein-api-library-android/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.0_be7be341fe076af53373d64433e31c16598a1774.jar" />
+    </item>
+
+</items>
