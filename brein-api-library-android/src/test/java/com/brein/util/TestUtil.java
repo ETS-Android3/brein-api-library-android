@@ -1,14 +1,10 @@
 package com.brein.util;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by marcorecchioni
- */
-@Ignore
+// @Ignore
 public class TestUtil {
 
 

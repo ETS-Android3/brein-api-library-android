@@ -12,6 +12,11 @@ import com.brein.util.BreinUtil;
 public class BreinConfig {
 
     /**
+     * contains the current version of the usage library
+     */
+    public static final String VERSION = "1.0.0";
+
+    /**
      * default endpoint of activity
      */
     public static final String DEFAULT_ACTIVITY_ENDPOINT = "/activity";
@@ -22,14 +27,14 @@ public class BreinConfig {
     public static final String DEFAULT_LOOKUP_ENDPOINT = "/lookup";
 
     /**
-     * default connection timeout
+     * default connection timeout in ms
      */
-    public static final long DEFAULT_CONNECTION_TIMEOUT = 1000;
+    public static final long DEFAULT_CONNECTION_TIMEOUT = 10000;
 
     /**
-     * default socket timeout
+     * default socket timeout in ms
      */
-    public static final long DEFAULT_SOCKET_TIMEOUT = 6000;
+    public static final long DEFAULT_SOCKET_TIMEOUT = 10000;
 
     /**
      * default breinify base url
@@ -37,17 +42,12 @@ public class BreinConfig {
     public static final String DEFAULT_BASE_URL = "https://api.breinify.com";
 
     /**
-     * Logger instance
-     */
-    // private static final Logger LOG = LoggerFactory.getLogger(BreinConfig.class);
-
-    /**
      * BASE URL
      */
     private String baseUrl = DEFAULT_BASE_URL;
 
     /**
-     * contains the com.brein.api key
+     * contains the api-key
      */
     private String apiKey;
 

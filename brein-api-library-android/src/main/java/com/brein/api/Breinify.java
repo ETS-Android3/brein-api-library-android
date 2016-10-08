@@ -14,7 +14,7 @@ public class Breinify {
     /**
      * contains the current version of the usage library
      */
-    private static final String VERSION = "1.0.0-snapshot";
+    private static final String VERSION = BreinConfig.VERSION;
 
     /**
      * contains the configuration

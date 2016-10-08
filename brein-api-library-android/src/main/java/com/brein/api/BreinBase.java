@@ -99,7 +99,7 @@ public class BreinBase {
 
     /**
      *
-     * @return
+     * @return unixTimestamp
      */
     public long getUnixTimestamp() {
         return unixTimestamp;
@@ -142,6 +142,5 @@ public class BreinBase {
         unixTimestamp = 0;
         sign = false;
     }
-
 
 }

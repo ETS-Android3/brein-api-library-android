@@ -16,29 +16,21 @@ import java.util.Random;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-
 /**
  * Utility class
  */
 public class BreinUtil {
 
-    /**
-     * Logger instance
-     */
-    // public static Logger LOG = LoggerFactory.getLogger(BreinUtil.class);
-
     private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     private static final Mac mac;
-
     private static final Random RANDOM = new Random();
 
     static {
 
         try {
             mac = Mac.getInstance("HmacSHA256");
-        } catch (NoSuchAlgorithmException var1) {
-            throw new IllegalStateException("Unable to find needed algorithm!", var1);
+        } catch (final NoSuchAlgorithmException e) {
+            throw new IllegalStateException("Unable to find needed algorithm!", e);
         }
     }
 
@@ -102,17 +94,15 @@ public class BreinUtil {
         final byte[] bytes = new byte[length / 8];
         random.nextBytes(bytes);
 
-        // return android.util.Base64.encodeToString(bytes, Base64.URL_SAFE);
-
         return Base64.encodeBytes(bytes);
     }
 
     /**
      * generates the signature
      *
-     * @param message
-     * @param secret
-     * @return
+     * @param message contains the message
+     * @param secret contains the secret
+     * @return signature
      */
     public static String generateSignature(final String message, final String secret) {
 
@@ -129,16 +119,11 @@ public class BreinUtil {
             SecretKeySpec secretKey = new SecretKeySpec(e, "HmacSHA256");
             mac.init(secretKey);
             byte[] hmacData = mac.doFinal(message.getBytes(Charset.forName("UTF-8")));
-
-            // return Base64.encodeToString(hmacData, Base64.DEFAULT);
-            // return android.util.Base64.encodeToString(hmacData, Base64.URL_SAFE);
-
             return Base64.encodeBytes(hmacData);
 
-        } catch (InvalidKeyException var5) {
-            throw new IllegalStateException("Unable to create signature!", var5);
+        } catch (final InvalidKeyException e) {
+            throw new IllegalStateException("Unable to create signature!", e);
         }
-
     }
 
     /**
@@ -181,7 +166,6 @@ public class BreinUtil {
         final boolean validUrl = isUrlValid(fullyQualifiedUrl);
         if (!validUrl) {
             final String msg = "URL: " + fullyQualifiedUrl + " is not valid!";
-            // Log.d("BreinUtil", msg);
             throw new BreinException(msg);
         }
     }
@@ -193,7 +177,6 @@ public class BreinUtil {
      */
     public static void validateBreinBase(final BreinBase breinBase) {
         if (null == breinBase) {
-            // Log.d("BreinUtil", "Object is null");
             throw new BreinException(BreinException.BREIN_BASE_VALIDATION_FAILED);
         }
     }
@@ -207,7 +190,6 @@ public class BreinUtil {
 
         final BreinConfig breinConfig = breinBase.getConfig();
         if (null == breinConfig) {
-            // Log.d("BreinUtil", "within doRequestAsynch - breinConfig is null");
             throw new BreinException(BreinException.CONFIG_VALIDATION_FAILED);
         }
     }
@@ -223,7 +205,6 @@ public class BreinUtil {
 
         final String url = breinConfig.getUrl();
         if (null == url) {
-            // Log.d("BreinUtil", "url is null");
             throw new BreinException(BreinException.URL_IS_NULL);
         }
 
@@ -241,7 +222,6 @@ public class BreinUtil {
 
         final String requestBody = breinBase.prepareJsonRequest();
         if (!BreinUtil.containsValue(requestBody)) {
-            // Log.d("BreinUtil", "url is null");
             throw new BreinException(BreinException.REQUEST_BODY_FAILED);
         }
         return requestBody;
@@ -249,6 +229,7 @@ public class BreinUtil {
 
     /**
      * Invokes validation of BreinBase object, configuration and url.
+     * The "validator" will throw an exception in case of any mis-behaviour.
      *
      * @param breinBase activity or lookup object
      */
@@ -261,6 +242,4 @@ public class BreinUtil {
         // validate URL, might throw an exception...
         // validateUrl(getFullyQualifiedUrl(breinBase));
     }
-
-
 }

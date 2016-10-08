@@ -13,15 +13,14 @@ import com.brein.domain.BreinResult;
 public class BreinEngine {
 
     /**
-     * creation of rest com.brein.engine. I know that this implementation only allows UNIREST and nothing
-     * else. Configuration of parameter needs to be done.
+     * creation of rest com.brein.engine.
      */
-    private IRestEngine restEngine = null;
+     private IRestEngine restEngine = null;
 
     /**
      * Creates the com.brein.engine
      *
-     * @param engineType (e.g. Jersey...)
+     * @param engineType (e.g. HTTP_URL_CONNECTION_ENGINE...)
      */
     public BreinEngine(final BreinEngineType engineType) {
 
@@ -29,14 +28,6 @@ public class BreinEngine {
             case HTTP_URL_CONNECTION_ENGINE:
                 restEngine = new HttpUrlRestEngine();
                 break;
-
-            /*
-            case JERSEY_ENGINE:
-                restEngine = new JerseyRestEngine();
-                break;
-
-            */
-            // case VOLLEY:
 
             default:
                 throw new BreinException("no rest engine specified!");
@@ -66,7 +57,6 @@ public class BreinEngine {
         if (breinLookup != null) {
             return restEngine.doLookup(breinLookup);
         }
-
         return null;
     }
 

@@ -20,5 +20,4 @@ public class BreinInvalidConfigurationException extends RuntimeException {
         super(msg, cause);
     }
 
-
 }

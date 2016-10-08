@@ -5,10 +5,7 @@ import com.brein.domain.BreinConfig;
 import com.brein.engine.BreinEngineType;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Properties;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -17,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test of configuration
  */
-@Ignore
+//@Ignore
 public class TestConfig {
     private static final String testApiKey = "TEST-API-KEY";
 
@@ -26,11 +23,6 @@ public class TestConfig {
      */
     @BeforeClass
     public static void setUp() {
-
-        // set logging on
-        final Properties props = System.getProperties();
-        props.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
-
     }
 
     /**
@@ -85,7 +77,6 @@ public class TestConfig {
     public void testConfigWithWrongUrl() {
 
         final String wrongUrl = "https://breeeeeinify.com";
-
         final BreinConfig breinConfig = new BreinConfig(testApiKey,
                 wrongUrl,
                 BreinEngineType.HTTP_URL_CONNECTION_ENGINE);

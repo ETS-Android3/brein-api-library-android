@@ -18,22 +18,12 @@ import java.net.URL;
 public class HttpUrlRestEngine implements IRestEngine {
 
     /**
-     * Logger
+     * constant for post method
      */
-    // private static final Logger LOG = LoggerFactory.getLogger(JerseyRestEngine.class);
+    public final static String POST_METHOD = "POST";
 
     /**
-     * header info
-     */
-    private static final String HEADER_APP_JSON = "application/json";
-
-    /**
-     * create HttpURLConnection client
-     */
-    private HttpURLConnection conn;
-
-    /**
-     * invokes the post request
+     * invokes the post request. Needs to run a thread.
      *
      * @param breinActivity data
      */
@@ -45,28 +35,29 @@ public class HttpUrlRestEngine implements IRestEngine {
 
         final String fullUrl = BreinUtil.getFullyQualifiedUrl(breinActivity);
         final String requestBody = BreinUtil.getRequestBody(breinActivity);
+        final int connectionTimeout = (int)breinActivity.getConfig().getConnectionTimeout();
+        final int readTimeout = (int)breinActivity.getConfig().getSocketTimeout();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(fullUrl);
-
+                    final URL url = new URL(fullUrl);
                     final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(15000 /* milliseconds */);
-                    conn.setConnectTimeout(15000 /* milliseconds */);
-                    conn.setRequestMethod("POST");
+
+                    conn.setReadTimeout(readTimeout);
+                    conn.setConnectTimeout(connectionTimeout);
+                    conn.setRequestMethod(POST_METHOD);
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
 
                     // final String data = requestObject.toString();
-
                     final PrintWriter out = new PrintWriter(conn.getOutputStream());
                     out.print(requestBody);
                     out.close();
 
                     conn.connect();
-                    int response = conn.getResponseCode();
+                    final int response = conn.getResponseCode();
                     // System.out.println("response is: " + response);
 
                 } catch (final Exception e) {
@@ -92,17 +83,19 @@ public class HttpUrlRestEngine implements IRestEngine {
 
         final String fullUrl = BreinUtil.getFullyQualifiedUrl(breinLookup);
         final String requestBody = BreinUtil.getRequestBody(breinLookup);
+        final int connectionTimeout = (int)breinLookup.getConfig().getConnectionTimeout();
+        final int readTimeout = (int)breinLookup.getConfig().getSocketTimeout();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(fullUrl);
-
+                    final URL url = new URL(fullUrl);
                     final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setReadTimeout(15000 /* milliseconds */);
-                    conn.setConnectTimeout(15000 /* milliseconds */);
-                    conn.setRequestMethod("POST");
+
+                    conn.setReadTimeout(readTimeout);
+                    conn.setConnectTimeout(connectionTimeout);
+                    conn.setRequestMethod(POST_METHOD);
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
 
@@ -113,13 +106,13 @@ public class HttpUrlRestEngine implements IRestEngine {
                     out.close();
 
                     conn.connect();
-                    int response = conn.getResponseCode();
+                    final int response = conn.getResponseCode();
                     // System.out.println("response code is: " + response);
 
                     if (response == 200) {
                         String jsonString = "";
 
-                        InputStream mInputStream = conn.getInputStream();
+                        final InputStream mInputStream = conn.getInputStream();
 
                         int i = 0;
                         while ((i = mInputStream.read()) != -1) {
@@ -133,7 +126,6 @@ public class HttpUrlRestEngine implements IRestEngine {
                     }
 
                 } catch (final Exception e) {
-                    // System.out.println("Exception is: " + e);
                     throw new BreinException("REST rest call exception");
                 }
 
@@ -142,7 +134,6 @@ public class HttpUrlRestEngine implements IRestEngine {
 
         return null;
     }
-
 
     /**
      * stops possible functionality (e.g. threads)

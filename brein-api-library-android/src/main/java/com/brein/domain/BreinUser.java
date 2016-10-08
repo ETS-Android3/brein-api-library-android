@@ -324,7 +324,6 @@ public class BreinUser {
                 + "\n"
                 + " sessionId: "
                 + (this.sessionId == null ? "n/a" : this.sessionId);
-
     }
 }
 

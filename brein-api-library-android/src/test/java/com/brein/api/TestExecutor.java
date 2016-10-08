@@ -11,15 +11,12 @@ import com.brein.engine.BreinEngineType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Properties;
 
 /**
  * Test of Breinify Java API (static option)
  */
-@Ignore
+// @Ignore
 public class TestExecutor {
 
     /**
@@ -54,11 +51,6 @@ public class TestExecutor {
      */
     @BeforeClass
     public static void init() {
-
-        // set logging on
-        final Properties props = System.getProperties();
-        props.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
-
     }
 
     /**
@@ -240,7 +232,6 @@ public class TestExecutor {
          * Just to ensure that the right config has been set
          */
         final String badUrl = "www.beeeeeiiiniiify.com";
-
         final BreinifyExecutor breinifyExecutor = new BreinConfig()
                 .setApiKey(VALID_API_KEY)
                 .setBaseUrl(badUrl)

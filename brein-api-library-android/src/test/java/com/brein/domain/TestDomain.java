@@ -3,10 +3,7 @@ package com.brein.domain;
 import com.brein.api.BreinActivity;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Properties;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test classes for the domain objects
  */
-@Ignore
+// @Ignore
 public class TestDomain {
 
     /**
@@ -22,10 +19,6 @@ public class TestDomain {
      */
     @BeforeClass
     public static void setUp() {
-
-        // set logging on
-        final Properties props = System.getProperties();
-        props.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
     }
 
     /**

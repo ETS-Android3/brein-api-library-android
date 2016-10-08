@@ -9,7 +9,6 @@ import com.brein.engine.BreinEngineType;
 
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.fail;
@@ -17,7 +16,7 @@ import static junit.framework.TestCase.fail;
 /**
  * Test cases for lookup functionality
  */
-@Ignore
+// @Ignore
 public class TestLookup {
 
     /**

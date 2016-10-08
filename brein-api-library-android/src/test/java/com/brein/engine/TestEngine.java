@@ -2,7 +2,6 @@ package com.brein.engine;
 
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -10,7 +9,7 @@ import org.junit.Test;
  * Run some tests for the UNIREST API
  */
 
-@Ignore
+// @Ignore
 public class TestEngine {
 
     /**

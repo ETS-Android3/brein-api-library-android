@@ -12,18 +12,16 @@ import com.brein.engine.BreinEngineType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Test of Breinify Java API (static option)
  */
 
-@Ignore
+// @Ignore
 public class TestApi {
 
     /**
@@ -65,10 +63,6 @@ public class TestApi {
      */
     @BeforeClass
     public static void setUp() {
-
-        // set logging on
-        final Properties props = System.getProperties();
-        props.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
     }
 
     /**
@@ -541,14 +535,14 @@ public class TestApi {
         final BreinEngine breinEngine = breinConfig.getBreinEngine();
 
         /*
-         * set connection timeout to 30000 ms
+         * set connection timeout to 10000 ms
          */
-        breinConfig.setConnectionTimeout(30000);
+        breinConfig.setConnectionTimeout(10000);
 
         /*
-         * set socket timeoiut to 25000 ms
+         * set socket timeout to 10000 ms
          */
-        breinConfig.setSocketTimeout(25000);
+        breinConfig.setSocketTimeout(10000);
 
         /*
          * configure the engine
@@ -799,51 +793,6 @@ public class TestApi {
         Breinify.activity();
 
     }
-
-    /**
-     * test case how to use the activity api
-     */
-    // @Test
-    public void testLoginWithPauseToCheckWifiIssue() {
-
-        // set configuration
-        Breinify.setConfig(breinConfig);
-
-        // additional optional user information
-        breinUser.setFirstName("User");
-        breinUser.setLastName("Name");
-
-        int index = 1;
-
-        while (true) {
-
-            try {
-
-                while (true) {
-
-                    // invoke activity call
-                    Breinify.activity(breinUser,
-                            breinActivityType,
-                            breinCategoryType,
-                            "Login-Description",
-                            false);
-
-                    try {
-                        System.out.println("Waiting: " + Integer.toString(index++));
-                        Thread.sleep(2000);
-
-                    } catch (final Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-            } catch (final BreinException e) {
-                System.out.println("Exception is: " + e);
-            }
-        }
-    }
-
 
     @Test
     public void testForDoc() {

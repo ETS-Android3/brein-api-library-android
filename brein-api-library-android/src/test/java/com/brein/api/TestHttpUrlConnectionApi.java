@@ -13,15 +13,12 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.util.Properties;
 
 /**
  * Test of Breinify Java API (static option)
  */
-@Ignore
+// @Ignore
 public class TestHttpUrlConnectionApi {
 
     /**
@@ -59,10 +56,6 @@ public class TestHttpUrlConnectionApi {
      */
     @BeforeClass
     public static void init() {
-
-        // set logging on
-        final Properties props = System.getProperties();
-        props.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
     }
 
     /**
@@ -70,7 +63,6 @@ public class TestHttpUrlConnectionApi {
      */
     @Before
     public void setUp() {
-
     }
 
     /**
@@ -85,7 +77,6 @@ public class TestHttpUrlConnectionApi {
             e.printStackTrace();
         }
     }
-
 
     @After
     public void wait5Seconds() {
