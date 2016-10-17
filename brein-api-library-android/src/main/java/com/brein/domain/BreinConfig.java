@@ -1,5 +1,7 @@
 package com.brein.domain;
 
+import android.content.Context;
+
 import com.brein.api.BreinInvalidConfigurationException;
 import com.brein.api.BreinifyExecutor;
 import com.brein.engine.BreinEngine;
@@ -90,6 +92,11 @@ public class BreinConfig {
      * contains the secret
      */
     private String secret;
+
+    /**
+     * contains the android application applicationContext
+     */
+    private Context applicationContext;
 
     /**
      * @param apiKey  contains the Breinify com.brein.api-key
@@ -361,6 +368,22 @@ public class BreinConfig {
     public BreinConfig setDefaultCategory(final String defaultCategory) {
         this.defaultCategory = defaultCategory;
         return this;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Context getApplicationContext() {
+        return applicationContext;
+    }
+
+    /**
+     *
+     * @param context
+     */
+    public void setApplicationContext(final Context context) {
+        this.applicationContext = context;
     }
 
     /**

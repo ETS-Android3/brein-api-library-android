@@ -1,5 +1,12 @@
 package com.brein.api;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+
 import com.brein.domain.BreinUser;
 import com.brein.util.BreinUtil;
 import com.google.gson.FieldNamingPolicy;
@@ -7,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -230,16 +238,17 @@ public class BreinActivity extends BreinBase implements ISecretStrategy {
                 additional.addProperty("ipAddress", breinUser.getIpAddress());
             }
 
-            if (additional.isJsonNull()) {
+            // add coordinates (if available)
+            handleGpsCoordinates(additional);
+
+            if (!additional.isJsonNull()) {
                 userData.add("additional", additional);
             }
 
             requestData.add("user", userData);
         }
 
-        /*
-         * activity data
-         */
+        // activity data
         final JsonObject activityData = new JsonObject();
         if (BreinUtil.containsValue(getBreinActivityType())) {
             activityData.addProperty("type", getBreinActivityType());
@@ -297,6 +306,50 @@ public class BreinActivity extends BreinBase implements ISecretStrategy {
                 .create();
 
         return gson.toJson(requestData);
+    }
+
+    /**
+     * adds the GPS coordinates to the json request
+     *
+     * @param additional
+     */
+    public void handleGpsCoordinates(final JsonObject additional) {
+
+        // firstly get the context
+        final Context context = getConfig().getApplicationContext();
+        if (context == null) {
+            return;
+        }
+
+        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        final List<String> providers = locationManager.getProviders(true);
+
+        // Loop over the array backwards, and if you get an accurate location, then break out the loop
+        Location location = null;
+
+        for (int index = providers.size() - 1; index >= 0; index--) {
+            if (ActivityCompat.checkSelfPermission(context,
+                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // we do not have the permissions
+                return;
+            }
+            location = locationManager.getLastKnownLocation(providers.get(index));
+            if (location != null) {
+                break;
+            }
+        }
+
+        if (location != null) {
+            final JsonObject locationData = new JsonObject();
+            locationData.addProperty("accuracy", location.getAccuracy());
+            locationData.addProperty("speed", location.getSpeed());
+            locationData.addProperty("latitude", location.getLatitude());
+            locationData.addProperty("longitude", location.getLongitude());
+
+            additional.add("location", locationData);
+        }
     }
 
     /**
