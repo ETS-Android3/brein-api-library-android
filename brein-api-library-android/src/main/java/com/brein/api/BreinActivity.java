@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.support.v4.app.ActivityCompat;
+import android.text.format.Formatter;
 
 import com.brein.domain.BreinUser;
 import com.brein.util.BreinUtil;
@@ -16,6 +19,8 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
+
+import static android.content.Context.WIFI_SERVICE;
 
 /**
  * Sends an activity to the com.brein.engine utilizing the API. The call is done asynchronously as a POST request. It is important
@@ -100,7 +105,7 @@ public class BreinActivity extends BreinBase implements ISecretStrategy {
         return this;
     }
 
-   /**
+    /**
      * retrieves the configured activity endpoint (e.g. \activitiy)
      *
      * @return endpoint
@@ -241,6 +246,8 @@ public class BreinActivity extends BreinBase implements ISecretStrategy {
             // add coordinates (if available)
             handleGpsCoordinates(additional);
 
+            handleNetworkInfo(additional);
+
             if (!additional.isJsonNull()) {
                 userData.add("additional", additional);
             }
@@ -306,6 +313,50 @@ public class BreinActivity extends BreinBase implements ISecretStrategy {
                 .create();
 
         return gson.toJson(requestData);
+    }
+
+    /**
+     * Provides network information within the user additional request
+     *
+     * @param additional additional json object
+     */
+    public void handleNetworkInfo(final JsonObject additional) {
+
+        // firstly get the context
+        final Context context = getConfig().getApplicationContext();
+        if (context == null) {
+            return;
+        }
+
+        final WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        if (wifiManager != null) {
+            final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            if (wifiInfo != null) {
+                final String ssid = wifiInfo.getSSID();
+                final String bssid = wifiInfo.getBSSID();
+                // final boolean hiddenSsid = wifiInfo.getHiddenSSID();
+
+                int ip = wifiInfo.getIpAddress();
+                final String ipAddress = Formatter.formatIpAddress(ip);
+                final int linkSpeed = wifiInfo.getLinkSpeed();
+                final String macAddress = wifiInfo.getMacAddress();
+                final int rssi = wifiInfo.getRssi();
+                final int networkId = wifiInfo.getNetworkId();
+                final String state = wifiInfo.getSupplicantState().toString();
+
+                final JsonObject networkData = new JsonObject();
+                networkData.addProperty("ssid", ssid);
+                networkData.addProperty("bssid", bssid);
+                networkData.addProperty("ipAddress", ipAddress);
+                networkData.addProperty("linkSpeed", linkSpeed);
+                networkData.addProperty("macAddress", macAddress);
+                networkData.addProperty("rssi", rssi);
+                networkData.addProperty("networkId", networkId);
+                networkData.addProperty("state", state);
+
+                additional.add("network", networkData);
+            }
+        }
     }
 
     /**
