@@ -35,6 +35,7 @@ public class HttpUrlRestEngine implements IRestEngine {
 
         final String fullUrl = BreinUtil.getFullyQualifiedUrl(breinActivity);
         final String requestBody = BreinUtil.getRequestBody(breinActivity);
+        System.out.println("Request is: " + requestBody);
         final int connectionTimeout = (int)breinActivity.getConfig().getConnectionTimeout();
         final int readTimeout = (int)breinActivity.getConfig().getSocketTimeout();
 
@@ -58,7 +59,7 @@ public class HttpUrlRestEngine implements IRestEngine {
 
                     conn.connect();
                     final int response = conn.getResponseCode();
-                    // System.out.println("response is: " + response);
+                    System.out.println("response is: " + response);
 
                 } catch (final Exception e) {
                     // System.out.println("Exception is: " + e);

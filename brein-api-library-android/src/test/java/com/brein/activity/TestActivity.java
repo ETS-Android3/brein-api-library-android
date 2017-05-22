@@ -21,33 +21,20 @@ import java.util.Properties;
 public class TestActivity {
 
     /**
-     * Contains the BASE URL of the Breinify Backend
+     * This has to be a valid api key & secret
      */
-    // private static final String BASE_URL = "http://dev.breinify.com/api";
-    private static final String BASE_URL = "https://api.breinify.com";
-
-    /**
-     * This has to be a valid api key
-     */
-    // private static final String VALID_API_KEY = "A187-B1DF-E3C5-4BDB-93C4-4729-7B54-E5B1";
-    private static final String VALID_API_KEY = "41B2-F48C-156A-409A-B465-317F-A0B4-E0E8";
-
-    private static final String VALID_SIGNATURE_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_SECRET = "lmcoj4k27hbbszzyiqamhg==";
 
     /**
      * Contains the Breinify User
      */
-    private final BreinUser breinUser = new BreinUser("Marco.Recchioni@breinify.com");
+    private final BreinUser breinUser = new BreinUser("Toni.Maroni@breinify.com");
 
     /**
      * Contains the Category
      */
     private final String breinCategoryType = "services";
-
-    /**
-     * Sign parameter
-     */
-    private final boolean sign = false;
 
     /**
      * The Activity itself
@@ -63,7 +50,6 @@ public class TestActivity {
         // set logging on
         final Properties props = System.getProperties();
         props.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "DEBUG");
-
     }
 
     /**
@@ -72,10 +58,7 @@ public class TestActivity {
     @Before
     public void setUp() {
 
-        final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY,
-                BASE_URL,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
-
+        final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
         breinActivity.setConfig(breinConfig);
     }
 
@@ -123,15 +106,15 @@ public class TestActivity {
         /*
          * additional user information
          */
-        breinUser.setFirstName("Marco");
-        breinUser.setLastName("Recchioni");
+        breinUser.setFirstName("Toni");
+        breinUser.setLastName("Maroni");
 
         /*
          * invoke activity call
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.LOGIN,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
     /**
@@ -145,7 +128,6 @@ public class TestActivity {
         for (int index = 0; index < maxLogin; index++) {
             testLogin();
         }
-
     }
 
     /**
@@ -166,7 +148,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.LOGOUT,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
     /**
@@ -182,7 +164,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.SEARCH,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
     /**
@@ -198,7 +180,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
     /**
@@ -214,7 +196,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
     /**
@@ -230,7 +212,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
     /**
@@ -246,7 +228,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.OTHER,
-                breinCategoryType, description, sign);
+                breinCategoryType, description);
     }
 
 }

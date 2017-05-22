@@ -87,18 +87,15 @@ public class Breinify {
      * @param categoryType the category of the platform/service/products, i.e., one of apparel, home, education, family,
      *                     food, health, job, services, or other
      * @param description  a string with further information about the activity performed
-     * @param sign         a boolean value specifying if the call should be signed
      */
     public static void activity(final BreinUser user,
                                 final String activityType,
                                 final String categoryType,
-                                final String description,
-                                final boolean sign) {
-        breinActivity.setBreinUser(user);
-        breinActivity.setBreinActivityType(activityType);
-        breinActivity.setBreinCategoryType(categoryType);
+                                final String description) {
+        breinActivity.setUser(user);
+        breinActivity.setActivityType(activityType);
+        breinActivity.setCategory(categoryType);
         breinActivity.setDescription(description);
-        breinActivity.setSign(sign);
 
         // invoke the request, "this" has all necessary information
         if (null == breinActivity.getBreinEngine()) {
@@ -131,19 +128,19 @@ public class Breinify {
         // use the own instance
         final BreinActivity breinActivity = getBreinActivity();
 
-        if (breinActivity.getBreinUser() == null) {
+        if (breinActivity.getUser() == null) {
             throw new BreinException(BreinException.USER_NOT_SET);
         }
 
-        if (breinActivity.getBreinActivityType() == null) {
+        if (breinActivity.getActivityType() == null) {
             throw new BreinException(BreinException.ACTIVITY_TYPE_NOT_SET);
         }
 
-        if (breinActivity.getBreinCategoryType() == null) {
+        if (breinActivity.getCategory(getConfig()) == null) {
             // check if there is an default category set
             final String defaultCategory = getConfig().getDefaultCategory();
             if (BreinUtil.containsValue(defaultCategory)) {
-                breinActivity.setBreinCategoryType(defaultCategory);
+                breinActivity.setCategory(defaultCategory);
             }
         }
 
@@ -161,22 +158,18 @@ public class Breinify {
      *
      * @param user      a plain object specifying information about the user to retrieve data for.
      * @param dimension an object (with an array) containing the names of the dimensions to lookup.
-     * @param sign      a boolean value specifying if the call should be signed.
      * @return response from request wrapped in an object called BreinResponse
      */
     public static BreinResult lookup(final BreinUser user,
-                                     final BreinDimension dimension,
-                                     final boolean sign) {
-        return lookup(breinLookup, user, dimension, sign);
+                                     final BreinDimension dimension) {
+        return lookup(breinLookup, user, dimension);
     }
 
     public static BreinResult lookup(final BreinLookup breinLookup,
                                      final BreinUser user,
-                                     final BreinDimension dimension,
-                                     final boolean sign) {
-        breinLookup.setBreinUser(user);
+                                     final BreinDimension dimension) {
+        breinLookup.setUser(user);
         breinLookup.setBreinDimension(dimension);
-        breinLookup.setSign(sign);
 
         /*
          * invoke the lookup request

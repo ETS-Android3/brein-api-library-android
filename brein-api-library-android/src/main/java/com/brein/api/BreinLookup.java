@@ -1,5 +1,6 @@
 package com.brein.api;
 
+import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinDimension;
 import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
@@ -10,10 +11,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.Map;
+
 /**
  * Provides the lookup functionality
  */
-public class BreinLookup extends BreinBase implements ISecretStrategy {
+
+public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStrategy {
 
     /**
      * used for lookup request
@@ -55,7 +59,8 @@ public class BreinLookup extends BreinBase implements ISecretStrategy {
         init();
 
         // reset base values (User & Config)
-        super.init();
+        // TODO check super.init call
+        // super.init();
     }
 
     /**
@@ -64,16 +69,13 @@ public class BreinLookup extends BreinBase implements ISecretStrategy {
      *
      * @param breinUser      contains the breinify user
      * @param breinDimension contains the dimensions to look after
-     * @param sign           if set to true a secret will be sent as well
      * @return response from request or null if no data can be retrieved
      */
     public BreinResult lookUp(final BreinUser breinUser,
-                              final BreinDimension breinDimension,
-                              final boolean sign) {
+                              final BreinDimension breinDimension) {
 
-        setBreinUser(breinUser);
+        setUser(breinUser);
         setBreinDimension(breinDimension);
-        setSign(sign);
 
         if (null == getBreinEngine()) {
             throw new BreinException(BreinException.ENGINE_NOT_INITIALIZED);
@@ -82,19 +84,24 @@ public class BreinLookup extends BreinBase implements ISecretStrategy {
         return getBreinEngine().performLookUp(this);
     }
 
+    @Override
+    public void prepareRequestData(BreinConfig config, Map<String, Object> requestData) {
+
+    }
+
     /**
      * prepares a JSON request for a lookup
      *
      * @return well formed json request
      */
     @Override
-    public String prepareJsonRequest() {
+    public String prepareRequestData(final BreinConfig config) {
 
         // call base class
-        super.prepareJsonRequest();
+        super.prepareRequestData(config);
 
         final JsonObject requestData = new JsonObject();
-        final BreinUser breinUser = getBreinUser();
+        final BreinUser breinUser = getUser();
         if (breinUser != null) {
             JsonObject userData = new JsonObject();
             userData.addProperty("email", breinUser.getEmail());
@@ -114,21 +121,6 @@ public class BreinLookup extends BreinBase implements ISecretStrategy {
             requestData.add("lookup", lookupData);
         }
 
-        /*
-         * API key
-         */
-        if (BreinUtil.containsValue(getConfig().getApiKey())) {
-            requestData.addProperty("apiKey", getConfig().getApiKey());
-        }
-
-        // Unix time stamp
-        requestData.addProperty("unixTimestamp", getUnixTimestamp());
-
-        // set secret
-        if (isSign()) {
-            requestData.addProperty("signatureType", createSignature());
-        }
-
         final Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
@@ -144,8 +136,8 @@ public class BreinLookup extends BreinBase implements ISecretStrategy {
      * @return endpoint
      */
     @Override
-    public String getEndPoint() {
-        return getConfig().getLookupEndpoint();
+    public String getEndPoint(final BreinConfig config) {
+        return config.getLookupEndpoint();
     }
 
     /**
@@ -154,7 +146,7 @@ public class BreinLookup extends BreinBase implements ISecretStrategy {
      * @return signature
      */
     @Override
-    public String createSignature() {
+    public String createSignature(final BreinConfig config, final Map<String, Object> requestData) {
 
         final String[] dimensions = getBreinDimension().getDimensionFields();
 

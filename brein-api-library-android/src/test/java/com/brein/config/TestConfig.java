@@ -48,8 +48,10 @@ public class TestConfig {
 
         final BreinConfig breinConfig = new BreinConfig();
         breinConfig.setApiKey(null);
+
         final BreinActivity breinActivity = new BreinActivity();
         breinActivity.setConfig(breinConfig);
+
         assertNull(breinActivity.getConfig().getApiKey());
     }
 
@@ -77,9 +79,8 @@ public class TestConfig {
     public void testConfigWithWrongUrl() {
 
         final String wrongUrl = "https://breeeeeinify.com";
-        final BreinConfig breinConfig = new BreinConfig(testApiKey,
-                wrongUrl,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        final BreinConfig breinConfig = new BreinConfig(testApiKey)
+                .setBaseUrl(wrongUrl);
 
         final boolean isValid = breinConfig.isUrlValid(wrongUrl);
         assertFalse(isValid);
@@ -93,9 +94,8 @@ public class TestConfig {
 
         final String correctUrl = "http://google.com";
 
-        final BreinConfig breinConfig = new BreinConfig(testApiKey,
-                correctUrl,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        final BreinConfig breinConfig = new BreinConfig(testApiKey)
+                .setBaseUrl(correctUrl);
 
         final boolean isValid = breinConfig.isUrlValid(correctUrl);
         assertTrue(isValid);
@@ -113,16 +113,15 @@ public class TestConfig {
         final String httpUrl = "http://api.breinify.com";
 
         // HTTPS
-        final BreinConfig breinConfigHttps = new BreinConfig(testApiKey,
-                httpsUrl,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        final BreinConfig breinConfigHttps = new BreinConfig(testApiKey)
+                .setBaseUrl(httpsUrl);
         final boolean isHttpsValid = breinConfigHttps.isUrlValid(httpsUrl);
         assertTrue(isHttpsValid);
 
         // HTTP
-        final BreinConfig breinConfigHttp = new BreinConfig(testApiKey,
-                httpUrl,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        final BreinConfig breinConfigHttp = new BreinConfig(testApiKey)
+                .setBaseUrl(httpUrl);
+
         final boolean isHttpValid = breinConfigHttps.isUrlValid(httpUrl);
         assertTrue(isHttpValid);
     }

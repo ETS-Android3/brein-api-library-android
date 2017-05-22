@@ -28,14 +28,12 @@ public class TestLookup {
     /**
      * This has to be a valid api key
      */
-    // private static final String VALID_API_KEY = "A187-B1DF-E3C5-4BDB-93C4-4729-7B54-E5B1";
-
     private static final String VALID_API_KEY = "41B2-F48C-156A-409A-B465-317F-A0B4-E0E8";
 
     /**
      * Contains the Breinify User
      */
-    private final BreinUser breinUser = new BreinUser("philipp@meisen.net");
+    private final BreinUser breinUser = new BreinUser("toni.maroni@mail.net");
 
     /**
      * The Lookup itself
@@ -48,10 +46,7 @@ public class TestLookup {
     @Before
     public void setUp() {
 
-        final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY,
-                BASE_URL,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
-
+        final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY);
         breinLookup.setConfig(breinConfig);
     }
 
@@ -90,7 +85,7 @@ public class TestLookup {
         /**
          * invoke lookup
          */
-        final BreinResult breinResult = breinLookup.lookUp(breinUser, breinDimension, false);
+        final BreinResult breinResult = breinLookup.lookUp(breinUser, breinDimension);
         if (breinResult != null) {
             final Object dataFirstname = breinResult.get("firstname");
             final Object dataGender = breinResult.get("gender");

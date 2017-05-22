@@ -34,15 +34,14 @@ In order to use the library you need a valid API-key, which you can get for free
 
 ```Java
 // this is the valid api-key
-final String apiKey = "772A-47D7-93A3-4EA9-9D73-85B9-479B-16C6";
+final String VALID_API_KEY = "772A-47D7-93A3-4EA9-9D73-85B9-479B-16C6";
+final String VALID_SECRET = "====erwer43gfd8((88("
 
 // this is the URL of the Breinify service
 final String serviceEndpoint = "https://api.breinify.com";
 
 // create the configuration object
-final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY,
-                BASE_URL,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
 
 // set the configuration for later usage
 Breinify.setConfig(breinConfig);

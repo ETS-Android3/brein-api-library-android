@@ -208,7 +208,7 @@ public class BreinUtil {
             throw new BreinException(BreinException.URL_IS_NULL);
         }
 
-        final String endPoint = breinBase.getEndPoint();
+        final String endPoint = breinBase.getEndPoint(breinConfig);
         return url + endPoint;
     }
 
@@ -220,7 +220,7 @@ public class BreinUtil {
      */
     public static String getRequestBody(final BreinBase breinBase) {
 
-        final String requestBody = breinBase.prepareJsonRequest();
+        final String requestBody = breinBase.prepareRequestData(breinBase.getConfig());
         if (!BreinUtil.containsValue(requestBody)) {
             throw new BreinException(BreinException.REQUEST_BODY_FAILED);
         }

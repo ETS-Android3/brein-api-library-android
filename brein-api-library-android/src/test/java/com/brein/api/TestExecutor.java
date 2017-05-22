@@ -37,9 +37,8 @@ public class TestExecutor {
     /**
      * This has to be a valid api key
      */
-    private static final String VALID_API_KEY = "41B2-F48C-156A-409A-B465-317F-A0B4-E0E8";
-
-    private static final String VALID_SIGNATURE_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_SECRET = "lmcoj4k27hbbszzyiqamhg==";
 
     /**
      * Contains the Breinify User
@@ -98,17 +97,15 @@ public class TestExecutor {
 
         final BreinifyExecutor breinifyExecutor = new BreinConfig()
                 .setApiKey(VALID_API_KEY)
-                .setBaseUrl(BASE_URL)
-                .setRestEngineType(BreinEngineType.HTTP_URL_CONNECTION_ENGINE)
+                .setSecret(VALID_SECRET)
                 .build();
 
         final BreinActivity breinActivity = breinifyExecutor.getBreinActivity();
 
-        breinActivity.setBreinUser(breinUser);
-        breinActivity.setBreinCategoryType(BreinCategoryType.APPAREL);
-        breinActivity.setBreinActivityType(BreinActivityType.PAGEVISIT);
+        breinActivity.setUser(breinUser);
+        breinActivity.setCategory(BreinCategoryType.APPAREL);
+        breinActivity.setActivityType(BreinActivityType.PAGEVISIT);
         breinActivity.setDescription("your description");
-        breinActivity.setSign(false);
 
         /*
          * invoke activity call
@@ -130,8 +127,7 @@ public class TestExecutor {
 
         final BreinifyExecutor breinifyExecutor = new BreinConfig()
                 .setApiKey(VALID_API_KEY)
-                .setBaseUrl(BASE_URL)
-                .setRestEngineType(BreinEngineType.HTTP_URL_CONNECTION_ENGINE)
+                .setSecret(VALID_SECRET)
                 .build();
 
         final String description = "your description";
@@ -141,8 +137,7 @@ public class TestExecutor {
         breinifyExecutor.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.FOOD,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -159,8 +154,7 @@ public class TestExecutor {
 
         final BreinifyExecutor breinifyExecutor = new BreinConfig()
                 .setApiKey(VALID_API_KEY)
-                .setBaseUrl(BASE_URL)
-                .setRestEngineType(BreinEngineType.HTTP_URL_CONNECTION_ENGINE)
+                .setSecret(VALID_SECRET)
                 .build();
 
         final String description = "your description";
@@ -170,8 +164,7 @@ public class TestExecutor {
         breinifyExecutor.activity(breinUser,
                 BreinActivityType.LOGIN,
                 null,
-                description,
-                false);
+                description);
     }
 
 
@@ -195,8 +188,7 @@ public class TestExecutor {
 
         final BreinifyExecutor breinifyExecutor = new BreinConfig()
                 .setApiKey(VALID_API_KEY)
-                .setBaseUrl(BASE_URL)
-                .setRestEngineType(BreinEngineType.HTTP_URL_CONNECTION_ENGINE)
+                .setSecret(VALID_SECRET)
                 .build();
 
         /*
@@ -207,8 +199,7 @@ public class TestExecutor {
         /*
          * invoke lookup
          */
-        final BreinResult result = breinifyExecutor.lookup(user,
-                breinDimension, sign);
+        final BreinResult result = breinifyExecutor.lookup(user, breinDimension);
 
         if (result != null) {
             final Object dataFirstname = result.get(FIRSTNAME);
@@ -241,8 +232,7 @@ public class TestExecutor {
         breinifyExecutor.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.FOOD,
-                "description",
-                false);
+                "description");
 
     }
 

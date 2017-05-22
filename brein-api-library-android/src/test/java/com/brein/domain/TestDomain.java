@@ -1,5 +1,7 @@
 package com.brein.domain;
 
+import android.webkit.WebView;
+
 import com.brein.api.BreinActivity;
 
 import org.junit.BeforeClass;
@@ -37,12 +39,12 @@ public class TestDomain {
 
         final BreinActivity breinActivity = new BreinActivity();
         breinActivity.setConfig(breinConfig);
-        breinActivity.setBreinUser(breinUser);
-        breinActivity.setBreinActivityType(BreinActivityType.LOGIN);
+        breinActivity.setUser(breinUser);
+        breinActivity.setActivityType(BreinActivityType.LOGIN);
         breinActivity.setDescription("Super-Description");
-        breinActivity.setBreinCategoryType(BreinCategoryType.HOME);
+        breinActivity.setCategory(BreinCategoryType.HOME);
 
-        final String jsonOutput = breinActivity.prepareJsonRequest();
+        final String jsonOutput = breinActivity.prepareRequestData(breinConfig);
         assertTrue(jsonOutput.length() > 0);
     }
 
@@ -60,12 +62,12 @@ public class TestDomain {
 
         final BreinActivity breinActivity = new BreinActivity();
         breinActivity.setConfig(breinConfig);
-        breinActivity.setBreinUser(breinUser);
-        breinActivity.setBreinActivityType(BreinActivityType.LOGIN);
+        breinActivity.setUser(breinUser);
+        breinActivity.setActivityType(BreinActivityType.LOGIN);
         breinActivity.setDescription("Super-Description");
-        breinActivity.setBreinCategoryType(BreinCategoryType.FOOD);
+        breinActivity.setCategory(BreinCategoryType.FOOD);
 
-        final String jsonOutput = breinActivity.prepareJsonRequest();
+        final String jsonOutput = breinActivity.prepareRequestData(breinConfig);
         assertTrue(jsonOutput.length() > 0);
     }
 
@@ -161,6 +163,14 @@ public class TestDomain {
 
         final String breinCategoryType = "flexibleString";
         assertTrue(breinCategoryType.equals("flexibleString"));
+    }
+
+    @Test
+    public void testUserAgent() {
+
+        final String userAgent = System.getProperty("http.agent");
+        System.out.println("UserAgent is: " + userAgent);
+
     }
 
 }

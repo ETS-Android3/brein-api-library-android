@@ -88,18 +88,16 @@ public class BreinifyExecutor {
      * @param category     the category of the platform/service/products, i.e., one of apparel, home, education, family,
      *                     food, health, job, services, or other
      * @param description  a string with further information about the activity performed
-     * @param sign         a boolean value specifying if the call should be signed
      */
     public void activity(final BreinUser user,
                          final String activityType,
                          final String category,
-                         final String description,
-                         final boolean sign) {
+                         final String description) {
 
         // set the appropriate configuration
         applyConfiguration();
 
-        Breinify.activity(user, activityType, category, description, sign);
+        Breinify.activity(user, activityType, category, description);
     }
 
     /**
@@ -124,15 +122,15 @@ public class BreinifyExecutor {
         // set the appropriate configuration
         applyConfiguration();
 
-        if (breinActivity.getBreinUser() == null) {
+        if (breinActivity.getUser() == null) {
             throw new BreinException(BreinException.USER_NOT_SET);
         }
 
-        if (breinActivity.getBreinActivityType() == null) {
+        if (breinActivity.getActivityType() == null) {
             throw new BreinException(BreinException.ACTIVITY_TYPE_NOT_SET);
         }
 
-        if (breinActivity.getBreinCategoryType() == null) {
+        if (breinActivity.getCategory(this.getConfig()) == null) {
             throw new BreinException(BreinException.CATEGORY_TYPE_NOT_SET);
         }
 
@@ -140,11 +138,10 @@ public class BreinifyExecutor {
             throw new BreinException(BreinException.ENGINE_NOT_INITIALIZED);
         }
 
-        activity(breinActivity.getBreinUser(),
-                breinActivity.getBreinActivityType(),
-                breinActivity.getBreinCategoryType(),
-                breinActivity.getDescription(),
-                breinActivity.isSign());
+        activity(breinActivity.getUser(),
+                breinActivity.getActivityType(),
+                breinActivity.getCategory(this.getConfig()),
+                breinActivity.getDescription());
     }
 
     /**
@@ -154,15 +151,13 @@ public class BreinifyExecutor {
      *
      * @param user      a plain object specifying information about the user to retrieve data for.
      * @param dimension an object (with an array) containing the names of the dimensions to lookup.
-     * @param sign      a boolean value specifying if the call should be signed.
      *
      * @return response from request wrapped in an object called BreinResponse
      */
     public BreinResult lookup(final BreinUser user,
-                              final BreinDimension dimension,
-                              final boolean sign) {
+                              final BreinDimension dimension) {
 
-        return Breinify.lookup(breinLookup, user, dimension, sign);
+        return Breinify.lookup(breinLookup, user, dimension);
     }
 
     /**

@@ -24,20 +24,18 @@ public class TestHttpUrlConnectionApi {
     /**
      * Contains the BASE URL of the Breinify Backend
      */
-    // private static final String BASE_URL = "http://dev.breinify.com/api";
     private static final String BASE_URL = "https://api.breinify.com";
 
     /**
      * This has to be a valid api key
      */
-    // private static final String VALID_API_KEY = "A187-B1DF-E3C5-4BDB-93C4-4729-7B54-E5B1";
-
     private static final String VALID_API_KEY = "41B2-F48C-156A-409A-B465-317F-A0B4-E0E8";
+    private static final String VALID_SECRET = "djfsdkfdfskjfksdjkf";
 
     /**
      * Contains the Breinify User
      */
-    private final BreinUser breinUser = new BreinUser("philipp@meisen.net");
+    private final BreinUser breinUser = new BreinUser("toni.tester@mail.net");
 
     /**
      * Contains the Category
@@ -47,9 +45,7 @@ public class TestHttpUrlConnectionApi {
     /**
      * Correct configuration
      */
-    final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY,
-            BASE_URL,
-            BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+    final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
 
     /**
      * Init part
@@ -109,8 +105,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.HOME,
-                "Login-Description",
-                false);
+                "Login-Description");
     }
 
     /**
@@ -120,12 +115,8 @@ public class TestHttpUrlConnectionApi {
     public void testLoginWithNullApiKey() {
 
         final String description = "Login-Description";
-        final boolean sign = false;
 
-        final BreinConfig config = new BreinConfig(null,
-                BASE_URL,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
-
+        final BreinConfig config = new BreinConfig(null, VALID_SECRET);
         Breinify.setConfig(config);
 
         /*
@@ -140,22 +131,19 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description,
-                sign);
+                description);
     }
 
     /**
      * Testcase with null value as base url
      */
-    // @Test(expected= BreinInvalidConfigurationException.class)
-    public void testLoginWithNullBaseUrl() {
+    @Test
+    public void testLoginWithoutSecret() {
 
         final String description = "Login-Description";
         final boolean sign = false;
 
-        final BreinConfig config = new BreinConfig(VALID_API_KEY,
-                null,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        final BreinConfig config = new BreinConfig(VALID_API_KEY, null);
 
         Breinify.setConfig(config);
 
@@ -171,9 +159,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description,
-                sign);
-
+                description);
     }
 
     /**
@@ -186,12 +172,9 @@ public class TestHttpUrlConnectionApi {
         final String description = "Login-Description";
         final boolean sign = false;
 
-
         BreinConfig config = null;
         try {
-            config = new BreinConfig(VALID_API_KEY,
-                    BASE_URL,
-                    BreinEngineType.NO_ENGINE);
+            config = new BreinConfig(VALID_API_KEY, VALID_SECRET, BreinEngineType.NO_ENGINE);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -204,16 +187,13 @@ public class TestHttpUrlConnectionApi {
         breinUser.setFirstName("Marco");
         breinUser.setLastName("Recchioni");
 
-
         /*
          * invoke activity call
          */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description,
-                sign);
-
+                description);
     }
 
     /**
@@ -227,9 +207,7 @@ public class TestHttpUrlConnectionApi {
         /*
          * set configuration
          */
-        BreinConfig config = new BreinConfig(VALID_API_KEY,
-                BASE_URL,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        BreinConfig config = new BreinConfig(VALID_API_KEY, VALID_SECRET);
         config.setActivityEndpoint("/wrongEndPoint");
 
         Breinify.setConfig(config);
@@ -246,10 +224,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description,
-                false);
-
-
+                description);
     }
 
     /**
@@ -289,8 +264,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGOUT,
                 breinCategoryType,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -312,8 +286,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.SEARCH,
                 breinCategoryType,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -335,8 +308,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
                 breinCategoryType,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -347,19 +319,12 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "RemoveFromCart-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
                 breinCategoryType,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -381,8 +346,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
                 breinCategoryType,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -404,8 +368,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
-                description,
-                false);
+                description);
     }
 
     /**
@@ -451,21 +414,14 @@ public class TestHttpUrlConnectionApi {
         Breinify.setConfig(breinConfig);
 
         // invoke lookup
-        final BreinResult response = Breinify.lookup(breinUser, breinDimension, false);
+        final BreinResult response = Breinify.lookup(breinUser, breinDimension);
 
-        while(true) {
-            ;
-        }
-
-        /*
         final Object dataFirstname = response.get("firstname");
         final Object dataGender = response.get("gender");
         final Object dataAge = response.get("age");
         final Object dataAgeGroup = response.get("agegroup");
         final Object dataDigitalFootprinting = response.get("digitalfootprint");
         final Object dataImages = response.get("images");
-        */
-
     }
 
 }

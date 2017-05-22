@@ -100,29 +100,40 @@ public class BreinConfig {
 
     /**
      * @param apiKey  contains the Breinify com.brein.api-key
-     * @param baseUrl contains the base url
      */
-    public BreinConfig(final String apiKey,
-                       final String baseUrl) {
+    public BreinConfig(final String apiKey) {
 
         setApiKey(apiKey);
-        setBaseUrl(baseUrl);
-        setRestEngineType(BreinEngineType.NO_ENGINE);
+        if (this.getRestEngineType() != BreinEngineType.HTTP_URL_CONNECTION_ENGINE) {
+            setRestEngineType(BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        }
+    }
+
+    /**
+     * @param apiKey  contains the Breinify com.brein.api-key
+     * @param secret contains the secret
+     */
+    public BreinConfig(final String apiKey,
+                       final String secret) {
+
+        this(apiKey);
+        setSecret(secret);
+        initEngine();
     }
 
     /**
      * Configuration object
      *
-     * @param apiKey          contains the Breinify com.brein.api-key
-     * @param baseUrl         contains the base url
-     * @param breinEngineType selected com.brein.engine
+     * @param apiKey            contains the Breinify com.brein.api-key
+     * @param secret            contains the secret
+     * @param breinEngineType   selected com.brein.engine
      */
     public BreinConfig(final String apiKey,
-                       final String baseUrl,
+                       final String secret,
                        final BreinEngineType breinEngineType) {
 
-        setApiKey(apiKey);
-        setBaseUrl(baseUrl);
+        this(apiKey);
+        setSecret(secret);
         setRestEngineType(breinEngineType);
         initEngine();
     }
@@ -148,7 +159,7 @@ public class BreinConfig {
      */
     public BreinifyExecutor build() {
 
-        BreinifyExecutor breinifyExecutor = new BreinifyExecutor();
+        final BreinifyExecutor breinifyExecutor = new BreinifyExecutor();
         breinifyExecutor.setConfig(this);
 
         initEngine();
@@ -371,7 +382,6 @@ public class BreinConfig {
     }
 
     /**
-     *
      * @return
      */
     public Context getApplicationContext() {
@@ -379,7 +389,6 @@ public class BreinConfig {
     }
 
     /**
-     *
      * @param context
      */
     public void setApplicationContext(final Context context) {
@@ -391,6 +400,7 @@ public class BreinConfig {
      * Depending of the configured com.brein.engine additional threads might
      * have been allocated and this will close those threads.
      */
+    // TODO: check if this is the right point
     public void shutdownEngine() {
 
         // check valid objects
@@ -415,4 +425,9 @@ public class BreinConfig {
     public boolean isUrlValid(final String url) {
         return BreinUtil.isUrlValid(url);
     }
+
+    public boolean isSign() {
+        return getSecret() != null && !getSecret().isEmpty();
+    }
+
 }
