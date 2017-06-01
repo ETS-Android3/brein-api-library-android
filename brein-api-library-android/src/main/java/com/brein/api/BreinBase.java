@@ -34,11 +34,6 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
     private BreinUser user;
 
     /**
-     * contains the configuration
-     */
-    private BreinConfig config;
-
-    /**
      * The base data for the request
      */
     private Map<String, Object> baseMap;
@@ -55,31 +50,6 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
         }
 
         return this.user;
-    }
-
-    /**
-     * retrieves the configuration
-     *
-     * @return brein config
-     */
-    public BreinConfig getConfig() {
-        return config;
-    }
-
-    /**
-     * sets the brein config
-     * @param breinConfig object
-     */
-    public void setConfig(final BreinConfig breinConfig) {
-        this.config = breinConfig;
-    }
-
-    /**
-     * returns the configured brein com.brein.engine
-     * @return brein com.brein.engine
-     */
-    public BreinEngine getBreinEngine() {
-        return null == this.config ? null : getConfig().getBreinEngine();
     }
 
     /**
@@ -253,10 +223,6 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
 
             //loop a Map
             for (Map.Entry<String, Object> entry : this.baseMap.entrySet()) {
-
-                // Todo: remove after check
-                System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-
                 if (BreinUtil.containsValue(entry.getValue())) {
                     requestData.put(entry.getKey(), entry.getValue());
                 }
@@ -266,9 +232,7 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
         // we set the unixTimestamp (may be twice, but anyways)
         long timestamp = getUnixTimestamp();
         if (timestamp == -1L) {
-            // TODO: check if ok this way
             timestamp = System.currentTimeMillis() / 1000L;
-            // Instant.now().getEpochSecond();
         }
         requestData.put(UNIX_TIMESTAMP_FIELD, timestamp);
 

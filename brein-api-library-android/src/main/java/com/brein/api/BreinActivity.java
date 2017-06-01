@@ -1,13 +1,12 @@
 package com.brein.api;
 
 import com.brein.domain.BreinConfig;
+import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
+import com.brein.engine.IRestEngine;
 import com.brein.util.BreinMapUtil;
 import com.brein.util.BreinUtil;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import java.util.Map;
  * The call is done asynchronously as a POST request. It is important
  * that a valid API-key & secret is configured prior before using this class.
  */
-public class BreinActivity extends BreinBase<BreinActivity> implements ISecretStrategy {
+public class BreinActivity extends BreinBase<BreinActivity> implements ISecretStrategy, IAsyncExecutable {
 
     public static final String ACTIVITY_FIELD = "activity";
     public static final String TAGS_FIELD = "tags";
@@ -136,7 +135,8 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
     public void activity(final BreinUser breinUser,
                          final String breinActivityType,
                          final String breinCategoryType,
-                         final String description) {
+                         final String description,
+                         final ICallback<BreinResult> callback) {
 
         /*
          * set the values for further usage
@@ -146,13 +146,19 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         setCategory(breinCategoryType);
         setDescription(description);
 
-        /*
-         * invoke the request, "this" has all necessary information
-         */
-        if (null == getBreinEngine()) {
-            throw new BreinException(BreinException.ENGINE_NOT_INITIALIZED);
-        }
-        getBreinEngine().sendActivity(this);
+        execute(callback);
+    }
+
+    /*
+    @Override
+    public void execute(final ICallback<BreinResult> callback) {
+        Breinify.activity(this, callback);
+    }
+    */
+
+    @Override
+    public void execute(ICallback callback) {
+        Breinify.activity(this, callback);
     }
 
     /**
@@ -165,87 +171,6 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         tagsMap = null;
     }
 
-    /**
-     * creates the json request based on the necessary data
-     *
-     * @return json string
-     */
-    // @Override
-    /*
-    public String prepareRequestData(final BreinConfig config) {
-
-        // call base class
-        super.prepareRequestData(config);
-
-        final JsonObject requestData = new JsonObject();
-
-        // user data
-        final BreinUser breinUser = getUser();
-        if (breinUser != null) {
-
-            final JsonObject userData = new JsonObject();
-            if (BreinUtil.containsValue(breinUser.getEmail())) {
-                userData.addProperty("email", breinUser.getEmail());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getFirstName())) {
-                userData.addProperty("firstName", breinUser.getFirstName());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getLastName())) {
-                userData.addProperty("lastName", breinUser.getLastName());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getDateOfBirth())) {
-                userData.addProperty("dateOfBirth", breinUser.getDateOfBirth());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getDeviceId())) {
-                userData.addProperty("deviceId", breinUser.getDeviceId());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getImei())) {
-                userData.addProperty("imei", breinUser.getImei());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getSessionId())) {
-                userData.addProperty("sessionId", breinUser.getSessionId());
-            }
-
-            // additional part
-            final JsonObject additional = new JsonObject();
-            if (BreinUtil.containsValue(breinUser.getUserAgent())) {
-                additional.addProperty("userAgent", breinUser.getUserAgent());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getReferrer())) {
-                additional.addProperty("referrer", breinUser.getReferrer());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getUrl())) {
-                additional.addProperty("url", breinUser.getUrl());
-            }
-
-            if (BreinUtil.containsValue(breinUser.getIpAddress())) {
-                additional.addProperty("ipAddress", breinUser.getIpAddress());
-            }
-
-            // add coordinates (if available)
-            // TODO:
-            // detectGpsCoordinates(additional);
-
-            // TODO:
-            // detectNetwork(additional);
-
-            if (!additional.isJsonNull()) {
-                userData.add("additional", additional);
-            }
-
-
-
-
-
-    */
 
     @Override
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
@@ -309,6 +234,9 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
     protected <T> T getActivityField(final ActivityField field) {
         return get(field.getName());
     }
+
+
+
 
     /**
      * This list may not be complete it just contains some values. For a complete list it is recommended to look at the

@@ -1,10 +1,18 @@
 package com.brein.engine;
 
 import com.brein.api.BreinActivity;
-import com.brein.api.BreinException;
+import com.brein.api.BreinBase;
 import com.brein.api.BreinLookup;
+import com.brein.api.ICallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static com.brein.engine.BreinEngineType.HTTP_URL_CONNECTION_ENGINE;
 
 /**
  * Creates the Rest Engine (currently only unirest) and provides the methods to
@@ -15,23 +23,13 @@ public class BreinEngine {
     /**
      * creation of rest com.brein.engine.
      */
-     private IRestEngine restEngine = null;
+    private IRestEngine restEngine = null;
 
     /**
      * Creates the com.brein.engine
-     *
-     * @param engineType (e.g. HTTP_URL_CONNECTION_ENGINE...)
      */
-    public BreinEngine(final BreinEngineType engineType) {
-
-        switch (engineType) {
-            case HTTP_URL_CONNECTION_ENGINE:
-                restEngine = new HttpUrlRestEngine();
-                break;
-
-            default:
-                throw new BreinException("no rest engine specified!");
-        }
+    public BreinEngine() {
+        restEngine = new HttpUrlRestEngine();
     }
 
     /**
@@ -77,4 +75,33 @@ public class BreinEngine {
     public void configure(final BreinConfig breinConfig) {
         restEngine.configure(breinConfig);
     }
+
+    BreinEngineType getRestEngineType(final BreinEngineType engine) {
+        return HTTP_URL_CONNECTION_ENGINE;
+    }
+
+    private static final Map<BreinEngineType, IRestEngine> ENGINES = new ConcurrentHashMap<>();
+    private static final Lock ENGINES_LOCK = new ReentrantLock();
+
+    public void invoke(final BreinConfig config, final BreinBase data, final ICallback<BreinResult> callback) {
+        getEngine(config).invokeRequest(config, data, callback);
+    }
+
+    protected IRestEngine getEngine(final BreinConfig config) {
+        return restEngine;
+    }
+
+    public void terminate() {
+
+        /*
+        ENGINES_LOCK.lock();
+        try {
+            ENGINES.forEach((key, engine) -> engine.terminate());
+            ENGINES.clear();
+        } finally {
+            ENGINES_LOCK.unlock();
+        }
+        */
+    }
+
 }

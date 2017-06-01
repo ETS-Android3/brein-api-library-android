@@ -1,10 +1,13 @@
 package com.brein.activity;
 
 import com.brein.api.BreinActivity;
+import com.brein.api.Breinify;
+import com.brein.api.ICallback;
+import com.brein.api.RestCallback;
 import com.brein.domain.BreinActivityType;
 import com.brein.domain.BreinConfig;
+import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
-import com.brein.engine.BreinEngineType;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -34,12 +37,26 @@ public class TestActivity {
     /**
      * Contains the Category
      */
-    private final String breinCategoryType = "services";
+    private final String breinCategory = "services";
 
     /**
      * The Activity itself
      */
     private final BreinActivity breinActivity = new BreinActivity();
+
+
+    class RestResult implements ICallback<BreinResult> {
+
+        @Override
+        public void callback(BreinResult data) {
+
+            System.out.println("within RestResult");
+            System.out.println("Data is: " + data.toString());
+
+        }
+    }
+
+    private final ICallback<BreinResult> restCallback = new RestResult();
 
     /**
      * Init part
@@ -59,7 +76,7 @@ public class TestActivity {
     public void setUp() {
 
         final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
-        breinActivity.setConfig(breinConfig);
+        Breinify.setConfig(breinConfig);
     }
 
     /**
@@ -71,14 +88,7 @@ public class TestActivity {
          * we have to wait some time in order to allow the asynch rest processing
          */
         try {
-            /*
-             * TODO...
-             * Thread.sleep is not the best practice...
-             *
-             */
             Thread.sleep(4000);
-
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -95,26 +105,26 @@ public class TestActivity {
             e.printStackTrace();
         }
     }
+
+
     /**
      * testcase how to use the activity api
      */
     @Test
     public void testLogin() {
-
-        final String description = "Login-Description";
-
         /*
          * additional user information
          */
         breinUser.setFirstName("Toni");
         breinUser.setLastName("Maroni");
 
-        /*
-         * invoke activity call
-         */
-        breinActivity.activity(breinUser,
-                BreinActivityType.LOGIN,
-                breinCategoryType, description);
+        breinActivity.setUser(breinUser);
+        breinActivity.setActivityType(BreinActivityType.LOGIN);
+        breinActivity.setCategory(breinCategory);
+        breinActivity.setDescription("Bla");
+
+        breinActivity.execute(restCallback);
+
     }
 
     /**
@@ -148,7 +158,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.LOGOUT,
-                breinCategoryType, description);
+                breinCategory, description, restCallback);
     }
 
     /**
@@ -164,7 +174,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.SEARCH,
-                breinCategoryType, description);
+                breinCategory, description, restCallback);
     }
 
     /**
@@ -180,7 +190,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
-                breinCategoryType, description);
+                breinCategory, description, restCallback);
     }
 
     /**
@@ -196,7 +206,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
-                breinCategoryType, description);
+                breinCategory, description, restCallback);
     }
 
     /**
@@ -212,7 +222,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
-                breinCategoryType, description);
+                breinCategory, description, restCallback);
     }
 
     /**
@@ -228,7 +238,7 @@ public class TestActivity {
          */
         breinActivity.activity(breinUser,
                 BreinActivityType.OTHER,
-                breinCategoryType, description);
+                breinCategory, description, restCallback);
     }
 
 }

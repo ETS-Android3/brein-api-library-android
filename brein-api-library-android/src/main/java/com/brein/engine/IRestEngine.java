@@ -1,8 +1,10 @@
 package com.brein.engine;
 
 import com.brein.api.BreinActivity;
+import com.brein.api.BreinBase;
 import com.brein.api.BreinException;
 import com.brein.api.BreinLookup;
+import com.brein.api.ICallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 
@@ -38,5 +40,29 @@ public interface IRestEngine {
      * terminates the rest engine
      */
     void terminate();
+
+    /**
+     *
+     * @param engine
+     * @return
+     */
+    IRestEngine getRestEngine(final BreinEngineType engine);
+
+    /**
+     *
+     * @param engine
+     * @return
+     */
+    BreinEngineType getRestEngineType(final BreinEngineType engine);
+
+    /**
+     *
+     * @param config
+     * @param data
+     * @param callback
+     */
+    void invokeRequest(final BreinConfig config,
+                           final BreinBase data,
+                           final ICallback<BreinResult> callback);
 
 }

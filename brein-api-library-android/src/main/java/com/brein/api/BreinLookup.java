@@ -17,7 +17,7 @@ import java.util.Map;
  * Provides the lookup functionality
  */
 
-public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStrategy {
+public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStrategy, IAsyncExecutable {
 
     /**
      * used for lookup request
@@ -63,28 +63,6 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
         // super.init();
     }
 
-    /**
-     * Lookup implementation. For a given user (BreinUser) a lookup will be performed with the requested dimensions
-     * (BreinDimension)
-     *
-     * @param breinUser      contains the breinify user
-     * @param breinDimension contains the dimensions to look after
-     * @return response from request or null if no data can be retrieved
-     */
-    public BreinResult lookUp(final BreinUser breinUser,
-                              final BreinDimension breinDimension) {
-
-        setUser(breinUser);
-        setBreinDimension(breinDimension);
-
-        if (null == getBreinEngine()) {
-            throw new BreinException(BreinException.ENGINE_NOT_INITIALIZED);
-        }
-
-        return getBreinEngine().performLookUp(this);
-    }
-
-    @Override
     public void prepareRequestData(BreinConfig config, Map<String, Object> requestData) {
 
     }
@@ -156,6 +134,12 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
                 getUnixTimestamp(),
                 dimensions == null ? 0 : dimensions.length);
 
-        return BreinUtil.generateSignature(message, getConfig().getSecret());
+        return BreinUtil.generateSignature(message, config.getSecret());
     }
+
+    @Override
+    public void execute(ICallback callback) {
+        Breinify.lookUp(this, callback);
+    }
+
 }

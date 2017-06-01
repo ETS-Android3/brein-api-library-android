@@ -47,6 +47,8 @@ public class TestHttpUrlConnectionApi {
      */
     final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
 
+    private final RestCallback restCallback = new RestCallback();
+
     /**
      * Init part
      */
@@ -105,7 +107,9 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.HOME,
-                "Login-Description");
+                "Login-Description",
+                restCallback
+                );
     }
 
     /**
@@ -131,7 +135,8 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -159,7 +164,8 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -193,7 +199,8 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -224,7 +231,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
-                description);
+                description,restCallback);
     }
 
     /**
@@ -264,11 +271,11 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGOUT,
                 breinCategoryType,
-                description);
+                description, restCallback);
     }
 
     /**
-     * TODO
+     * testcase
      */
     @Test
     public void testSearch() {
@@ -286,11 +293,11 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.SEARCH,
                 breinCategoryType,
-                description);
+                description, restCallback);
     }
 
     /**
-     * TODO
+     * testcase
      */
     @Test
     public void testAddToCart() {
@@ -308,11 +315,11 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
                 breinCategoryType,
-                description);
+                description, restCallback);
     }
 
     /**
-     * TODO
+     * testcase
      */
     @Test
     public void testRemoveFromCart() {
@@ -324,11 +331,11 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
                 breinCategoryType,
-                description);
+                description, restCallback);
     }
 
     /**
-     * TODO
+     * testcase
      */
     @Test
     public void testSelectProduct() {
@@ -346,11 +353,11 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
                 breinCategoryType,
-                description);
+                description, restCallback);
     }
 
     /**
-     * TODO
+     * testcase
      */
     @Test
     public void testOther() {
@@ -368,7 +375,7 @@ public class TestHttpUrlConnectionApi {
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
-                description);
+                description, restCallback);
     }
 
     /**
@@ -395,33 +402,6 @@ public class TestHttpUrlConnectionApi {
         breinEngine.configure(breinConfig);
     }
 
-    /**
-     * Tests the lookup functionality
-     */
-    // @Test
-    public void testLookup() {
 
-        final String[] dimensions = {"firstname",
-                "gender",
-                "age",
-                "agegroup",
-                "digitalfootprint",
-                "images"};
-
-        final BreinDimension breinDimension = new BreinDimension(dimensions);
-
-        // configuration
-        Breinify.setConfig(breinConfig);
-
-        // invoke lookup
-        final BreinResult response = Breinify.lookup(breinUser, breinDimension);
-
-        final Object dataFirstname = response.get("firstname");
-        final Object dataGender = response.get("gender");
-        final Object dataAge = response.get("age");
-        final Object dataAgeGroup = response.get("agegroup");
-        final Object dataDigitalFootprinting = response.get("digitalfootprint");
-        final Object dataImages = response.get("images");
-    }
 
 }

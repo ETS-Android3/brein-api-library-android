@@ -2,6 +2,7 @@ package com.brein.util;
 
 import com.brein.api.BreinBase;
 import com.brein.api.BreinException;
+import com.brein.api.Breinify;
 import com.brein.domain.BreinConfig;
 
 import java.io.IOException;
@@ -188,7 +189,7 @@ public class BreinUtil {
      */
     public static void validateConfig(final BreinBase breinBase) {
 
-        final BreinConfig breinConfig = breinBase.getConfig();
+        final BreinConfig breinConfig = Breinify.getConfig();
         if (null == breinConfig) {
             throw new BreinException(BreinException.CONFIG_VALIDATION_FAILED);
         }
@@ -201,7 +202,7 @@ public class BreinUtil {
      * @return full url
      */
     public static String getFullyQualifiedUrl(final BreinBase breinBase) {
-        final BreinConfig breinConfig = breinBase.getConfig();
+        final BreinConfig breinConfig = Breinify.getConfig();
 
         final String url = breinConfig.getUrl();
         if (null == url) {
@@ -220,7 +221,7 @@ public class BreinUtil {
      */
     public static String getRequestBody(final BreinBase breinBase) {
 
-        final String requestBody = breinBase.prepareRequestData(breinBase.getConfig());
+        final String requestBody = breinBase.prepareRequestData(Breinify.getConfig());
         if (!BreinUtil.containsValue(requestBody)) {
             throw new BreinException(BreinException.REQUEST_BODY_FAILED);
         }
@@ -241,5 +242,18 @@ public class BreinUtil {
 
         // validate URL, might throw an exception...
         // validateUrl(getFullyQualifiedUrl(breinBase));
+    }
+
+    /**
+     * Safely casting long to int in Java without using java.lang.Math.toIntExact
+     * @param value long value to cast
+     * @return int or exception
+     */
+    public static int safeLongToInt(long value) {
+        int i = (int)value;
+        if ((long)i != value) {
+            throw new IllegalArgumentException(value + " cannot be cast to int without changing its value.");
+        }
+        return i;
     }
 }

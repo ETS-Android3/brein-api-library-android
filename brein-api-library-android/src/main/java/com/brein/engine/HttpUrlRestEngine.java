@@ -1,16 +1,25 @@
 package com.brein.engine;
 
 import com.brein.api.BreinActivity;
+import com.brein.api.BreinBase;
 import com.brein.api.BreinException;
 import com.brein.api.BreinLookup;
+import com.brein.api.Breinify;
+import com.brein.api.ICallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 import com.brein.util.BreinUtil;
+import com.google.gson.Gson;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * could be the jersey rest com.brein.engine implementation
@@ -36,8 +45,8 @@ public class HttpUrlRestEngine implements IRestEngine {
         final String fullUrl = BreinUtil.getFullyQualifiedUrl(breinActivity);
         final String requestBody = BreinUtil.getRequestBody(breinActivity);
         System.out.println("Request is: " + requestBody);
-        final int connectionTimeout = (int)breinActivity.getConfig().getConnectionTimeout();
-        final int readTimeout = (int)breinActivity.getConfig().getSocketTimeout();
+        final int connectionTimeout = (int) Breinify.getConfig().getConnectionTimeout();
+        final int readTimeout = (int) Breinify.getConfig().getSocketTimeout();
 
         new Thread(new Runnable() {
             @Override
@@ -84,8 +93,8 @@ public class HttpUrlRestEngine implements IRestEngine {
 
         final String fullUrl = BreinUtil.getFullyQualifiedUrl(breinLookup);
         final String requestBody = BreinUtil.getRequestBody(breinLookup);
-        final int connectionTimeout = (int)breinLookup.getConfig().getConnectionTimeout();
-        final int readTimeout = (int)breinLookup.getConfig().getSocketTimeout();
+        final int connectionTimeout = (int) Breinify.getConfig().getConnectionTimeout();
+        final int readTimeout = (int) Breinify.getConfig().getSocketTimeout();
 
         new Thread(new Runnable() {
             @Override
@@ -143,11 +152,84 @@ public class HttpUrlRestEngine implements IRestEngine {
     public void terminate() {
     }
 
+    @Override
+    public IRestEngine getRestEngine(BreinEngineType engine) {
+        return null;
+    }
+
+    @Override
+    public BreinEngineType getRestEngineType(BreinEngineType engine) {
+        return null;
+    }
+
     /**
      * configuration of the rest  client
      */
     @Override
     public void configure(final BreinConfig breinConfig) {
+    }
+
+
+    @Override
+    public void invokeRequest(final BreinConfig config, final BreinBase data, final ICallback<BreinResult> callback) {
+
+        // validate the input objects
+        BreinUtil.validate(data);
+
+        final String fullUrl = BreinUtil.getFullyQualifiedUrl(data);
+        final String requestBody = BreinUtil.getRequestBody(data);
+        System.out.println("Request is: " + requestBody);
+        final int connectionTimeout = (int) Breinify.getConfig().getConnectionTimeout();
+        final int readTimeout = (int) Breinify.getConfig().getSocketTimeout();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+
+                    final URL url = new URL(fullUrl);
+                    final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    conn.setReadTimeout(readTimeout);
+                    conn.setConnectTimeout(connectionTimeout);
+                    conn.setRequestMethod(POST_METHOD);
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("Accept", "application/json");
+
+                    // final String data = requestObject.toString();
+                    final PrintWriter out = new PrintWriter(conn.getOutputStream());
+                    out.print(requestBody);
+                    out.close();
+
+                    conn.connect();
+                    final int response = conn.getResponseCode();
+                    System.out.println("response is: " + response);
+                    BreinResult breinResponse = null;
+                    Map<String, Object> mapResponse = new HashMap<String, Object>();
+                    mapResponse.put("Response", response);
+                    if (response == 200) {
+                        System.out.println("response is: " + conn.getResponseMessage());
+                        // mapResponse = new Gson().fromJson(conn.getResponseMessage(), Map.class);
+                        mapResponse.put("Message", conn.getResponseMessage());
+                        breinResponse = new BreinResult(mapResponse);
+                    }
+
+                    conn.disconnect();
+
+                    callback.callback(breinResponse);
+
+                } catch (final Exception e) {
+                    // System.out.println("Exception is: " + e);
+                    throw new BreinException("REST rest call exception");
+                } finally {
+
+                }
+
+            }
+        }).start();
     }
 
 }

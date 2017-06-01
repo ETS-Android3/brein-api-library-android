@@ -17,6 +17,8 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Test of Breinify Java API (static option)
  */
@@ -54,6 +56,29 @@ public class TestApi {
      * Correct configuration
      */
     final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+
+
+
+    class RestResult implements ICallback<BreinResult> {
+
+        @Override
+        public void callback(BreinResult data) {
+
+            System.out.println("within RestResult");
+            System.out.println("Data is: " + data.toString());
+
+            for(Map.Entry<String, Object> entry : data.getMap().entrySet()) {
+                if (entry.getKey().equalsIgnoreCase("response")) {
+                    System.out.println("Value is: " + entry.getValue());
+                    int value = (int)entry.getValue();
+                    assertTrue(value == 200);
+                }
+            }
+
+        }
+    }
+
+    private final ICallback restCallback = new RestResult();
 
     /**
      * Init part
@@ -111,7 +136,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
-                "Login-Description");
+                "Login-Description",
+                restCallback);
     }
 
     /**
@@ -137,7 +163,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 breinActivityType,
                 null,
-                "Login-Description");
+                "Login-Description",
+                restCallback);
     }
 
     /**
@@ -164,7 +191,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -210,7 +238,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -241,7 +270,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -280,7 +310,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -302,7 +333,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.SEARCH,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -324,7 +356,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -346,7 +379,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -368,7 +402,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -390,7 +425,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -412,7 +448,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
-                description);
+                description,
+                restCallback);
     }
 
     /**
@@ -453,7 +490,7 @@ public class TestApi {
         breinActivity.setTag("nr", 3000);
         breinActivity.setTag("sortid", "1.0");
 
-        Breinify.activity();
+        Breinify.activity(breinActivity, restCallback);
     }
 
     /**
@@ -481,14 +518,7 @@ public class TestApi {
                 .setReferrer("https://sample.com.au/track")
                 .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586");
 
-        final BreinActivity breinActivity = Breinify.getBreinActivity();
-
-        breinActivity.setCategory(BreinCategoryType.APPAREL);
-        breinActivity.setActivityType(BreinActivityType.PAGEVISIT);
-        breinActivity.setDescription("your description");
-
-        // user not set -> exception expected
-        Breinify.activity();
+        Breinify.activity(breinUser, BreinActivityType.PAGEVISIT, BreinCategoryType.APPAREL, "Description", restCallback );
     }
 
     /**
@@ -538,7 +568,10 @@ public class TestApi {
         /*
          * invoke lookup
          */
-        final BreinResult response = Breinify.lookup(breinUser, breinDimension);
+        // TODO: 25.05.17 provide callback for result
+        // final BreinResult response = Breinify.lookup(breinUser, breinDimension);
+
+        /*
         if (response != null) {
             final Object dataFirstname = response.get("firstname");
             final Object dataGender = response.get("gender");
@@ -547,6 +580,7 @@ public class TestApi {
             final Object dataDigitalFootprinting = response.get("digitalfootprint");
             final Object dataImages = response.get("images");
         }
+        */
     }
 
     /**
@@ -573,7 +607,8 @@ public class TestApi {
         Breinify.activity(breinUser,
                 "login",
                 "home",
-                "Login-Description");
+                "Login-Description",
+                restCallback);
     }
 
     /**
@@ -593,83 +628,10 @@ public class TestApi {
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.HOME,
-                "Login-Description");
+                "Login-Description",
+                restCallback);
     }
 
-    /**
-     * Test a lookup with sign and correct secret
-     */
-    @Test
-    public void testLookupWithSign() {
-
-        final String secret = "p3rqlab6m7/172pdgiq6ng==";
-        final String[] dimensions = {"firstname",
-                "gender",
-                "age",
-                "agegroup",
-                "digitalfootprint",
-                "images"};
-
-        final BreinDimension breinDimension = new BreinDimension(dimensions);
-        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
-
-        // set secret
-        breinConfig.setSecret(secret);
-
-        /*
-         * set configuration
-         */
-        Breinify.setConfig(breinConfig);
-
-        /*
-         * invoke lookup
-         */
-        final BreinResult response = Breinify.lookup(breinUser, breinDimension);
-        if (response != null) {
-            final Object dataFirstname = response.get("firstname");
-            final Object dataGender = response.get("gender");
-            final Object dataAge = response.get("age");
-            final Object dataAgeGroup = response.get("agegroup");
-            final Object dataDigitalFootprinting = response.get("digitalfootprint");
-            final Object dataImages = response.get("images");
-        }
-    }
-
-    /**
-     * Test a lookup with sign and correct secret
-     */
-    @Test
-    public void testLookupWithSignButWrongSecret() {
-
-        final String thisIsAWrongSecret = "ThisIsAWrongSecret";
-        final String[] dimensions = {"firstname",
-                "gender",
-                "age",
-                "agegroup",
-                "digitalfootprint",
-                "images"};
-
-        final BreinDimension breinDimension = new BreinDimension(dimensions);
-        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
-
-        // set secret
-        breinConfig.setSecret(thisIsAWrongSecret);
-
-        Breinify.setConfig(breinConfig);
-
-        /*
-         * invoke lookup
-         */
-        final BreinResult response = Breinify.lookup(breinUser, breinDimension);
-        if (response != null) {
-            final Object dataFirstname = response.get("firstname");
-            final Object dataGender = response.get("gender");
-            final Object dataAge = response.get("age");
-            final Object dataAgeGroup = response.get("agegroup");
-            final Object dataDigitalFootprinting = response.get("digitalfootprint");
-            final Object dataImages = response.get("images");
-        }
-    }
 
     /**
      * test case where an activity is sent without having set
@@ -691,25 +653,41 @@ public class TestApi {
                 .setSessionId("SESS-ID-IS-THIS");
 
         // send activity with all fields sets so far
-        Breinify.activity(breinUser, "ACT-TYPE", "CAT-TYPE", "DESC");
+        Breinify.activity(breinUser, "ACT-TYPE", "CAT-TYPE", "DESC", restCallback);
 
         // send activity without CAT-TYPE => use default
-        Breinify.activity(breinUser, "ACT-TYPE", "", "DESC");
+        Breinify.activity(breinUser, "ACT-TYPE", "", "DESC", restCallback);
 
-        Breinify.activity(breinUser, "ACT-TYPE", null, "DESC");
+        Breinify.activity(breinUser, "ACT-TYPE", null, "DESC", restCallback);
 
-        // send activity by setting the breinActivity methods
-        BreinActivity breinActivity = Breinify.getBreinActivity()
-                .setCategory(null)
-                .setActivityType("ACTI-TYPE")
-                .setDescription("DESC");
+        Breinify.activity(breinUser, "ACT-TYPE", "bla", null, restCallback);
 
-        Breinify.activity();
+        Breinify.activity(breinUser, "ACT-TYPE", "bla", "Desc", null);
+
     }
+
+
+    @Test
+    public void testTemporalData() {
+
+        final BreinUser breinUser = new BreinUser("fred.firestone@email.com")
+                .setFirstName("Fred")
+                .setIpAddress("74.115.209.58")
+                .setTimezone("America/Los_Angeles")
+                .setLocalDateTime("Sun Dec 25 2016 18:15:48 GMT-0800 (PST)");
+
+
+        BreinTemporalData breinTemporalData = new BreinTemporalData()
+                .setLocation("san francisco");
+
+        breinTemporalData.execute(restCallback);
+
+
+}
+
 
     @Test
     public void testForDoc() {
-
 
     }
 

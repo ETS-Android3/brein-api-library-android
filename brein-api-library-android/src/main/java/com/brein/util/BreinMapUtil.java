@@ -22,10 +22,8 @@ public class BreinMapUtil {
 
         final Map<String, Object> copy = new HashMap<>();
 
-        //loop a Map
         for (Map.Entry<String, Object> entry : source.entrySet()) {
-            // Todo: remove after check
-            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            // System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
             copy.put(entry.getKey(), copyValue(entry.getValue()));
         }
 
@@ -39,8 +37,7 @@ public class BreinMapUtil {
 
         final List<Object> copy = new ArrayList<>();
         for (Object value : copy) {
-            // Todo: remove
-            System.out.println(value);
+            // System.out.println(value);
             copy.add(copyValue(value));
         }
 

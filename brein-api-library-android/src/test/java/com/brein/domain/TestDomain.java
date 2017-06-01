@@ -3,6 +3,7 @@ package com.brein.domain;
 import android.webkit.WebView;
 
 import com.brein.api.BreinActivity;
+import com.brein.api.Breinify;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class TestDomain {
                 .setLastName("Maroni");
 
         final BreinActivity breinActivity = new BreinActivity();
-        breinActivity.setConfig(breinConfig);
+        Breinify.setConfig(breinConfig);
         breinActivity.setUser(breinUser);
         breinActivity.setActivityType(BreinActivityType.LOGIN);
         breinActivity.setDescription("Super-Description");
@@ -61,7 +62,7 @@ public class TestDomain {
         final BreinUser breinUser = new BreinUser();
 
         final BreinActivity breinActivity = new BreinActivity();
-        breinActivity.setConfig(breinConfig);
+        Breinify.setConfig(breinConfig);
         breinActivity.setUser(breinUser);
         breinActivity.setActivityType(BreinActivityType.LOGIN);
         breinActivity.setDescription("Super-Description");

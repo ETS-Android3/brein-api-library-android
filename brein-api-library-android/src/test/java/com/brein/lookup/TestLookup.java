@@ -1,6 +1,8 @@
 package com.brein.lookup;
 
 import com.brein.api.BreinLookup;
+import com.brein.api.Breinify;
+import com.brein.api.RestCallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinDimension;
 import com.brein.domain.BreinResult;
@@ -40,6 +42,8 @@ public class TestLookup {
      */
     private final BreinLookup breinLookup = new BreinLookup();
 
+    private final RestCallback restCallback = new RestCallback();
+
     /**
      * Preparation of test case
      */
@@ -47,7 +51,7 @@ public class TestLookup {
     public void setUp() {
 
         final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY);
-        breinLookup.setConfig(breinConfig);
+        Breinify.setConfig(breinConfig);
     }
 
     /**
@@ -59,11 +63,6 @@ public class TestLookup {
          * we have to wait some time in order to allow the asynch rest processing
          */
         try {
-            /**
-             * TODO...
-             * Thread.sleep is not the best practice...
-             *
-             */
             Thread.sleep(4000);
         } catch (InterruptedException e) {
             fail();
@@ -81,11 +80,16 @@ public class TestLookup {
                 "age", "agegroup", "digitalfootprint", "images"};
 
         final BreinDimension breinDimension = new BreinDimension(dimensions);
+        breinLookup.setBreinDimension(breinDimension);
+        breinLookup.setUser(breinUser);
 
         /**
          * invoke lookup
          */
-        final BreinResult breinResult = breinLookup.lookUp(breinUser, breinDimension);
+        breinLookup.execute(restCallback);
+
+
+        /*
         if (breinResult != null) {
             final Object dataFirstname = breinResult.get("firstname");
             final Object dataGender = breinResult.get("gender");
@@ -94,5 +98,6 @@ public class TestLookup {
             final Object dataDigitalFootprinting = breinResult.get("digitalfootprint");
             final Object dataImages = breinResult.get("digitalfootprint");
         }
+        */
     }
 }

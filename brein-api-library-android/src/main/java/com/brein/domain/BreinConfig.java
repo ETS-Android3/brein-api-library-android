@@ -3,7 +3,6 @@ package com.brein.domain;
 import android.content.Context;
 
 import com.brein.api.BreinInvalidConfigurationException;
-import com.brein.api.BreinifyExecutor;
 import com.brein.engine.BreinEngine;
 import com.brein.engine.BreinEngineType;
 import com.brein.util.BreinUtil;
@@ -22,6 +21,16 @@ public class BreinConfig {
      * default endpoint of activity
      */
     public static final String DEFAULT_ACTIVITY_ENDPOINT = "/activity";
+
+    /**
+     * default endpoint for temporalData
+     */
+    public static final String DEFAULT_TEMPORALDATA_ENDPOINT = "/temporaldata";
+
+    /**
+     * default endpoint for recommendation
+     */
+    public static final String DEFAULT_RECOMMENDATION_ENDPOINT = "/recommendation";
 
     /**
      * default endpoint of lookup
@@ -67,6 +76,16 @@ public class BreinConfig {
      * contains the lookup endpoint (default = LOOKUP_ENDPOINT)
      */
     private String lookupEndpoint = DEFAULT_LOOKUP_ENDPOINT;
+
+    /**
+     * contains the temporalData endpoint (default = DEFAULT_TEMPORALDATA_ENDPOINT)
+     */
+    private String temporalDataEndpoint = DEFAULT_TEMPORALDATA_ENDPOINT;
+
+    /**
+     * contains the recommendation endpoint (default = DEFAULT_RECOMMENDATION_ENDPOINT)
+     */
+    private String recommendationEndpoint = DEFAULT_RECOMMENDATION_ENDPOINT;
 
     /**
      * connection timeout
@@ -148,23 +167,7 @@ public class BreinConfig {
      * initializes the rest client
      */
     public void initEngine() {
-        breinEngine = new BreinEngine(getRestEngineType());
-    }
-
-    /**
-     * builder method - based on th configuration an universal executer
-     * will be created.
-     *
-     * @return new created executer
-     */
-    public BreinifyExecutor build() {
-
-        final BreinifyExecutor breinifyExecutor = new BreinifyExecutor();
-        breinifyExecutor.setConfig(this);
-
-        initEngine();
-
-        return breinifyExecutor;
+        breinEngine = new BreinEngine();
     }
 
     /**
@@ -340,6 +343,45 @@ public class BreinConfig {
      */
     public BreinConfig setLookupEndpoint(final String lookupEndpoint) {
         this.lookupEndpoint = lookupEndpoint;
+        return this;
+    }
+
+    /**
+     * retrieves the temporalData endpoint
+     *
+     * @return temporalData endpoint
+     */
+    public String getTemporalDataEndpoint() {
+        return this.temporalDataEndpoint;
+    }
+
+    /**
+     * sets the temporalData endpoint
+     *
+     * @param temporalDataEndpoint endpoint
+     * @return the config object itself
+     */
+    public void setTemporalDataEndpoint(final String temporalDataEndpoint) {
+        this.temporalDataEndpoint = temporalDataEndpoint;
+    }
+
+    /**
+     * retrieves the recommendation endpoint
+     *
+     * @return recommendationEndpoint endpoint
+     */
+    public String getRecommendationEndpoint() {
+        return this.recommendationEndpoint;
+    }
+
+    /**
+     * sets the recommendation endpoint
+     *
+     * @param recommendationEndpoint endpoint
+     * @return the config object itself
+     */
+    public BreinConfig setRecommendationEndpoint(final String recommendationEndpoint) {
+        this.recommendationEndpoint = recommendationEndpoint;
         return this;
     }
 
