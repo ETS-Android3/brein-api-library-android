@@ -9,12 +9,8 @@ import com.brein.api.ICallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 import com.brein.util.BreinUtil;
-import com.google.gson.Gson;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
