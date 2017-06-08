@@ -2,7 +2,6 @@ package com.brein.api;
 
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinUser;
-import com.brein.engine.BreinEngine;
 import com.brein.util.BreinUtil;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

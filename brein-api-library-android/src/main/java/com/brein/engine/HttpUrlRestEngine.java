@@ -183,7 +183,6 @@ public class HttpUrlRestEngine implements IRestEngine {
             public void run() {
 
                 try {
-
                     final URL url = new URL(fullUrl);
                     final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 

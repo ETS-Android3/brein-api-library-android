@@ -2,7 +2,6 @@ package com.brein.api;
 
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
-import com.brein.domain.results.BreinTemporalDataResult;
 import com.brein.engine.BreinEngine;
 
 

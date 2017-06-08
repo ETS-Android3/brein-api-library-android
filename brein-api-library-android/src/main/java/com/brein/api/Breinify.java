@@ -1,7 +1,6 @@
 package com.brein.api;
 
 import com.brein.domain.BreinConfig;
-import com.brein.domain.BreinDimension;
 import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
 
@@ -257,9 +256,8 @@ public class Breinify {
      * <p>
      * This request is synchronous.
      *
-     * @param user      a plain object specifying information about the user to retrieve data for.
-     * @param dimension an object (with an array) containing the names of the dimensions to lookup.
-     * @return response from request wrapped in an object called BreinResponse
+     * @param data      a plain object specifying information about the brein lookup data.
+     * @param callback  a method invoked with the result set.
      */
     public static void lookUp(final BreinLookup data, final ICallback<BreinResult> callback) {
         getBrein().lookup(data, callback);
