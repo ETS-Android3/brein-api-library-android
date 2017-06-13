@@ -631,7 +631,7 @@ public class BreinUser {
         USER_AGENT("userAgent"),
         TIME_ZONE("timezone"),
         LOCAL_DATE_TIME("localDateTime"),
-        PUSH_DEVICE_TOKEN("pushDeviceToken");
+        PUSH_DEVICE_TOKEN("androidPushDeviceRegistration");
 
         final String name;
 

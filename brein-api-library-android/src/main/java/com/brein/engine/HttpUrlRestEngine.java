@@ -219,10 +219,7 @@ public class HttpUrlRestEngine implements IRestEngine {
                 } catch (final Exception e) {
                     // System.out.println("Exception is: " + e);
                     throw new BreinException("REST rest call exception");
-                } finally {
-
                 }
-
             }
         }).start();
     }

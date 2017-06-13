@@ -1,5 +1,7 @@
 package com.brein.api;
 
+import android.app.Application;
+
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
@@ -32,15 +34,12 @@ public class Breinify {
      */
     private static final BreinTemporalData breinTemporalData = new BreinTemporalData();
 
-
     /**
      * Specifies the overall configuration used by the library. The configuration must be set prior to any call to the
      * API.
      *
      * @param config the configuration to use
-     *
      * @return the {@code Brein} instance, usable if multiple different configurations are used
-     *
      * @see Brein
      * @see BreinConfig
      */
@@ -54,9 +53,7 @@ public class Breinify {
      * API.
      *
      * @param apiKey the API key to be used
-     *
      * @return the {@code Brein} instance, usable if multiple different configurations are used
-     *
      * @see Brein
      */
     public static Brein setConfig(final String apiKey) {
@@ -70,13 +67,21 @@ public class Breinify {
      * @param apiKey the API key to be used
      * @param secret the secret to be used to sign the messages (Verification Signature must be enabled for the API
      *               key)
-     *
      * @return the {@code Brein} instance, usable if multiple different configurations are used
-     *
      * @see Brein
      */
     public static Brein setConfig(final String apiKey, final String secret) {
         return setConfig(new BreinConfig(apiKey, secret));
+    }
+
+    /**
+     *
+     * @param application
+     * @param apiKey
+     * @param secret
+     */
+    public static void initialize(final Application application, final String apiKey, final String secret) {
+        BreinifyManager.getInstance().initialize(application, apiKey, secret);
     }
 
     /**
@@ -121,7 +126,7 @@ public class Breinify {
      * @param activityType the type of the activity collected, i.e., one of search, login, logout, addToCart,
      *                     removeFromCart, checkOut, selectProduct, or other. if not specified, the default other will
      *                     be used
-     * @param categoryType the category of the platform/service/products, i.e., one of apparel, home, education, family,
+     * @param category     the category of the platform/service/products, i.e., one of apparel, home, education, family,
      *                     food, health, job, services, or other
      * @param description  a string with further information about the activity performed
      */
@@ -143,7 +148,6 @@ public class Breinify {
         breinActivity.getBreinEngine().sendActivity(breinActivity);
         */
 
-
         if (user == null) {
             throw new BreinException(BreinException.USER_NOT_SET);
         }
@@ -162,7 +166,6 @@ public class Breinify {
      * Method to send an activity asynchronous.
      *
      * @param activity the {@code BreinActivity} to be sent
-     *
      * @see BreinActivity
      */
     public static void activity(final BreinActivity activity) {
@@ -175,7 +178,6 @@ public class Breinify {
      * @param activity the {@code BreinActivity} to be sent
      * @param callback callback to get informed whenever the activity was sent, the callback retrieves the {@code
      *                 BreinResult}
-     *
      * @see BreinActivity
      * @see BreinResult
      */
@@ -187,14 +189,12 @@ public class Breinify {
      * Method to retrieve temporal information based on temporal data. This method uses the available information from
      * the system it is running on to be passed to the API, which resolves the temporal information. Normally (if not
      * using a VPN) the ip-address is a good source to determine, e.g., the location.
-     *
      */
     public static void temporalData(final ICallback<BreinResult> callback) {
 
         final BreinTemporalData data = new BreinTemporalData().setLocalDateTime();
 
-       //  getBrein().temporalData(data, callback);
-
+        //  getBrein().temporalData(data, callback);
         temporalData(data, callback);
     }
 
@@ -206,12 +206,11 @@ public class Breinify {
      * @param longitude  the longitude of the geo-coordinates to resolve
      * @param shapeTypes the shape-types to retrieve (if empty, no shape-types will be returned), e.g., CITY,
      *                   NEIGHBORHOOD, ZIP-CODES
-     *
      */
     public static void temporalData(final double latitude,
-                                                       final double longitude,
-                                                       final ICallback<BreinResult> callback,
-                                                       final String... shapeTypes) {
+                                    final double longitude,
+                                    final ICallback<BreinResult> callback,
+                                    final String... shapeTypes) {
         final BreinTemporalData data = new BreinTemporalData()
                 .setLongitude(longitude)
                 .setLatitude(latitude)
@@ -220,14 +219,11 @@ public class Breinify {
         getBrein().temporalData(data, callback);
     }
 
-
     /**
      * Method to retrieve temporal information based on temporal data. This method uses the {@code ipAddress} to
      * determine further information, i.e., weather, location, events, time, timezone, and holidays.
      *
      * @param ipAddress the address to resolve the information for
-     *
-     *
      */
     public static void temporalData(final String ipAddress, final ICallback<BreinResult> callback) {
         final BreinTemporalData data = new BreinTemporalData().setLookUpIpAddress(ipAddress);
@@ -235,15 +231,12 @@ public class Breinify {
         getBrein().temporalData(data, callback);
     }
 
-
     /**
      * Method to retrieve temporal information based on temporal data. This method uses the available information from
      * the system it is running on to be passed to the API, which resolves the temporal information. Normally (if not
      * using a VPN) the ip-address is a good source to determine, e.g., the location.
-     *
      */
     public static void temporalData(final BreinTemporalData data, final ICallback<BreinResult> callback) {
-
         getBrein().temporalData(data, callback);
     }
 
@@ -256,23 +249,19 @@ public class Breinify {
      * <p>
      * This request is synchronous.
      *
-     * @param data      a plain object specifying information about the brein lookup data.
-     * @param callback  a method invoked with the result set.
+     * @param data     a plain object specifying information about the brein lookup data.
+     * @param callback a method invoked with the result set.
      */
     public static void lookUp(final BreinLookup data, final ICallback<BreinResult> callback) {
         getBrein().lookup(data, callback);
     }
 
-
     protected static Brein getBrein() {
         if (lastBrein == null) {
             lastBrein = new Brein().setConfig(lastConfig);
         }
-
         return lastBrein;
     }
-
-
 
     /**
      * Shutdown Breinify services
@@ -281,7 +270,7 @@ public class Breinify {
         if (getConfig() != null) {
             getConfig().shutdownEngine();
         }
+
+        BreinifyManager.getInstance().shutdown();
     }
-
-
 }
