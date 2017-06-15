@@ -391,8 +391,8 @@ public class BreinUser {
      *
      * @return value
      */
-    public String getPushDeviceToken() {
-        return getUserAdditionalField(UserAdditionalField.PUSH_DEVICE_TOKEN);
+    public String getPushDeviceRegistration() {
+        return getUserAdditionalField(UserAdditionalField.PUSH_DEVICE_REGISTRATION);
     }
 
     /**
@@ -401,8 +401,8 @@ public class BreinUser {
      * @param deviceToken value
      * @return self
      */
-    public BreinUser setPushDeviceToken(final String deviceToken) {
-        UserAdditionalField.PUSH_DEVICE_TOKEN.set(this, deviceToken);
+    public BreinUser setPushDeviceRegistration(final String deviceToken) {
+        UserAdditionalField.PUSH_DEVICE_REGISTRATION.set(this, deviceToken);
         return this;
     }
 
@@ -631,7 +631,7 @@ public class BreinUser {
         USER_AGENT("userAgent"),
         TIME_ZONE("timezone"),
         LOCAL_DATE_TIME("localDateTime"),
-        PUSH_DEVICE_TOKEN("androidPushDeviceRegistration");
+        PUSH_DEVICE_REGISTRATION("androidPushDeviceRegistration");
 
         final String name;
 

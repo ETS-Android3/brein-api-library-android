@@ -1,5 +1,7 @@
 package com.brein.engine;
 
+import android.util.Log;
+
 import com.brein.api.BreinActivity;
 import com.brein.api.BreinBase;
 import com.brein.api.BreinException;
@@ -21,6 +23,8 @@ import java.util.Map;
  * could be the jersey rest com.brein.engine implementation
  */
 public class HttpUrlRestEngine implements IRestEngine {
+
+    private static final String TAG = "HttpUrlRestEngine";
 
     /**
      * constant for post method
@@ -68,6 +72,7 @@ public class HttpUrlRestEngine implements IRestEngine {
 
                 } catch (final Exception e) {
                     // System.out.println("Exception is: " + e);
+                    Log.d(TAG, "HttpUrlRestEngine exception is: " + e);
                     throw new BreinException("REST rest call exception");
                 }
 
@@ -214,14 +219,15 @@ public class HttpUrlRestEngine implements IRestEngine {
 
                     conn.disconnect();
 
-                    callback.callback(breinResponse);
-
+                    if (callback != null) {
+                        callback.callback(breinResponse);
+                    }
                 } catch (final Exception e) {
                     // System.out.println("Exception is: " + e);
+                    Log.d(TAG, "HttpUrlRestEngine exception is: " + e);
                     throw new BreinException("REST rest call exception");
                 }
             }
         }).start();
     }
-
 }

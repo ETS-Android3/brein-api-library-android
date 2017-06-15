@@ -14,6 +14,8 @@ public class Breinify {
     private static BreinConfig lastConfig = null;
     private static Brein lastBrein = null;
 
+    private static BreinUser breinUser = new BreinUser();
+
     /**
      * contains the current version of the usage library
      */
@@ -75,13 +77,39 @@ public class Breinify {
     }
 
     /**
-     *
      * @param application
      * @param apiKey
      * @param secret
      */
-    public static void initialize(final Application application, final String apiKey, final String secret) {
-        BreinifyManager.getInstance().initialize(application, apiKey, secret);
+    public static void initialize(final Application application,
+                                  final String apiKey,
+                                  final String secret) {
+        final long backgroundTimeInMS = 60 * 1000;
+
+        initialize(application, apiKey, secret, backgroundTimeInMS);
+    }
+
+    /**
+     * @param application
+     * @param apiKey
+     * @param secret
+     */
+    public static void initialize(final Application application,
+                                  final String apiKey,
+                                  final String secret,
+                                  final long backgroundInterval) {
+        BreinifyManager.getInstance().initialize(application,
+                apiKey,
+                secret,
+                backgroundInterval);
+    }
+
+    /**
+     *
+     * @param deviceToken
+     */
+    public static void configureDeviceToken(final String deviceToken) {
+        BreinifyManager.getInstance().configureDeviceToken(deviceToken);
     }
 
     /**
@@ -114,6 +142,34 @@ public class Breinify {
      */
     public static BreinLookup getBreinLookup() {
         return breinLookup;
+    }
+
+    public static BreinUser getUser() {
+        return breinUser;
+    }
+
+    /**
+     *
+     * @param email
+     */
+    public static void setEmail(final String email) {
+        BreinifyManager.getInstance().setUserEmail(email);
+    }
+
+    /**
+     *
+     * @param userId
+     */
+    public static void setUserId(final String userId) {
+        BreinifyManager.getInstance().setUserId(userId);
+    }
+
+    /**
+     *
+     * @param token
+     */
+    public static void setPushDeviceRegistration(final String token) {
+        BreinifyManager.getInstance().setPushDeviceRegistration(token);
     }
 
     /**
@@ -159,7 +215,20 @@ public class Breinify {
                 .setDescription(description);
 
         activity(activity, callback);
+    }
 
+    /**
+     * Method to send an activity asynchronous.
+     *
+     * @param activityType the activty type to be sent
+     * @see BreinActivity
+     */
+    public static void activity(final String activityType) {
+
+        breinActivity.setUser(breinUser);
+        breinActivity.setActivityType(activityType);
+
+        activity(breinActivity, null);
     }
 
     /**

@@ -4,8 +4,8 @@ import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 import com.brein.engine.BreinEngine;
 
-
 public class Brein {
+
     private BreinConfig config;
     private BreinEngine engine;
 
@@ -18,9 +18,7 @@ public class Brein {
         if (this.engine != null) {
             shutdown();
         }
-
         this.config = breinConfig;
-
         return this;
     }
 
@@ -59,7 +57,6 @@ public class Brein {
         getEngine().invoke(this.config, data, callback);
         // return new BreinTemporalDataResult(result.getMap());
     }
-
 
     /**
      * Sends a recommendation request to the engine utilizing the API. The call is done synchronously as a POST request.

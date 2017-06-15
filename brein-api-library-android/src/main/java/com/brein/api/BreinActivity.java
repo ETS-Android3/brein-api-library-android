@@ -122,7 +122,6 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         return this;
     }
 
-
     /**
      * Sends an activity to the Breinify server.
      *

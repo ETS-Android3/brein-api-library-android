@@ -1,6 +1,5 @@
 package com.brein.api;
 
-
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
@@ -47,6 +46,7 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
             long timeInApp = System.currentTimeMillis() - userEnteredTime;
 
             // app is now in background
+            Log.d(TAG, "app is now in background");
         }
     }
 
