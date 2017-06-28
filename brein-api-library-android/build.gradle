@@ -9,6 +9,8 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+
+
     }
     buildTypes {
         release {
@@ -24,6 +26,11 @@ android {
         abortOnError false
         // if true, only report errors
         ignoreWarnings true
+    }
+
+    // prevent unmocked methods from android.jar throw exceptions
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     packagingOptions {
@@ -54,6 +61,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.google.code.gson:gson:2.6.2'
 
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
 }
 
 task deleteJar(type: Delete) {
@@ -62,9 +70,37 @@ task deleteJar(type: Delete) {
 
 task createJar(type: Copy) {
     from('build/intermediates/bundles/release')
-    into('libs')
+    into('libs/')
     include('classes.jar')
     rename('classes.jar', 'brein-api-library-android.jar')
 }
 
+
+
 createJar.dependsOn(deleteJar, build)
+
+task jarTask(type: Jar) {
+    baseName="brein-api-library-android"
+    from 'src/main/java'
+}
+
+task createJarWithDependencies(type: Jar) {
+    baseName = "my-sdk-android-jar-with-dependencies"
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+
+    }
+
+    with jarTask
+}
+
+configurations {
+    jarConfiguration
+}
+
+artifacts {
+    jarConfiguration jarTask
+}

@@ -1,20 +1,17 @@
 package com.brein.config;
 
-import com.brein.api.BreinActivity;
 import com.brein.domain.BreinConfig;
-import com.brein.engine.BreinEngineType;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Test of configuration
  */
-//@Ignore
+// @Ignore
 public class TestConfig {
     private static final String testApiKey = "TEST-API-KEY";
 
@@ -24,7 +21,6 @@ public class TestConfig {
     @BeforeClass
     public static void setUp() {
     }
-
 
     /**
      * Test a config with a wrong url

@@ -5,9 +5,7 @@ import com.brein.api.Breinify;
 import com.brein.api.RestCallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinDimension;
-import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
-import com.brein.engine.BreinEngineType;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,19 +16,19 @@ import static junit.framework.TestCase.fail;
 /**
  * Test cases for lookup functionality
  */
-// @Ignore
+//@Ignore
 public class TestLookup {
 
     /**
      * Contains the BASE URL of the Breinify Backend
      */
-    // private static final String BASE_URL = "http://dev.breinify.com/api";
     private static final String BASE_URL = "https://api.breinify.com";
 
     /**
-     * This has to be a valid api key
+     * This has to be a valid api key & secret
      */
-    private static final String VALID_API_KEY = "41B2-F48C-156A-409A-B465-317F-A0B4-E0E8";
+    private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_SECRET = "lmcoj4k27hbbszzyiqamhg==";
 
     /**
      * Contains the Breinify User
@@ -50,7 +48,7 @@ public class TestLookup {
     @Before
     public void setUp() {
 
-        final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY);
+        final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
         Breinify.setConfig(breinConfig);
     }
 

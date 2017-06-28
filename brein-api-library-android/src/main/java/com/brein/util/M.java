@@ -22,8 +22,6 @@ public class M<T> {
     @SuppressWarnings("unchecked")
     public M<T> set(final Map map) {
 
-
-
         Iterator it = map.entrySet().iterator();
 
         while (it.hasNext()) {
@@ -33,9 +31,7 @@ public class M<T> {
             set((String)pair.getKey(), (T) pair.getValue());
         }
 
-
        //  map.forEach((key, value) -> set(String.valueOf(key), (T) value));
-
 
         return this;
     }

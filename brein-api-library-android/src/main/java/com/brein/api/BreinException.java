@@ -1,9 +1,13 @@
 package com.brein.api;
 
+import android.util.Log;
+
 /**
  * BreinException
  */
 public class BreinException extends RuntimeException {
+
+    private static final String TAG = "BreinException";
 
     /*
      * Error Messages
@@ -25,14 +29,16 @@ public class BreinException extends RuntimeException {
      */
     public BreinException(final Throwable e) {
         super(e);
+        Log.d(TAG, "Exception is: " + e.getMessage());
     }
 
     public BreinException(final String msg) {
         super(msg);
+        Log.d(TAG, "Exception is: " + msg);
     }
 
     public BreinException(final String msg, final Exception cause) {
         super(msg, cause);
+        Log.d(TAG, "Exception is: " + msg + " with cause: " + cause.getMessage());
     }
-
 }

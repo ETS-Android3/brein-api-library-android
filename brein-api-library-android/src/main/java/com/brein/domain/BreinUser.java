@@ -1,6 +1,7 @@
 package com.brein.domain;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -34,7 +35,7 @@ public class BreinUser {
     /**
      * contains further fields in the user additional section
      */
-    private Map<String, Object> additionalMap;
+    private Map<String, Object> additionalMap = new HashMap<>();
     /**
      * contains further fields in the user section
      */
@@ -289,6 +290,15 @@ public class BreinUser {
     }
 
     /**
+     * @return
+     */
+    public String createUserAgent() {
+        // TODO: 27/06/2017 logic missing
+        final String userAgent = System.getProperty("http.agent");
+        return userAgent;
+    }
+
+    /**
      * retrieves the ipAddress (additional part)
      *
      * @return ipAddress
@@ -412,25 +422,39 @@ public class BreinUser {
     public void detectGpsCoordinates() {
 
         // firstly get the context
-        final Context context = getConfig().getApplicationContext();
-        if (context == null) {
+        final Application applicationContext = getConfig().getApplication();
+        if (applicationContext == null) {
             return;
         }
 
-        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        final List<String> providers = locationManager.getProviders(true);
+        final LocationManager locationManager = (LocationManager) applicationContext.getSystemService(Context.LOCATION_SERVICE);
+        final List<String> providers = locationManager.getAllProviders(); // getProviders(true);
 
         // Loop over the array backwards, and if you get an accurate location, then break out the loop
         Location location = null;
 
         for (int index = providers.size() - 1; index >= 0; index--) {
-            if (ActivityCompat.checkSelfPermission(context,
+
+            final int accessFineLocationPermission = ActivityCompat.checkSelfPermission(applicationContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+
+            final int accessCoarseLocationPermission = ActivityCompat.checkSelfPermission(applicationContext,
+                    Manifest.permission.ACCESS_COARSE_LOCATION);
+
+            if (accessCoarseLocationPermission != PackageManager.PERMISSION_GRANTED ||
+                    accessFineLocationPermission != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+
+            /*
+            if (ActivityCompat.checkSelfPermission(applicationContext,
                     Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(context,
+                    && ActivityCompat.checkSelfPermission(applicationContext,
                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // we do not have the permissions
                 return;
             }
+            */
             location = locationManager.getLastKnownLocation(providers.get(index));
             if (location != null) {
                 break;
@@ -450,43 +474,55 @@ public class BreinUser {
 
     /**
      * Provides network information within the user additional request
-     *
      */
     public void detectNetwork() {
 
         // firstly get the context
-        final Context context = getConfig().getApplicationContext();
-        if (context == null) {
+        final Application applicationContext = getConfig().getApplication();
+        if (applicationContext == null) {
             return;
         }
 
-        final WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
-        if (wifiManager != null) {
-            final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            if (wifiInfo != null) {
-                final String ssid = wifiInfo.getSSID();
-                final String bssid = wifiInfo.getBSSID();
-                // final boolean hiddenSsid = wifiInfo.getHiddenSSID();
+        // only possible if permission has been granted
+        if (ActivityCompat.checkSelfPermission(applicationContext,
+                Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED) {
 
-                int ip = wifiInfo.getIpAddress();
-                final String ipAddress = Formatter.formatIpAddress(ip);
-                final int linkSpeed = wifiInfo.getLinkSpeed();
-                final String macAddress = wifiInfo.getMacAddress();
-                final int rssi = wifiInfo.getRssi();
-                final int networkId = wifiInfo.getNetworkId();
-                final String state = wifiInfo.getSupplicantState().toString();
+            final WifiManager wifiManager = (WifiManager) applicationContext
+                    .getApplicationContext()
+                    .getSystemService(WIFI_SERVICE);
 
-                final JsonObject networkData = new JsonObject();
-                networkData.addProperty("ssid", ssid);
-                networkData.addProperty("bssid", bssid);
-                networkData.addProperty("ipAddress", ipAddress);
-                networkData.addProperty("linkSpeed", linkSpeed);
-                networkData.addProperty("macAddress", macAddress);
-                networkData.addProperty("rssi", rssi);
-                networkData.addProperty("networkId", networkId);
-                networkData.addProperty("state", state);
+            if (wifiManager != null) {
+                final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                if (wifiInfo != null) {
 
-                this.additionalMap.put("network", networkData);
+                    // TODO: 27/06/2017 check all information!!!
+
+                    final String ssid = wifiInfo.getSSID();
+                    final String bssid = wifiInfo.getBSSID();
+                    // final boolean hiddenSsid = wifiInfo.getHiddenSSID();
+
+                    int ip = wifiInfo.getIpAddress();
+                    final String ipAddress = Formatter.formatIpAddress(ip);
+                    final int linkSpeed = wifiInfo.getLinkSpeed();
+                    final String macAddress = wifiInfo.getMacAddress();
+                    final int rssi = wifiInfo.getRssi();
+                    final int networkId = wifiInfo.getNetworkId();
+                    final String state = wifiInfo.getSupplicantState().toString();
+
+                    final JsonObject networkData = new JsonObject();
+                    networkData.addProperty("ssid", ssid);
+                    networkData.addProperty("bssid", bssid);
+                    networkData.addProperty("ipAddress", ipAddress);
+                    networkData.addProperty("linkSpeed", linkSpeed);
+                    networkData.addProperty("macAddress", macAddress);
+                    networkData.addProperty("rssi", rssi);
+                    networkData.addProperty("networkId", networkId);
+                    networkData.addProperty("state", state);
+
+                    if (this.additionalMap != null) {
+                        this.additionalMap.put("network", networkData);
+                    }
+                }
             }
         }
     }
@@ -524,10 +560,21 @@ public class BreinUser {
         return this;
     }
 
+    /**
+     * @param key
+     * @param <T>
+     * @return
+     */
     public <T> T get(final String key) {
         return get(key, false);
     }
 
+    /**
+     * @param key
+     * @param additional
+     * @param <T>
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public <T> T get(final String key, final boolean additional) {
         if (additional) {
@@ -537,6 +584,11 @@ public class BreinUser {
         }
     }
 
+    /**
+     * @param key
+     * @param <T>
+     * @return
+     */
     public <T> T getAdditional(final String key) {
         return get(key, true);
     }
@@ -557,6 +609,12 @@ public class BreinUser {
         return this;
     }
 
+    /**
+     * prepares the request data
+     *
+     * @param config      contains the configuration (if necessary)
+     * @param requestData request destination
+     */
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
         final Map<String, Object> userRequestData = new HashMap<>();
         requestData.put(USER_FIELD, userRequestData);
@@ -571,8 +629,12 @@ public class BreinUser {
             }
         }
 
+        // tries to detect gps and network data this will be added to property additionalMap
         detectGpsCoordinates();
         detectNetwork();
+
+        // check or create userAgent
+        handleUserAgent();
 
         // add the additional-data, if there is any
         if (this.additionalMap != null) {
@@ -580,6 +642,21 @@ public class BreinUser {
         }
     }
 
+    /**
+     * Checks if a userAgent has been set if not it will be generated and set.
+     */
+    public void handleUserAgent() {
+        final String userAgent = this.getUserAgent();
+        if (userAgent != null && userAgent.length() != 0) {
+            setUserAgent(createUserAgent());
+        }
+    }
+
+    /**
+     * @param field
+     * @param <T>
+     * @return
+     */
     protected <T> T getUserField(final UserField field) {
         return get(field.getName());
     }
@@ -614,6 +691,11 @@ public class BreinUser {
         }
     }
 
+    /**
+     * @param field
+     * @param <T>
+     * @return
+     */
     protected <T> T getUserAdditionalField(final UserAdditionalField field) {
         return get(field.getName());
     }
@@ -621,7 +703,6 @@ public class BreinUser {
 
     /**
      * This is part of the User.Additional Section
-     *
      */
     public enum UserAdditionalField {
 
@@ -644,10 +725,8 @@ public class BreinUser {
         }
 
         public void set(final BreinUser user, final Object value) {
-            user.setAdditional( getName(), value);
+            user.setAdditional(getName(), value);
         }
-
     }
-
 }
 

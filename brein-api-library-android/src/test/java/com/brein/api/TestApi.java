@@ -6,15 +6,16 @@ import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinDimension;
 import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
+import com.brein.domain.results.BreinTemporalDataResult;
 import com.brein.engine.BreinEngine;
 import com.brein.engine.BreinEngineType;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertTrue;
  * Test of Breinify Java API (static option)
  */
 
-// @Ignore
+@Ignore
 public class TestApi {
 
     /**
@@ -57,24 +58,30 @@ public class TestApi {
      */
     final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
 
-
-
+    /**
+     * Catches the result from the rest call
+     */
     class RestResult implements ICallback<BreinResult> {
 
         @Override
         public void callback(BreinResult data) {
 
+            assertTrue(data != null);
+
             System.out.println("within RestResult");
             System.out.println("Data is: " + data.toString());
 
-            for(Map.Entry<String, Object> entry : data.getMap().entrySet()) {
-                if (entry.getKey().equalsIgnoreCase("response")) {
-                    System.out.println("Value is: " + entry.getValue());
-                    int value = (int)entry.getValue();
-                    assertTrue(value == 200);
-                }
-            }
+            for (Map.Entry<String, Object> entry : data.getMap().entrySet()) {
+                System.out.println("entry: " + entry.getKey() + " - value: " + entry.getValue());
 
+                final BreinTemporalDataResult temporalDataResult = new BreinTemporalDataResult(data);
+
+                boolean hasWeather = temporalDataResult.hasWeather();
+                boolean hasEvents = temporalDataResult.hasEvents();
+                boolean hasLocalDateTime = temporalDataResult.hasLocalDateTime();
+                boolean hasEpochDateTime = temporalDataResult.hasEpochDateTime();
+                boolean hasHolidays = temporalDataResult.hasHolidays();
+            }
         }
     }
 
@@ -97,6 +104,7 @@ public class TestApi {
          * we have to wait some time in order to allow the asynch rest processing
          */
         try {
+            // TODO: 28/06/2017  remove this sleep statement
             Thread.sleep(5000);
             Breinify.shutdown();
         } catch (final InterruptedException e) {
@@ -210,12 +218,11 @@ public class TestApi {
      * Testcase with null rest engine. This will throw an
      * exception.
      */
-    @Test(expected= BreinException.class)
+    // @Test (expected = BreinException.class)
     public void testLoginWithDefaultRestEngine() {
 
         final String description = "Login-Description";
         final boolean sign = false;
-
 
         BreinConfig config = null;
         try {
@@ -518,7 +525,7 @@ public class TestApi {
                 .setReferrer("https://sample.com.au/track")
                 .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586");
 
-        Breinify.activity(breinUser, BreinActivityType.PAGEVISIT, BreinCategoryType.APPAREL, "Description", restCallback );
+        Breinify.activity(breinUser, BreinActivityType.PAGEVISIT, BreinCategoryType.APPAREL, "Description", restCallback);
     }
 
     /**
@@ -669,21 +676,39 @@ public class TestApi {
 
     @Test
     public void testTemporalData() {
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+        Breinify.setConfig(breinConfig);
 
         final BreinUser breinUser = new BreinUser("fred.firestone@email.com")
                 .setFirstName("Fred")
-                .setIpAddress("74.115.209.58")
-                .setTimezone("America/Los_Angeles")
-                .setLocalDateTime("Sun Dec 25 2016 18:15:48 GMT-0800 (PST)");
-
+                .setIpAddress("74.115.209.58");
+        //    .setTimezone("America/Los_Angeles")
+        //    .setLocalDateTime("Sun Jul 2 2017 18:15:48 GMT-0800 (PST)");
 
         BreinTemporalData breinTemporalData = new BreinTemporalData()
-                .setLocation("san francisco");
+                .setLocation("san francisco")
+                .setUser(breinUser);
 
         breinTemporalData.execute(restCallback);
+    }
 
+    @Test
+    public void testRecommendation() {
 
-}
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+        Breinify.setConfig(breinConfig);
+
+        final BreinUser breinUser = new BreinUser()
+                .setEmail("tester.breinify@email.com")
+                .setSessionId("1133AADDDEEE");
+
+        final int numberOfRecommendations = 3;
+        final BreinRecommendation recommendation = new BreinRecommendation()
+                .setUser(breinUser)
+                .setNumberOfRecommendations(numberOfRecommendations);
+
+        Breinify.recommendation(recommendation, restCallback);
+    }
 
 
     @Test

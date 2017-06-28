@@ -8,10 +8,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-/**
- * Created by marcorecchioni on 12/06/17.
- */
-
 public class BreinBackgroundService extends Service {
 
     private static final String TAG = "BreinBackgroundService";
@@ -24,6 +20,7 @@ public class BreinBackgroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // TODO: 27/06/2017 check if correct
         while (true) {
             try {
                 Thread.sleep(10000);

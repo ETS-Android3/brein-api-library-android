@@ -1,8 +1,9 @@
 package com.brein.domain;
 
-import android.content.Context;
+import android.app.Application;
 
 import com.brein.api.BreinInvalidConfigurationException;
+import com.brein.api.BreinifyManager;
 import com.brein.engine.BreinEngine;
 import com.brein.engine.BreinEngineType;
 import com.brein.util.BreinUtil;
@@ -15,7 +16,7 @@ public class BreinConfig {
     /**
      * contains the current version of the usage library
      */
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1";
 
     /**
      * default endpoint of activity
@@ -113,9 +114,9 @@ public class BreinConfig {
     private String secret;
 
     /**
-     * contains the android application applicationContext
+     * contains the android application application
      */
-    private Context applicationContext;
+    private Application application;
 
     /**
      * @param apiKey  contains the Breinify com.brein.api-key
@@ -424,17 +425,12 @@ public class BreinConfig {
     }
 
     /**
-     * @return
+     * Provides the Android Application Object
+     *
+     * @return Android Application Object
      */
-    public Context getApplicationContext() {
-        return applicationContext;
-    }
-
-    /**
-     * @param context
-     */
-    public void setApplicationContext(final Context context) {
-        this.applicationContext = context;
+    public Application getApplication() {
+        return BreinifyManager.getInstance().getApplication();
     }
 
     /**

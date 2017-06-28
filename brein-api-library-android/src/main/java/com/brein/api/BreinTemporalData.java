@@ -43,7 +43,6 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
     public static final String STATE_TEXT_FIELD = "text";
     public static final String COUNTRY_TEXT_FIELD = "text";
 
-
     /**
      * retrieves the configured temporalData endpoint (e.g. \temporalData)
      *
@@ -379,7 +378,6 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
         final String paraTimezone = timeZone == null ? "" : timeZone;
 
         final long unixTimestamp = BreinMapUtil.getNestedValue(requestData, UNIX_TIMESTAMP_FIELD);
-
         final String message = String.format("%d-%s-%s", unixTimestamp, paraLocalDateTime, paraTimezone);
 
         return BreinUtil.generateSignature(message, config.getSecret());
@@ -389,8 +387,6 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
     public void execute(ICallback callback) {
         Breinify.temporalData(this, callback);
     }
-
-
 
 }
 

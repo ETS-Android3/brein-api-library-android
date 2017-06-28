@@ -3,7 +3,6 @@ package com.brein.activity;
 import com.brein.api.BreinActivity;
 import com.brein.api.Breinify;
 import com.brein.api.ICallback;
-import com.brein.api.RestCallback;
 import com.brein.domain.BreinActivityType;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
@@ -13,14 +12,17 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Properties;
 
+import static junit.framework.Assert.assertTrue;
+
 /**
  * This test cases shows how to use the  activity
  */
-
+@Ignore
 public class TestActivity {
 
     /**
@@ -49,6 +51,8 @@ public class TestActivity {
 
         @Override
         public void callback(BreinResult data) {
+
+            assertTrue(data != null);
 
             System.out.println("within RestResult");
             System.out.println("Data is: " + data.toString());
@@ -128,7 +132,7 @@ public class TestActivity {
     }
 
     /**
-     * Invoke a test call with 200 logins
+     * Invoke a test call with 20 logins
      */
     @Test
     public void testWith20Logins() {

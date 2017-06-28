@@ -41,12 +41,9 @@ public class BreinHolidayResult {
             if (result.containsKey(HOLIDAY_TYPE_KEY)) {
                 //noinspection unchecked
 
-                // TODO: cehck implementation
+                // TODO: check implementation
                 final List<HolidayType> list = new ArrayList<>();
-
-                for (HolidayType holType : HolidayType.values()) {
-                    list.add(holType);
-                }
+                Collections.addAll(list, HolidayType.values());
 
                 types = list;
 

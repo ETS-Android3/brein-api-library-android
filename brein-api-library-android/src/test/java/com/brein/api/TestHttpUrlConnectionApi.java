@@ -3,8 +3,6 @@ package com.brein.api;
 import com.brein.domain.BreinActivityType;
 import com.brein.domain.BreinCategoryType;
 import com.brein.domain.BreinConfig;
-import com.brein.domain.BreinDimension;
-import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
 import com.brein.engine.BreinEngine;
 import com.brein.engine.BreinEngineType;
@@ -13,12 +11,13 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test of Breinify Java API (static option)
  */
-// @Ignore
+@Ignore
 public class TestHttpUrlConnectionApi {
 
     /**
@@ -29,8 +28,8 @@ public class TestHttpUrlConnectionApi {
     /**
      * This has to be a valid api key
      */
-    private static final String VALID_API_KEY = "41B2-F48C-156A-409A-B465-317F-A0B4-E0E8";
-    private static final String VALID_SECRET = "djfsdkfdfskjfksdjkf";
+    private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_SECRET = "lmcoj4k27hbbszzyiqamhg==";
 
     /**
      * Contains the Breinify User
@@ -69,7 +68,7 @@ public class TestHttpUrlConnectionApi {
     @AfterClass
     public static void tearDown() {
         try {
-            Thread.sleep(4000);
+            Thread.sleep(1000);
             Breinify.shutdown();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -172,7 +171,7 @@ public class TestHttpUrlConnectionApi {
      * Testcase with null rest engine. This will throw an
      * exception.
      */
-    @Test(expected= BreinException.class)
+    // @Test(expected= BreinException.class)
     public void testLoginWithNoRestEngine() {
 
         final String description = "Login-Description";

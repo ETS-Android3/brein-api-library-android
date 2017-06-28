@@ -5,19 +5,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-/**
- * Run some tests for the UNIREST API
- */
-
 // @Ignore
 public class TestEngine {
 
     /**
-     * this is my test api key
+     * This has to be a valid api key & secret
      */
-    private static final String API_KEY = "A187-B1DF-E3C5-4BDB-93C4-4729-7B54-E5B1";
-
-
+    private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
+    private static final String VALID_SECRET = "lmcoj4k27hbbszzyiqamhg==";
 
     /**
      * Preparation for the test cases
@@ -31,8 +26,6 @@ public class TestEngine {
      */
     @AfterClass
     public static void tearDown() {
-
-
     }
 
     /**
@@ -40,9 +33,6 @@ public class TestEngine {
      */
     @Test
     public void testJerseyRestEngine() {
-
     }
-
-
 
 }

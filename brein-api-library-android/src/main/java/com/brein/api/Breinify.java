@@ -1,5 +1,6 @@
 package com.brein.api;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.brein.domain.BreinConfig;
@@ -14,7 +15,7 @@ public class Breinify {
     private static BreinConfig lastConfig = null;
     private static Brein lastBrein = null;
 
-    private static BreinUser breinUser = new BreinUser();
+    private static final BreinUser breinUser = new BreinUser();
 
     /**
      * contains the current version of the usage library
@@ -77,28 +78,36 @@ public class Breinify {
     }
 
     /**
+     *
      * @param application
+     * @param mainActivity
      * @param apiKey
      * @param secret
      */
     public static void initialize(final Application application,
+                                  final Activity mainActivity,
                                   final String apiKey,
                                   final String secret) {
         final long backgroundTimeInMS = 60 * 1000;
 
-        initialize(application, apiKey, secret, backgroundTimeInMS);
+        initialize(application, mainActivity, apiKey, secret, backgroundTimeInMS);
     }
 
     /**
+     *
      * @param application
+     * @param mainActivity
      * @param apiKey
      * @param secret
+     * @param backgroundInterval
      */
     public static void initialize(final Application application,
+                                  final Activity mainActivity,
                                   final String apiKey,
                                   final String secret,
                                   final long backgroundInterval) {
         BreinifyManager.getInstance().initialize(application,
+                mainActivity,
                 apiKey,
                 secret,
                 backgroundInterval);
@@ -191,18 +200,6 @@ public class Breinify {
                                 final String category,
                                 final String description,
                                 final ICallback<BreinResult> callback) {
-
-        /*
-        breinActivity.setUser(user);
-        breinActivity.setActivityType(activityType);
-        breinActivity.setCategory(categoryType);
-        breinActivity.setDescription(description);
-
-        if (null == breinActivity.getBreinEngine()) {
-            throw new BreinException(BreinException.ENGINE_NOT_INITIALIZED);
-        }
-        breinActivity.getBreinEngine().sendActivity(breinActivity);
-        */
 
         if (user == null) {
             throw new BreinException(BreinException.USER_NOT_SET);
@@ -309,6 +306,11 @@ public class Breinify {
         getBrein().temporalData(data, callback);
     }
 
+    /**
+     *
+     * @param data
+     * @param callback
+     */
     public static void recommendation(final BreinRecommendation data, final ICallback<BreinResult> callback) {
         getBrein().recommendation(data, callback);
     }
@@ -325,6 +327,10 @@ public class Breinify {
         getBrein().lookup(data, callback);
     }
 
+    /**
+     *
+     * @return
+     */
     protected static Brein getBrein() {
         if (lastBrein == null) {
             lastBrein = new Brein().setConfig(lastConfig);
