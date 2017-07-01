@@ -7,11 +7,15 @@ import com.brein.domain.BreinConfig;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.crypto.Mac;
@@ -102,7 +106,7 @@ public class BreinUtil {
      * generates the signature
      *
      * @param message contains the message
-     * @param secret contains the secret
+     * @param secret  contains the secret
      * @return signature
      */
     public static String generateSignature(final String message, final String secret) {
@@ -134,7 +138,7 @@ public class BreinUtil {
      * @return true if ok otherwise false
      */
     public static boolean isUrlValid(final String url) {
-       return true;
+        return true;
     }
 
     public static boolean isUrlValidNotWorkingOnAndroid(final String url) {
@@ -246,14 +250,51 @@ public class BreinUtil {
 
     /**
      * Safely casting long to int in Java without using java.lang.Math.toIntExact
+     *
      * @param value long value to cast
      * @return int or exception
      */
     public static int safeLongToInt(long value) {
-        int i = (int)value;
-        if ((long)i != value) {
+        int i = (int) value;
+        if ((long) i != value) {
             throw new IllegalArgumentException(value + " cannot be cast to int without changing its value.");
         }
         return i;
+    }
+
+
+    /**
+     * Returns the ipAddress
+     *
+     * @param useIPv4 true if ip4 should be used
+     * @return String -> ipAddress
+     */
+    public static String getIPAddress(boolean useIPv4) {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if (!addr.isLoopbackAddress()) {
+                        String sAddr = addr.getHostAddress();
+                        //boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                        boolean isIPv4 = sAddr.indexOf(':') < 0;
+
+                        if (useIPv4) {
+                            if (isIPv4)
+                                return sAddr;
+                        } else {
+                            if (!isIPv4) {
+                                int delim = sAddr.indexOf('%'); // drop ip6 zone suffix
+                                return delim < 0 ? sAddr.toUpperCase() : sAddr.substring(0, delim).toUpperCase();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (final Exception ex) {
+            // for now eat exceptions
+        }
+        return "";
     }
 }
