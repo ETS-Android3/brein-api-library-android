@@ -233,9 +233,6 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         return get(field.getName());
     }
 
-
-
-
     /**
      * This list may not be complete it just contains some values. For a complete list it is recommended to look at the
      * API documentation.

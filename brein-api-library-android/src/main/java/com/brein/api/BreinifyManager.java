@@ -13,6 +13,7 @@ import android.util.Log;
 import com.brein.util.BreinUtil;
 
 import java.util.Map;
+import java.util.UUID;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -43,7 +44,7 @@ public class BreinifyManager {
     // application context
     private Application application;
 
-    // contains the main actvity
+    // contains the main activity
     private Activity mainActivity;
 
     // instance of push notification service
@@ -53,8 +54,11 @@ public class BreinifyManager {
     private final Handler handler = new Handler();
 
     private Runnable runnableCode;
+    private String apiKey;
+    private String secret;
+    private long backgroundInterval = 0;
 
-    //private constructor.
+    // private constructor
     private BreinifyManager() {
 
         // Prevent form the reflection api.
@@ -64,7 +68,9 @@ public class BreinifyManager {
     }
 
     /**
-     * @return
+     * Singleton mechanism
+     *
+     * @return instance of BreinifyManager
      */
     public static BreinifyManager getInstance() {
         // Double check locking pattern
@@ -81,18 +87,25 @@ public class BreinifyManager {
     }
 
     /**
-     * @return
+     * Returns the deviceRegistration
+     *
+     * @return String
      */
     public String getPushDeviceRegistration() {
         return pushDeviceRegistration;
     }
 
     /**
-     * @param pushDeviceRegistration
+     * Set the deviceRegistration
+     *
+     * @param pushDeviceRegistration String
      */
     public void setPushDeviceRegistration(final String pushDeviceRegistration) {
         Log.d(TAG, "pushDeviceRegistration is: " + pushDeviceRegistration);
         this.pushDeviceRegistration = pushDeviceRegistration;
+
+        // set user as well -> necessary for correct request
+        Breinify.getUser().setPushDeviceRegistration(pushDeviceRegistration);
     }
 
     /**
@@ -187,27 +200,45 @@ public class BreinifyManager {
 
         this.application = application;
         this.mainActivity = mainActivity;
+        this.apiKey = apiKey;
+        this.secret = secret;
+        this.backgroundInterval = backgroundInterval;
 
+        initLifecycleAndEngine(backgroundInterval);
+    }
+
+    /**
+     * Initializes the Lifecycle support and Engine
+     *
+     * @param backgroundInterval
+     */
+    private void initLifecycleAndEngine(long backgroundInterval) {
         // register the callbacks for lifecycle support - necessary to determine if app
         // is in background or foreground
 
-        if (application != null) {
+        if (this.application != null) {
             this.application.registerActivityLifecycleCallbacks(new BreinifyLifecycle());
         }
 
         // configure the API
-        Breinify.setConfig(apiKey, secret);
+        Breinify.setConfig(this.apiKey, this.secret);
 
         // configure the recipient of push notifications
         initNotificationReceiver();
 
-        // read user defaults
+        // read user defaults (email, userId, token)
         readAndInitUserDefaults();
 
         // configure the background processing
         initBackgroundHandler(backgroundInterval);
 
-        // check if unsent message are there (see iOS implementation)
+        // configure the session
+        configureSession();
+
+        // send the user identification to the backend
+        sendIdentifyInfo();
+
+        // check if unsent message are there
         // TODO: 15/06/17
     }
 
@@ -246,6 +277,7 @@ public class BreinifyManager {
                 // Do something here on the main thread
                 Log.d("initBackgroundHandler", "Called on main thread");
 
+                // flag if sending is possible
                 sendLocationInfo();
 
                 // Repeat this the same runnable code block again
@@ -267,10 +299,10 @@ public class BreinifyManager {
     }
 
     /**
-     *
+     * initializes the session id with an identifier
      */
-    public void configureSesseion() {
-        // Todo
+    public void configureSession() {
+        setSessionId(UUID.randomUUID().toString());
     }
 
     /**
@@ -302,11 +334,14 @@ public class BreinifyManager {
     }
 
     /**
-     * send an identify information
+     * send an identify information ony if token is given
      */
     public void sendIdentifyInfo() {
         Log.d(TAG, "sendIdentifyInfo invoked");
-        sendActivity("identify", null);
+
+        if (BreinUtil.containsValue(BreinifyManager.getInstance().getPushDeviceRegistration())) {
+            sendActivity("identify", null);
+        }
     }
 
     /**
@@ -317,6 +352,11 @@ public class BreinifyManager {
 
         if (application == null) {
             Log.d(TAG, "sendLocationInfo. Can not check permissions because application object not set");
+            return;
+        }
+
+        if (!BreinUtil.containsValue(BreinifyManager.getInstance().getPushDeviceRegistration())) {
+            Log.d(TAG, "sendLocationInfo. No deviceRegistrationToken set.");
             return;
         }
 
@@ -348,9 +388,12 @@ public class BreinifyManager {
 
         final SharedPreferences prefs = application.getSharedPreferences(BREIN_PREF_NAME, MODE_PRIVATE);
         if (prefs != null) {
+
             final String breinPushRegistration = prefs.getString(BREIN_PUSH_DEVICE_REGISTRATION, null);
             final String breinEmail = prefs.getString(BREIN_USER_EMAIL, null);
-            final String breinUserId = prefs.getString(BREIN_USER_ID, null);
+
+            // generate UUID if not already generated
+            final String breinUserId = prefs.getString(BREIN_USER_ID, UUID.randomUUID().toString());
 
             if (BreinUtil.containsValue(breinUserId)) {
                 Breinify.setUserId(breinUserId);
@@ -363,9 +406,6 @@ public class BreinifyManager {
             if (BreinUtil.containsValue(breinPushRegistration)) {
                 Breinify.setPushDeviceRegistration(breinPushRegistration);
             }
-
-            // send the user identification to the backend
-            sendIdentifyInfo();
         }
     }
 
@@ -391,10 +431,13 @@ public class BreinifyManager {
     public void configureDeviceToken(final String deviceToken) {
         Log.d(TAG, "configureDeviceToken invoked wit token: " + deviceToken);
 
-        Breinify.getUser().setPushDeviceRegistration(deviceToken);
+        setPushDeviceRegistration(deviceToken);
 
         // save device registration
         saveUserDefaultValue(BREIN_PUSH_DEVICE_REGISTRATION, deviceToken);
+
+        // send Identify
+        sendIdentifyInfo();
     }
 
     /**
@@ -407,9 +450,25 @@ public class BreinifyManager {
         if (application != null) {
             final SharedPreferences.Editor editor = application.getSharedPreferences(BREIN_PREF_NAME, MODE_PRIVATE).edit();
             if (editor != null) {
-                editor.putString(key, value);
-                editor.apply();
+                if (key != null && value != null) {
+                    editor.putString(key, value);
+                    editor.apply();
+                }
             }
         }
+    }
+
+    /**
+     * Invoked when app is set to foreground, set saved sessionId
+     */
+    public void appIsInForeground() {
+        Breinify.getUser().setSessionId(this.sessionId);
+    }
+
+    /**
+     * Invoked when app is in set to background, remove sessionId
+     */
+    public void appIsInBackground() {
+        Breinify.getUser().setSessionId("");
     }
 }

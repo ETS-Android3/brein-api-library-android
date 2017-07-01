@@ -24,6 +24,7 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
             userEnteredTime = System.currentTimeMillis();
 
             // app is now in foreground
+            BreinifyManager.getInstance().appIsInForeground();
         }
         numStarted++;
     }
@@ -47,6 +48,8 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
 
             // app is now in background
             Log.d(TAG, "app is now in background");
+
+            BreinifyManager.getInstance().appIsInBackground();
         }
     }
 
