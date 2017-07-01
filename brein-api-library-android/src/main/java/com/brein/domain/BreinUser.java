@@ -13,6 +13,7 @@ import android.text.format.Formatter;
 
 import com.brein.api.BreinBase;
 import com.brein.api.BreinException;
+import com.brein.api.BreinifyManager;
 import com.brein.util.BreinMapUtil;
 import com.brein.util.BreinUtil;
 import com.google.gson.JsonObject;
@@ -290,11 +291,25 @@ public class BreinUser {
     }
 
     /**
-     * @return
+     * Creates the userAgent String in Android standard format and adds the
+     * app name.
+     *
+     * @return String userAgent
      */
     public String createUserAgent() {
-        // TODO: 27/06/2017 logic missing
-        final String userAgent = System.getProperty("http.agent");
+
+        final Application appCtx = BreinifyManager.getInstance().getApplication();
+
+        String appName = "";
+        if (appCtx != null) {
+            appName = appCtx.getApplicationInfo().loadLabel(appCtx.getPackageManager()).toString();
+        }
+
+        // add the app
+        final String userAgent = System.getProperty("http.agent")
+                + "/("
+                + appName
+                + ")";
         return userAgent;
     }
 
@@ -647,7 +662,7 @@ public class BreinUser {
      */
     public void handleUserAgent() {
         final String userAgent = this.getUserAgent();
-        if (userAgent != null && userAgent.length() != 0) {
+        if (userAgent == null || userAgent.length() != 0) {
             setUserAgent(createUserAgent());
         }
     }
