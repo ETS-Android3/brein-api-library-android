@@ -7,6 +7,10 @@ import com.brein.domain.BreinDimension;
 import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
 import com.brein.domain.results.BreinTemporalDataResult;
+import com.brein.domain.results.temporaldataparts.BreinEventResult;
+import com.brein.domain.results.temporaldataparts.BreinHolidayResult;
+import com.brein.domain.results.temporaldataparts.BreinLocationResult;
+import com.brein.domain.results.temporaldataparts.BreinWeatherResult;
 import com.brein.engine.BreinEngine;
 import com.brein.engine.BreinEngineType;
 
@@ -16,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
@@ -104,7 +109,6 @@ public class TestApi {
          * we have to wait some time in order to allow the asynch rest processing
          */
         try {
-            // TODO: 28/06/2017  remove this sleep statement
             Thread.sleep(5000);
             Breinify.shutdown();
         } catch (final InterruptedException e) {
@@ -201,6 +205,16 @@ public class TestApi {
                 breinCategoryType,
                 description,
                 restCallback);
+    }
+
+    @Test
+    public void testWithoutCallback() {
+
+        Breinify.activity(breinUser,
+                BreinActivityType.LOGIN,
+                BreinCategoryType.HOME,
+                "Login-Description", null);
+
     }
 
     /**
@@ -710,10 +724,105 @@ public class TestApi {
         Breinify.recommendation(recommendation, restCallback);
     }
 
+    @Test
+    public void testForDocSendingReadArticle() {
+
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+        Breinify.setConfig(breinConfig);
+
+
+        final BreinUser breinUser = new BreinUser();
+        final BreinActivity breinActivity = new BreinActivity()
+                .setUser(breinUser)
+                .setActivityType("readArticle")
+                .setDescription("A Homebody Persident Sits Out His Honeymoon Period");
+
+        Breinify.activity(breinActivity);
+
+    }
 
     @Test
-    public void testForDoc() {
+    public void testForDocTemporalDataUserInfo() {
 
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+        Breinify.setConfig(breinConfig);
+
+
+        BreinTemporalData breinTemporalData = new BreinTemporalData()
+                .setLocation("san francisco");
+
+        breinTemporalData.execute(new ICallback() {
+            @Override
+            public void callback(final BreinResult data) {
+
+                final BreinTemporalDataResult temporalDataResult = new BreinTemporalDataResult(data);
+                if (temporalDataResult.hasWeather()) {
+                    final BreinWeatherResult weatherResult = temporalDataResult.getWeather();
+                }
+                if (temporalDataResult.hasEvents()) {
+                    final List<BreinEventResult> eventResults = temporalDataResult.getEvents();
+                }
+                if (temporalDataResult.hasLocalDateTime()) {
+                    System.out.println("");
+                }
+                if (temporalDataResult.hasEpochDateTime()) {
+                    System.out.println("");
+                }
+                if (temporalDataResult.hasHolidays()) {
+                    final List<BreinHolidayResult> holidayResults = temporalDataResult.getHolidays();
+                }
+            }
+        });
+    }
+
+
+    @Test
+    public void testForDocTemporalDataGeocoding() {
+
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+        Breinify.setConfig(breinConfig);
+
+        final BreinTemporalData breinTemporalData = new BreinTemporalData()
+                .setLocation("The Big Apple");
+
+        breinTemporalData.execute(new ICallback() {
+            @Override
+            public void callback(final BreinResult data) {
+
+                final BreinLocationResult locationResult = new BreinLocationResult(data.getMap());
+                final double lat = locationResult.getLat();
+                final double lon = locationResult.getLon();
+                final String country = locationResult.getCountry();
+                final String state = locationResult.getState();
+                final String city = locationResult.getCity();
+                final String granu = locationResult.getGranularity();
+            }
+        });
+    }
+
+
+    @Test
+    public void testForDocTemporalDataReverseGeoCoding() {
+
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+        Breinify.setConfig(breinConfig);
+
+        final BreinTemporalData breinTemporalData = new BreinTemporalData()
+                .setLatitude(37.7609295)
+                .setLongitude(-122.4194155)
+                .addShapeTypes("CITY", "NEIGHBORHOOD");
+
+        breinTemporalData.execute(new ICallback() {
+            @Override
+            public void callback(final BreinResult data) {
+
+                final BreinTemporalDataResult temporalDataResult = new BreinTemporalDataResult(data);
+
+                // access the geoJson instances for the CITY and the NEIGHBORHOOD
+                temporalDataResult.getLocation().getGeoJson("CITY");
+                temporalDataResult.getLocation().getGeoJson("NEIGHBORHOOD");
+            }
+        });
     }
 
 }
