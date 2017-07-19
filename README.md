@@ -34,9 +34,10 @@ It is recommended to use signed messages when utilizing the Android library. A s
 
 **utakxp7sm6weo5gvk7cytw==**
 
-### Requirements
+### Targets
 
-- min Android Version
+- min Android Version: 21
+- default target: 24
 
 ### Installation
 
@@ -98,7 +99,7 @@ final BreinUser breinUser = new BreinUser("user.anywhere@email.com")
          .setFirstName("User")
          .setLastName("Anyhere");
                
-// invoke an activity noting that the user has logged in
+// invoke an activity that the user has logged in
 Breinify.activity(breinUser, 
          BreinActivityType.LOGIN,
          BreinCategoryType.HOME, 
@@ -108,23 +109,22 @@ Breinify.activity(breinUser,
 
 ### Sending readArticle
 
-Instead of sending an activity utilizing the `Breinify.activity(...)` method, it is also possible to create an instance of a `BreinActivity` and pass this later on to the `Breinify.activity(...)` method.
+Instead of sending an activity utilizing the `Breinify.activity(...)` method, it is also possible to create an instance of a `BreinActivity` add the appropriate properties and execute the request later on by using the `Breinify.activity(...)` method.
 
-```Swift
+```Java
 // create a user you're interested in
-let breinUser = BreinUser(firstName: "Fred", lastName: "Firestone")
+final BreinUser breinUser = new BreinUser("user.anywhere@email.com")
+      .setFirstName("User")
+      .setLastName("Anyhere");
 
 // create activity object and collect data        
-let breinActivity = BreinActivity(user: breinUser)
-            .setActivityType("readArticle")
-            .setDescription("A Homebody President Sits Out His Honeymoon Period")
+final BreinActivity breinActivity = new BreinActivity()
+      .setUser(breinUser)
+      .setActivityType("readArticle")
+      .setDescription("A Homebody Persident Sits Out His Honeymoon Period");
         
-// invoke activity call later
-do {
-     try Breinify.activity(breinActivity)
-   } catch {
-     print("Error is: \(error)")
-   } 
+// invoke activity call when appropriate
+Breinify.activity(breinActivity);
 ```
 
 
@@ -139,28 +139,23 @@ Sometimes it is necessary to get some more information about the user of an appl
 to handle time-dependent data correctly, to add geo-based services, or increase quality of service. The client's information can be retrieved easily 
 by calling the `/temporaldata` endpoint utilizing the `Breinify.temporalData(...)` method or by executing a `BreinTemporalData` instance, i.e.,:
 
-```swift
-do {   
-   try Breinify.temporalData({
-      // success
-      (result: BreinResult) -> Void in
-                
-      if let holiday = result.get("holidays") {
-         print("Holiday is: \(holiday)")
+```java
+breinTemporalData.execute(new ICallback() {
+   @Override
+   public void callback(final BreinResult data) {
+      final BreinTemporalDataResult temporalDataResult = new BreinTemporalDataResult(data);
+      if (temporalDataResult.hasWeather()) {
+         final BreinWeatherResult weatherResult = temporalDataResult.getWeather();
       }
-      if let weather = result.get("weather") {
-         print("Weather is: \(weather)")
+      if (temporalDataResult.hasEvents()) {
+         final List<BreinEventResult> eventResults = temporalDataResult.getEvents();
+      } 
+      if (temporalDataResult.hasHolidays()) {
+         final List<BreinHolidayResult> holidayResults = temporalDataResult.getHolidays();
       }
-      if let location = result.get("location") {
-         print("Location is: \(location)")
-      }
-      if let time = result.get("time") {
-         print("Time is: \(time)")
-      }
-   })
-   } catch {
-     print("Error")
-}
+   }
+});
+
 ```
 
 The returned result contains detailed information about the time, the location, the weather, holidays, and events at the time and the location. A detailed
@@ -179,25 +174,22 @@ structured and even partly unstructured, e.g., the textual representation `the B
 whereby a structured location would be, e.g., `{ city: 'Seattle', state: 'Washington', country: 'USA' }`. It is also possible
 to pass in partial information and let the system try to resolve/complete the location, e.g., `{ city: 'New York', country: 'USA' }`.
 
-```swift
-	do {
-	   let breinTemporalData = BreinTemporalData()
-	           .setLocation(freeText: "The Big Apple")
-	            
-	   try Breinify.temporalData(breinTemporalData, {           
-	          (result: BreinResult) -> Void in
-	        
-             let breinLocationResult = BreinLocationResult(result)
-             print("Latitude is: \(breinLocationResult.getLatitude())")
-             print("Longitude is: \(breinLocationResult.getLongitude())")
-             print("Country is: \(breinLocationResult.getCountry())")
-             print("State is: \(breinLocationResult.getState())")
-             print("City is: \(breinLocationResult.getCity())")
-             print("Granularity is: \(breinLocationResult.getGranularity())")
-	        })
-	  } catch {
-	       print("Error")
-	  }
+```java
+final BreinTemporalData breinTemporalData = new BreinTemporalData()
+                .setLocation("The Big Apple");
+
+breinTemporalData.execute(new ICallback() {
+   @Override
+   public void callback(final BreinResult data) {
+
+   final BreinLocationResult locationResult = new BreinLocationResult(data.getMap());
+   final double lat = locationResult.getLat();
+   final double lon = locationResult.getLon();
+   final String country = locationResult.getCountry();
+   final String state = locationResult.getState();
+   final String city = locationResult.getCity();
+   }
+});
 ```
 
 This will lead to the following result:
@@ -217,36 +209,22 @@ to a specific city or neighborhood (i.e., names of neighborhood, city, state, co
 
 A possible request if you're interesed in events might look like this:
 
-```swift
-do {
-   let breinTemporalData = BreinTemporalData()
-         .setLatitude(37.7609295)
-         .setLongitude(-122.4194155)
-         .addShapeTypes(["CITY"]) 
-  
-   try Breinify.temporalData(breinTemporalData, {
-      (result: BreinResult) -> Void in
-      print("Api Success : result is:\n \(result)")
+```java
+final BreinTemporalData breinTemporalData = new BreinTemporalData()
+    .setLatitude(37.7609295)
+    .setLongitude(-122.4194155)
+    .addShapeTypes("CITY", "NEIGHBORHOOD");
 
-     // Events
-     let breinEventResult = BreinEventResult(result)
-     breinEventResult.getEventList().forEach { (entry) in
-
-     let eventResult = BreinEventResult(entry)
-     print("Starttime is: \(eventResult.getStartTime())")
-     print("Endtime is: \(eventResult.getEndTime())")
-     print("Name is: \(eventResult.getName())")
-     print("Size is: \(eventResult.getSize())")
-
-     let breinLocationResult = eventResult.getLocationResult()
-     print("Latitude is: \(breinLocationResult.getLatitude())")
-     print("Longitude is: \(breinLocationResult.getLongitude())")
-     print("Country is: \(breinLocationResult.getCountry())")
-     print("State is: \(breinLocationResult.getState())")
-     print("City is: \(breinLocationResult.getCity())")
-     print("Granularity is: \(breinLocationResult.getGranularity())")
-     }
-   } 
+breinTemporalData.execute(new ICallback() {
+    @Override
+    public void callback(final BreinResult data) {
+        final BreinTemporalDataResult temporalDataResult = new BreinTemporalDataResult(data);
+                
+        // access the geoJson instances for the CITY and the NEIGHBORHOOD
+        temporalDataResult.getLocation().getGeoJson("CITY");
+        temporalDataResult.getLocation().getGeoJson("NEIGHBORHOOD");
+    }
+});
 ```
 
 
