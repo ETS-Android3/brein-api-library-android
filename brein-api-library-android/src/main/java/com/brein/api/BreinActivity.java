@@ -147,13 +147,6 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         execute(callback);
     }
 
-    /*
-    @Override
-    public void execute(final ICallback<BreinResult> callback) {
-        Breinify.activity(this, callback);
-    }
-    */
-
     @Override
     public void execute(ICallback callback) {
         Breinify.activity(this, callback);
@@ -168,7 +161,6 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         setDescription("");
         tagsMap = null;
     }
-
 
     @Override
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {

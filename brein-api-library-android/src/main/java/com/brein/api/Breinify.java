@@ -215,6 +215,29 @@ public class Breinify {
     }
 
     /**
+     * Sends an activity to the engine utilizing the API. The call is done asynchronously as a POST request. It is
+     * important that a valid API-key is configured prior to using this function.
+     * <p>
+     * This request is asynchronous.
+     *
+     * @param user         a plain object specifying the user information the activity belongs to
+     * @param activityType the type of the activity collected, i.e., one of search, login, logout, addToCart,
+     *                     removeFromCart, checkOut, selectProduct, or other. if not specified, the default other will
+     *                     be used
+     * @param category     the category of the platform/service/products, i.e., one of apparel, home, education, family,
+     *                     food, health, job, services, or other
+     * @param description  a string with further information about the activity performed
+     */
+    public static void activity(final BreinUser user,
+                                final String activityType,
+                                final String category,
+                                final String description) {
+
+        // invoke activity call without callback
+        activity(user, activityType, category, description, null);
+    }
+
+    /**
      * Method to send an activity asynchronous.
      *
      * @param activityType the activty type to be sent

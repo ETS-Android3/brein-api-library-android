@@ -1,5 +1,6 @@
 package com.brein.domain.results.temporaldataparts;
 
+import com.brein.domain.BreinResult;
 import com.brein.util.BreinMapUtil;
 
 import java.util.Collections;
@@ -25,6 +26,10 @@ public class BreinLocationResult {
 
     private final double lat;
     private final double lon;
+
+    public BreinLocationResult(final BreinResult breinResult) {
+        this(breinResult.getMap());
+    }
 
     public BreinLocationResult(final Map<String, Object> json) {
         if (json == null) {
