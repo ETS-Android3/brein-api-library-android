@@ -3,6 +3,7 @@ package com.brein.config;
 import com.brein.domain.BreinConfig;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test of configuration
  */
-// @Ignore
+@Ignore
 public class TestConfig {
     private static final String testApiKey = "TEST-API-KEY";
 
