@@ -43,7 +43,7 @@ It is recommended to use signed messages when utilizing the Android library. A s
 
 ### Including the Library
 
-The library is available through [JCenter](https://bintray.com/) and can be easily added within the
+The library is available through [JCenter](https://bintray.com/breinify/brein-api-library/brein-api-library-android/) and can be easily added within the
 gradle configuration like this:
 
 ```gradle
