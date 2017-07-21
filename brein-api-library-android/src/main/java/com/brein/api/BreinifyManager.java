@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.brein.domain.BreinIpInfo;
 import com.brein.util.BreinUtil;
 
 import java.util.Map;
@@ -60,7 +61,6 @@ public class BreinifyManager {
 
     // private constructor
     private BreinifyManager() {
-
         // Prevent form the reflection api.
         if (breinifyManagerInstance != null) {
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
@@ -70,7 +70,7 @@ public class BreinifyManager {
     /**
      * Singleton mechanism
      *
-     * @return instance of BreinifyManager
+     * @return BreinifyManager contains instance of BreinifyManager
      */
     public static BreinifyManager getInstance() {
         // Double check locking pattern
@@ -109,42 +109,43 @@ public class BreinifyManager {
     }
 
     /**
-     * @return
+     * returns user email
+     * @return String contains user email
      */
     public String getUserEmail() {
         return userEmail;
     }
 
     /**
-     * @param userEmail
+     * @param userEmail String contains user email
      */
     public void setUserEmail(final String userEmail) {
         this.userEmail = userEmail;
     }
 
     /**
-     * @return
+     * @return String contains the userId
      */
     public String getUserId() {
         return userId;
     }
 
     /**
-     * @param userId
+     * @param userId String contains the userId
      */
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
     /**
-     * @return
+     * @return String contains sessionId
      */
     public String getSessionId() {
         return sessionId;
     }
 
     /**
-     * @param sessionId
+     * @param sessionId String contains sessionId
      */
     public void setSessionId(final String sessionId) {
         this.sessionId = sessionId;
@@ -153,7 +154,7 @@ public class BreinifyManager {
     /**
      * Provides the Android Application Object
      *
-     * @return Android Application
+     * @return Application contains Android Application
      */
     public Application getApplication() {
         return application;
@@ -161,7 +162,7 @@ public class BreinifyManager {
 
     /**
      *
-     * @return
+     * @return Activity mainActivtiy
      */
     public Activity getMainActivity() {
         return mainActivity;
@@ -169,7 +170,7 @@ public class BreinifyManager {
 
     /**
      *
-     * @param mainActivity
+     * @param mainActivity Activity contains main activity
      */
     public void setMainActivity(final Activity mainActivity) {
         this.mainActivity = mainActivity;
@@ -187,10 +188,10 @@ public class BreinifyManager {
     /**
      * Initializes the appropriate callbacks and timer for background processing
      *
-     * @param application Application contains the application object
-     * @param mainActivity
-     * @param apiKey      String contains the Breinify API Key
-     * @param secret      String contains the Breinfiy secret
+     * @param application  Application contains the application object
+     * @param mainActivity Activity contains main activity
+     * @param apiKey       String contains the Breinify API Key
+     * @param secret       String contains the Breinfiy secret
      */
     public void initialize(final Application application,
                            final Activity mainActivity,
@@ -205,12 +206,15 @@ public class BreinifyManager {
         this.backgroundInterval = backgroundInterval;
 
         initLifecycleAndEngine(backgroundInterval);
+
+        // invoke ipAddress detection now
+        BreinIpInfo.getInstance();
     }
 
     /**
      * Initializes the Lifecycle support and Engine
      *
-     * @param backgroundInterval
+     * @param backgroundInterval long contains background interval
      */
     private void initLifecycleAndEngine(long backgroundInterval) {
         // register the callbacks for lifecycle support - necessary to determine if app
@@ -253,7 +257,7 @@ public class BreinifyManager {
     }
 
     /**
-     *
+     * Stop sending notifications
      */
     public void destroyNotificationReceiver() {
         if (application != null) {
@@ -264,7 +268,7 @@ public class BreinifyManager {
     /**
      * Background Handler for sending messages
      *
-     * @param backgroundInterval interval in ms
+     * @param backgroundInterval long interval in ms
      */
     public void initBackgroundHandler(final long backgroundInterval) {
 
@@ -308,8 +312,8 @@ public class BreinifyManager {
     /**
      * send an activity
      *
-     * @param activityType      contains the activity type
-     * @param additionalContent can contain additional data
+     * @param activityType      String contains the activity type
+     * @param additionalContent Map can contain additional data
      */
     public void sendActivity(final String activityType,
                              final Map<String, Object> additionalContent) {
@@ -426,7 +430,7 @@ public class BreinifyManager {
     /**
      * Save the device token
      *
-     * @param deviceToken
+     * @param deviceToken String contains pushDeviceRegistration
      */
     public void configureDeviceToken(final String deviceToken) {
         Log.d(TAG, "configureDeviceToken invoked wit token: " + deviceToken);
@@ -443,8 +447,8 @@ public class BreinifyManager {
     /**
      * Helper to save key - value pair as user defaults
      *
-     * @param key   contains the key
-     * @param value contains the value
+     * @param key   String contains the key
+     * @param value String contains the value
      */
     public void saveUserDefaultValue(final String key, final String value) {
         if (application != null) {

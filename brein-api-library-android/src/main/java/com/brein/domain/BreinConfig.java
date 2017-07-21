@@ -360,7 +360,6 @@ public class BreinConfig {
      * sets the temporalData endpoint
      *
      * @param temporalDataEndpoint endpoint
-     * @return the config object itself
      */
     public void setTemporalDataEndpoint(final String temporalDataEndpoint) {
         this.temporalDataEndpoint = temporalDataEndpoint;

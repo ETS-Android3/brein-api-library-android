@@ -21,11 +21,6 @@ import org.junit.Test;
 public class TestHttpUrlConnectionApi {
 
     /**
-     * Contains the BASE URL of the Breinify Backend
-     */
-    private static final String BASE_URL = "https://api.breinify.com";
-
-    /**
      * This has to be a valid api key
      */
     private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";

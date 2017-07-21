@@ -164,10 +164,15 @@ public class TestDomain {
 
     @Test
     public void testUserAgent() {
-
         final String userAgent = System.getProperty("http.agent");
         System.out.println("UserAgent is: " + userAgent);
+    }
 
+    @Test
+    public void testBreinIpInfo() {
+        final BreinIpInfo info = BreinIpInfo.getInstance();
+        final String externalIp = info.getExternalIp();
+        System.out.println("External IP is: " + externalIp);
     }
 
 }

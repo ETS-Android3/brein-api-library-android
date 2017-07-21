@@ -136,6 +136,7 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
         return BreinUtil.generateSignature(message, config.getSecret());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void execute(ICallback callback) {
         Breinify.lookUp(this, callback);

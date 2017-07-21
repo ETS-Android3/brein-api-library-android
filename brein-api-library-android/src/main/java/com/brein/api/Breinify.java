@@ -7,8 +7,10 @@ import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 import com.brein.domain.BreinUser;
 
+import java.util.Map;
+
 /**
- * Static Implementation of Breinify activity & lookup calls
+ * Static Implementation of Breinify activity  lookup calls
  */
 public class Breinify {
 
@@ -78,11 +80,12 @@ public class Breinify {
     }
 
     /**
+     * Initializes the instance
      *
-     * @param application
-     * @param mainActivity
-     * @param apiKey
-     * @param secret
+     * @param application contains the application context
+     * @param mainActivity contains the main activity
+     * @param apiKey contains the apiKey
+     * @param secret contains the secret
      */
     public static void initialize(final Application application,
                                   final Activity mainActivity,
@@ -94,12 +97,13 @@ public class Breinify {
     }
 
     /**
+     * Initializes the instance
      *
-     * @param application
-     * @param mainActivity
-     * @param apiKey
-     * @param secret
-     * @param backgroundInterval
+     * @param application contains the application context
+     * @param mainActivity contains the main activity
+     * @param apiKey contains the apiKey
+     * @param secret contains the secret
+     * @param backgroundInterval sets a background interval
      */
     public static void initialize(final Application application,
                                   final Activity mainActivity,
@@ -114,8 +118,9 @@ public class Breinify {
     }
 
     /**
+     * configures the deviceToken
      *
-     * @param deviceToken
+     * @param deviceToken contains the deviceToken
      */
     public static void configureDeviceToken(final String deviceToken) {
         BreinifyManager.getInstance().configureDeviceToken(deviceToken);
@@ -158,27 +163,62 @@ public class Breinify {
     }
 
     /**
-     *
-     * @param email
+     * Service method to set the email property that is part of the
+     * BreinifyManager instance
+     * @param email contains the email
      */
     public static void setEmail(final String email) {
         BreinifyManager.getInstance().setUserEmail(email);
     }
 
     /**
-     *
-     * @param userId
+     * Service method to set the userId property that is part of the
+     * BreinifyManager instance
+     * @param userId contaisns the userId
      */
     public static void setUserId(final String userId) {
         BreinifyManager.getInstance().setUserId(userId);
     }
 
     /**
-     *
-     * @param token
+     * returns user's email as part of BreinifyManager
+     * @return email
+     */
+    public static String getEmail() {
+        return BreinifyManager.getInstance().getUserEmail();
+    }
+
+    /**
+     * returns userId as part of BreinifyManager
+     * @return userId
+     */
+    public static String getUserId() {
+        return BreinifyManager.getInstance().getUserId();
+    }
+
+    /**
+     * sets the pushDeviceToken
+     * @param token contains the token
      */
     public static void setPushDeviceRegistration(final String token) {
         BreinifyManager.getInstance().setPushDeviceRegistration(token);
+    }
+
+    /**
+     * Delegate to save userDefaults
+     */
+    public static void saveUserDefaults() {
+        BreinifyManager.getInstance().saveUserDefaults();
+    }
+
+    /**
+     * Delegate to send activities
+     * @param activityType contains the type of activity
+     * @param additionalContent contains optional additional content
+     */
+    public static void sendActivity(final String activityType,
+                                    final Map<String, Object> additionalContent) {
+        BreinifyManager.getInstance().sendActivity(activityType, null);
     }
 
     /**
@@ -330,9 +370,10 @@ public class Breinify {
     }
 
     /**
+     * Invokes recommendation request
      *
-     * @param data
-     * @param callback
+     * @param data BreinRecommendation instance
+     * @param callback ICallback constains callback handler
      */
     public static void recommendation(final BreinRecommendation data, final ICallback<BreinResult> callback) {
         getBrein().recommendation(data, callback);

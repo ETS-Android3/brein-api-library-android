@@ -147,6 +147,7 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         execute(callback);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void execute(ICallback callback) {
         Breinify.activity(this, callback);
@@ -177,7 +178,9 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
         }
 
         // we have to set the category again, because it may be set to default
-        activityRequestData.put(ActivityField.CATEGORY.getName(), getCategory(config));
+        if (BreinUtil.containsValue(getCategory(config))) {
+            activityRequestData.put(ActivityField.CATEGORY.getName(), getCategory(config));
+        }
 
         // add tagsMap map if configured
         if (this.tagsMap != null && !this.tagsMap.isEmpty()) {

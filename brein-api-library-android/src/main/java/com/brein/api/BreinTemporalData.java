@@ -383,6 +383,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
         return BreinUtil.generateSignature(message, config.getSecret());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void execute(ICallback callback) {
         Breinify.temporalData(this, callback);

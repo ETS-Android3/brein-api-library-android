@@ -20,7 +20,6 @@ public class BreinBackgroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // TODO: 27/06/2017 check if correct
         while (true) {
             try {
                 Thread.sleep(10000);
@@ -36,10 +35,7 @@ public class BreinBackgroundService extends Service {
 
         @Override
         protected String doInBackground(String... params) {
-            String response = "";
-            String dataToSend = params[0];
-
-            return response;
+            return "";
         }
 
         protected void requestHttp() {

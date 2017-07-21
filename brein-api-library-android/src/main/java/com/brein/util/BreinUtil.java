@@ -4,6 +4,7 @@ import com.brein.api.BreinBase;
 import com.brein.api.BreinException;
 import com.brein.api.Breinify;
 import com.brein.domain.BreinConfig;
+import com.brein.domain.BreinIpInfo;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -31,7 +32,6 @@ public class BreinUtil {
     private static final Random RANDOM = new Random();
 
     static {
-
         try {
             mac = Mac.getInstance("HmacSHA256");
         } catch (final NoSuchAlgorithmException e) {
@@ -262,7 +262,6 @@ public class BreinUtil {
         return i;
     }
 
-
     /**
      * Returns the ipAddress
      *
@@ -297,4 +296,9 @@ public class BreinUtil {
         }
         return "";
     }
+
+    public static String detectIpAddress() {
+        return BreinIpInfo.getInstance().getExternalIp();
+    }
+
 }

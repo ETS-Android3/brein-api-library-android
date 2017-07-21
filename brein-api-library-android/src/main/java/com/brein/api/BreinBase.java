@@ -20,6 +20,7 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
     public static final String UNIX_TIMESTAMP_FIELD = "unixTimestamp";
     public static final String SIGNATURE_FIELD = "signature";
     public static final String SIGNATURE_TYPE_FIELD = "signatureType";
+    public static final String IP_ADDRESS = "ipAddress";
 
     /**
      * Builder for JSON creation
@@ -219,8 +220,6 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
 
         // add the base values
         if (this.baseMap != null) {
-
-            //loop a Map
             for (Map.Entry<String, Object> entry : this.baseMap.entrySet()) {
                 if (BreinUtil.containsValue(entry.getValue())) {
                     requestData.put(entry.getKey(), entry.getValue());
@@ -228,14 +227,20 @@ public abstract class BreinBase<T extends BreinBase> implements ISecretStrategy 
             }
         }
 
-        // we set the unixTimestamp (may be twice, but anyways)
+        if (!requestData.containsValue(IP_ADDRESS)) {
+            final String ipDetected = BreinUtil.detectIpAddress();
+            if (BreinUtil.containsValue(ipDetected)) {
+                requestData.put(IP_ADDRESS, ipDetected);
+            }
+        }
+
         long timestamp = getUnixTimestamp();
         if (timestamp == -1L) {
             timestamp = System.currentTimeMillis() / 1000L;
         }
         requestData.put(UNIX_TIMESTAMP_FIELD, timestamp);
 
-        // check if we have user and add it
+        // check if we have user data
         if (this.user != null) {
             this.user.prepareRequestData(config, requestData);
         }

@@ -42,24 +42,25 @@ public interface IRestEngine {
     void terminate();
 
     /**
+     * Retrieves the rest engine
      *
-     * @param engine
-     * @return
+     * @param engine BreinEngineType contains the engine
+     * @return IRestEngine instance
      */
     IRestEngine getRestEngine(final BreinEngineType engine);
 
     /**
-     *
-     * @param engine
-     * @return
+     * Retrieves the rest engine type
+     * @param engine BreinEngineType contains type of engine
+     * @return BreinEngineType
      */
     BreinEngineType getRestEngineType(final BreinEngineType engine);
 
     /**
-     *
-     * @param config
-     * @param data
-     * @param callback
+     * invokes request
+     * @param config    BreinConfig contains the configuration object
+     * @param data      BreinBase contains the obect to send
+     * @param callback  ICallback contains the callback handler
      */
     void invokeRequest(final BreinConfig config,
                            final BreinBase data,

@@ -33,11 +33,6 @@ import static org.junit.Assert.assertTrue;
 public class TestApi {
 
     /**
-     * Contains the BASE URL of the Breinify Backend
-     */
-    private static final String BASE_URL = "https://api.breinify.com";
-
-    /**
      * This has to be a valid api key
      */
     private static final String VALID_SIGNATURE_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
@@ -109,7 +104,7 @@ public class TestApi {
          * we have to wait some time in order to allow the asynch rest processing
          */
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
             Breinify.shutdown();
         } catch (final InterruptedException e) {
             e.printStackTrace();
@@ -522,9 +517,7 @@ public class TestApi {
     public void testPageVisitWithException() {
 
         // set configuration
-        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY,
-                BASE_URL,
-                BreinEngineType.HTTP_URL_CONNECTION_ENGINE);
+        final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY);
         Breinify.setConfig(breinConfig);
 
         // user data
@@ -678,15 +671,10 @@ public class TestApi {
 
         // send activity without CAT-TYPE => use default
         Breinify.activity(breinUser, "ACT-TYPE", "", "DESC", restCallback);
-
         Breinify.activity(breinUser, "ACT-TYPE", null, "DESC", restCallback);
-
         Breinify.activity(breinUser, "ACT-TYPE", "bla", null, restCallback);
-
         Breinify.activity(breinUser, "ACT-TYPE", "bla", "Desc", null);
-
     }
-
 
     @Test
     public void testTemporalData() {

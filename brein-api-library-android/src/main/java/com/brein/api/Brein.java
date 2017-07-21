@@ -39,7 +39,6 @@ public class Brein {
      *
      * @param data a plain object specifying the lookup information.
      *
-     * @return response from request wrapped in an object called BreinResponse
      */
     public void lookup(final BreinLookup data, final ICallback<BreinResult> callback) {
         getEngine().invoke(this.config, data, callback);
@@ -51,11 +50,9 @@ public class Brein {
      * <p>
      * This request is synchronous.
      *
-     * @return result from the Breinify engine
      */
     public void temporalData(final BreinTemporalData data, final ICallback<BreinResult> callback) {
         getEngine().invoke(this.config, data, callback);
-        // return new BreinTemporalDataResult(result.getMap());
     }
 
     /**

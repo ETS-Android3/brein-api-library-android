@@ -509,10 +509,8 @@ public class BreinUser {
             if (wifiManager != null) {
                 final WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 if (wifiInfo != null) {
-
-                    // TODO: 27/06/2017 check all information!!!
-
-                    final String ssid = wifiInfo.getSSID();
+                    // contains double quotes
+                    final String ssid = wifiInfo.getSSID().replace("\"", "");
                     final String bssid = wifiInfo.getBSSID();
                     // final boolean hiddenSsid = wifiInfo.getHiddenSSID();
 

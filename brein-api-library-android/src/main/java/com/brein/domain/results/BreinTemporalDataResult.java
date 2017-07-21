@@ -34,6 +34,7 @@ public class BreinTemporalDataResult extends BreinResult {
         return getValue(WEATHER_KEY) != null;
     }
 
+    @SuppressWarnings("unchecked")
     public BreinWeatherResult getWeather() {
         return new BreinWeatherResult((Map<String, Object>) getValue(WEATHER_KEY));
     }
@@ -84,6 +85,7 @@ public class BreinTemporalDataResult extends BreinResult {
         return getValue(LOCATION_KEY) != null;
     }
 
+    @SuppressWarnings("unchecked")
     public BreinLocationResult getLocation() {
         return new BreinLocationResult((Map<String, Object>) getValue(LOCATION_KEY));
     }
