@@ -227,7 +227,87 @@ breinTemporalData.execute(new ICallback() {
 });
 ```
 
+## PushNotifications: Selected Usage Example
 
 
+Let's integrate Breinify's PushNotifications within an Android App using [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/). 
+
+### Integration
+
+
+Using Breinify Push Notifications in Android apps is straightforward. 
+
+The Breinify SDK integrates smoothly within the Android Application Lifecycle. Add in your MainActivity the initialization of the Breinify SDK:
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   setContentView(R.layout.activity_main);
+
+	// we come to this later
+   checkAppPermission();
+   
+   final String kValidApiKey = "5ACB-F8B8-B6BD-46EF-B959-1536-64D2-3F38";
+   final String kValidSecret = "/ss906aixyii8f6mi8xb3g==";
+
+   Breinify.initialize(this.getApplication(), this, kValidApiKey, kValidSecret);
+}
+   
+```
+
+The Breinify SDK needs some permission in order to retrieve the appropriate information. In your `AndroidManifest.xml` file you have to add the following permissions:
+
+```xml
+<!-- for Inet access -->
+<uses-permission android:name="android.permission.INTERNET" />
+
+<!-- For GPS based location -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+<!-- For using only network based location -->
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+<!-- For Wifi information -->
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+<!-- permission if the application needs to keep the processor from sleeping when a message is received -->
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+```
+
+Android user's must be prompted for those permissions. This can be done like this:
+
+```java
+private void checkAppPermission() {
+   final int accessFineLocationPermission = ActivityCompat.checkSelfPermission(this,
+      android.Manifest.permission.ACCESS_FINE_LOCATION);
+   if (accessFineLocationPermission == PackageManager.PERMISSION_DENIED) {
+      ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+   }
+
+   final int accessCoarseLocationPermission = ActivityCompat.checkSelfPermission(this,
+      android.Manifest.permission.ACCESS_COARSE_LOCATION);
+   if (accessCoarseLocationPermission == PackageManager.PERMISSION_DENIED) {
+      ActivityCompat.requestPermissions(this, 
+         new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+   }
+}
+```
+
+Furthermore the `AndroidManifest.xml` needs to contain one additional services to handle the PushNotification:
+
+```xml
+   ...
+   <service
+      android:name="com.brein.api.BreinNotficationService">
+      <intent-filter>
+         <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+      </intent-filter>
+   </service>
+   ...
+```
+
+That's all.
 
 
