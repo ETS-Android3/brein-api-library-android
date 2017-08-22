@@ -40,19 +40,11 @@ public class BreinHolidayResult {
 
             if (result.containsKey(HOLIDAY_TYPE_KEY)) {
                 //noinspection unchecked
-
-                // TODO: check implementation
                 final List<HolidayType> list = new ArrayList<>();
                 Collections.addAll(list, HolidayType.values());
 
                 types = list;
 
-                /*
-                types = ((List<String>) result.get(HOLIDAY_TYPE_KEY)).stream()
-                        .map(String::toString)
-                        .map(HolidayType::valueOf)
-                        .collect(Collectors.toList());
-                        */
             } else {
                 types = Collections.emptyList();
             }

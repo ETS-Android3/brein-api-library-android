@@ -37,7 +37,7 @@ public class Breinify {
     /**
      * contains the temporalData object
      */
-    private static final BreinTemporalData breinTemporalData = new BreinTemporalData();
+    // private static final BreinTemporalData breinTemporalData = new BreinTemporalData();
 
     /**
      * Specifies the overall configuration used by the library. The configuration must be set prior to any call to the
@@ -91,7 +91,7 @@ public class Breinify {
                                   final Activity mainActivity,
                                   final String apiKey,
                                   final String secret) {
-        final long backgroundTimeInMS = 60 * 1000;
+        final long backgroundTimeInMS = 60 * (long)1000;
 
         initialize(application, mainActivity, apiKey, secret, backgroundTimeInMS);
     }
@@ -322,8 +322,6 @@ public class Breinify {
     public static void temporalData(final ICallback<BreinResult> callback) {
 
         final BreinTemporalData data = new BreinTemporalData().setLocalDateTime();
-
-        //  getBrein().temporalData(data, callback);
         temporalData(data, callback);
     }
 

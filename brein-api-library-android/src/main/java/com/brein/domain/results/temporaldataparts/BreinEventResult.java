@@ -31,7 +31,6 @@ public class BreinEventResult {
                 .replaceAll("eventCategory", "")
                 .toUpperCase();
 
-        // Todo: check Implementation
         EventCategory tmpCategory = EventCategory.UNKNOWN;
         for (EventCategory eventCategory : EventCategory.values()) {
             final String str = eventCategory.toString();
@@ -41,13 +40,6 @@ public class BreinEventResult {
         }
 
         category = tmpCategory;
-
-        /*
-        category = Arrays.asList(EventCategory.values()).stream()
-                .filter(e -> e.toString().equalsIgnoreCase(categoryName))
-                .findAny()
-                .orElse(EventCategory.UNKNOWN);
-                */
     }
 
     public String getName() {

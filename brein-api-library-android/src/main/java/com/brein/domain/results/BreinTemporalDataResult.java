@@ -7,6 +7,7 @@ import com.brein.domain.results.temporaldataparts.BreinLocationResult;
 import com.brein.domain.results.temporaldataparts.BreinWeatherResult;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,10 +95,14 @@ public class BreinTemporalDataResult extends BreinResult {
         return getValue(HOLIDAY_LIST_KEY) != null;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<BreinHolidayResult> getHolidays() {
         final List<Map<String, Object>> value = getValue(HOLIDAY_LIST_KEY);
         if (value == null) {
-            return null;
+            return Collections.emptyList();
         } else {
             // TODO: check implementation
 
@@ -140,7 +145,7 @@ public class BreinTemporalDataResult extends BreinResult {
     public List<BreinEventResult> getEvents() {
         final List<Map<String, Object>> value = getValue(EVENT_LIST_KEY);
         if (value == null) {
-            return null;
+            return Collections.emptyList();
         } else {
 
             // TODO: check implementation

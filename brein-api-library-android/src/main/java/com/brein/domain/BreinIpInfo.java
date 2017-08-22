@@ -1,6 +1,8 @@
 package com.brein.domain;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -94,12 +96,12 @@ public class BreinIpInfo {
             while (data != -1) {
                 char current = (char) data;
                 data = isw.read();
-                retVal += current;
+                retVal += Character.toString(current);
             }
 
             return retVal;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            Log.e("BreinIpInfo", "Exception occured", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

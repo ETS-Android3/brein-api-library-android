@@ -28,7 +28,7 @@ public class HttpUrlRestEngine implements IRestEngine {
     /**
      * constant for post method
      */
-    public final static String POST_METHOD = "POST";
+    private static final String POST_METHOD = "POST";
 
     /**
      * invokes the post request. Needs to run a thread.
@@ -60,7 +60,6 @@ public class HttpUrlRestEngine implements IRestEngine {
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
 
-                    // final String data = requestObject.toString();
                     Log.d(TAG, "Outputstream is: " + conn.getOutputStream());
                     final PrintWriter out = new PrintWriter(conn.getOutputStream());
                     out.print(requestBody);
@@ -71,9 +70,7 @@ public class HttpUrlRestEngine implements IRestEngine {
                     Log.d(TAG, "response is: " + response);
 
                 } catch (final Exception e) {
-                    // System.out.println("Exception is: " + e);
                     Log.d(TAG, "HttpUrlRestEngine exception is: " + e);
-                    // throw new BreinException("REST rest call exception");
                 }
 
             }
@@ -110,7 +107,6 @@ public class HttpUrlRestEngine implements IRestEngine {
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
 
-                    // final String data = requestObject.toString();
                     Log.d(TAG, "Outputstream is: " + conn.getOutputStream());
                     final PrintWriter out = new PrintWriter(conn.getOutputStream());
                     out.print(requestBody);
@@ -120,22 +116,19 @@ public class HttpUrlRestEngine implements IRestEngine {
                     final int response = conn.getResponseCode();
 
                     if (response == HttpURLConnection.HTTP_OK) {
-                        String jsonString = "";
-
+                        final StringBuilder sb = new StringBuilder();
                         final InputStream mInputStream = conn.getInputStream();
 
                         int i;
                         while ((i = mInputStream.read()) != -1) {
-                            jsonString += (char) i;
+                            sb.append((char) i);
                         }
                     } else {
                         Log.d(TAG, "doLookup - exception");
-                        // throw new BreinException("REST rest call exception");
                     }
 
                 } catch (final Exception e) {
                     Log.d(TAG, "doLookup - exception");
-                    // throw new BreinException("REST rest call exception");
                 }
 
             }
@@ -168,6 +161,7 @@ public class HttpUrlRestEngine implements IRestEngine {
     public void configure(final BreinConfig breinConfig) {
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void invokeRequest(final BreinConfig config, final BreinBase data, final ICallback<BreinResult> callback) {
 
@@ -204,18 +198,16 @@ public class HttpUrlRestEngine implements IRestEngine {
                     final int response = conn.getResponseCode();
                     Log.d(TAG, "InvokeRequest - response is:  " + conn.getResponseMessage());
                     BreinResult breinResponse = null;
-                    // final Map<String, Object> mapResponse = new HashMap<>();
-                    // mapResponse.put("Response", response);
                     if (response == HttpURLConnection.HTTP_OK) {
-                        String jsonResponse = "";
+                        final StringBuilder jsonResponse = new StringBuilder();
                         final InputStream mInputStream = conn.getInputStream();
 
                         int i;
                         while ((i = mInputStream.read()) != -1) {
-                            jsonResponse += (char) i;
+                            jsonResponse.append((char) i);
                         }
 
-                        final Map<String, Object> mapResponse =new Gson().fromJson(jsonResponse, Map.class);
+                        final Map<String, Object> mapResponse = new Gson().fromJson(jsonResponse.toString(), Map.class);
                         breinResponse = new BreinResult(mapResponse);
                     }
 

@@ -23,9 +23,9 @@ public class BreinBackgroundService extends Service {
         while (true) {
             try {
                 Thread.sleep(10000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 new BreinBackgroundTask().execute();
-                e.printStackTrace();
+                Log.d("BreinBackgroundService", "Exception on onStartCommand is: ", e);
             }
             return START_STICKY;
         }

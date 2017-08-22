@@ -26,7 +26,6 @@ public class M<T> {
 
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
             set((String)pair.getKey(), (T) pair.getValue());
         }

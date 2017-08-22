@@ -388,6 +388,7 @@ public class BreinifyManager {
 
         if (application == null) {
             Log.d(TAG, "readAndInitUserDefaults can not work, because application object not set.");
+            return;
         }
 
         final SharedPreferences prefs = application.getSharedPreferences(BREIN_PREF_NAME, MODE_PRIVATE);

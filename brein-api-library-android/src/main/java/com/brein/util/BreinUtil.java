@@ -268,6 +268,7 @@ public class BreinUtil {
      * @param useIPv4 true if ip4 should be used
      * @return String -> ipAddress
      */
+    /*
     public static String getIPAddress(boolean useIPv4) {
         try {
             List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
@@ -296,6 +297,7 @@ public class BreinUtil {
         }
         return "";
     }
+    */
 
     public static String detectIpAddress() {
         return BreinIpInfo.getInstance().getExternalIp();

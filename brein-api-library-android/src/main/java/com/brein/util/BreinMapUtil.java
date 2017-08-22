@@ -1,12 +1,17 @@
 package com.brein.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class BreinMapUtil {
 
+
+    private BreinMapUtil() {
+
+    }
 
     /**
      * Map Helper method used to copy a hashmap of type String, Object
@@ -23,7 +28,6 @@ public class BreinMapUtil {
         final Map<String, Object> copy = new HashMap<>();
 
         for (Map.Entry<String, Object> entry : source.entrySet()) {
-            // System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
             copy.put(entry.getKey(), copyValue(entry.getValue()));
         }
 
@@ -32,12 +36,11 @@ public class BreinMapUtil {
 
     public static List<Object> copyList(final List<Object> source) {
         if (source == null) {
-            return null;
+            return Collections.emptyList();
         }
 
         final List<Object> copy = new ArrayList<>();
         for (Object value : copy) {
-            // System.out.println(value);
             copy.add(copyValue(value));
         }
 

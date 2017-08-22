@@ -24,21 +24,23 @@ public class BreinException extends RuntimeException {
     public static final String ACTIVITY_TYPE_NOT_SET = "ActivityType not set.";
     public static final String CATEGORY_TYPE_NOT_SET = "CategoryType not set.";
 
+    private static final String EXCEPTION_IS = "Exception is:";
+
     /*
      * Exception methods...
      */
     public BreinException(final Throwable e) {
         super(e);
-        Log.d(TAG, "Exception is: " + e.getMessage());
+        Log.d(TAG, EXCEPTION_IS + e.getMessage());
     }
 
     public BreinException(final String msg) {
         super(msg);
-        Log.d(TAG, "Exception is: " + msg);
+        Log.d(TAG, EXCEPTION_IS + msg);
     }
 
     public BreinException(final String msg, final Exception cause) {
         super(msg, cause);
-        Log.d(TAG, "Exception is: " + msg + " with cause: " + cause.getMessage());
+        Log.d(TAG, EXCEPTION_IS + msg + " with cause: " + cause.getMessage());
     }
 }

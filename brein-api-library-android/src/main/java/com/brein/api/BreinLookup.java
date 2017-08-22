@@ -49,20 +49,8 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
         breinDimension = null;
     }
 
-    /**
-     * resets all values of this class and base class to initial values.
-     * This will lead to empty strings or null objects
-     */
-    public void resetAllValues() {
-        // reset init values
-        init();
 
-        // reset base values (User & Config)
-        // TODO check super.init call
-        // super.init();
-    }
-
-    public void prepareRequestData(BreinConfig config, Map<String, Object> requestData) {
+    public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
 
     }
 

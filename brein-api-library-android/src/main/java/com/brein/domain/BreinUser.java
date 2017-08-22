@@ -306,11 +306,10 @@ public class BreinUser {
         }
 
         // add the app
-        final String userAgent = System.getProperty("http.agent")
+        return System.getProperty("http.agent")
                 + "/("
                 + appName
                 + ")";
-        return userAgent;
     }
 
     /**

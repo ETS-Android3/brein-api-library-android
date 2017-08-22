@@ -7,11 +7,6 @@ import com.brein.api.ICallback;
 import com.brein.domain.BreinConfig;
 import com.brein.domain.BreinResult;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import static com.brein.engine.BreinEngineType.HTTP_URL_CONNECTION_ENGINE;
 
 /**
@@ -79,10 +74,7 @@ public class BreinEngine {
     BreinEngineType getRestEngineType(final BreinEngineType engine) {
         return HTTP_URL_CONNECTION_ENGINE;
     }
-
-    private static final Map<BreinEngineType, IRestEngine> ENGINES = new ConcurrentHashMap<>();
-    private static final Lock ENGINES_LOCK = new ReentrantLock();
-
+    
     public void invoke(final BreinConfig config, final BreinBase data, final ICallback<BreinResult> callback) {
         getEngine(config).invokeRequest(config, data, callback);
     }
@@ -92,16 +84,6 @@ public class BreinEngine {
     }
 
     public void terminate() {
-
-        /*
-        ENGINES_LOCK.lock();
-        try {
-            ENGINES.forEach((key, engine) -> engine.terminate());
-            ENGINES.clear();
-        } finally {
-            ENGINES_LOCK.unlock();
-        }
-        */
     }
 
 }

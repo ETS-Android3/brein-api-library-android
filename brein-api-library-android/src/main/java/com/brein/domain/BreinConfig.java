@@ -437,7 +437,6 @@ public class BreinConfig {
      * Depending of the configured com.brein.engine additional threads might
      * have been allocated and this will close those threads.
      */
-    // TODO: check if this is the right point
     public void shutdownEngine() {
 
         // check valid objects

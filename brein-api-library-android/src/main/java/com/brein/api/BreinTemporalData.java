@@ -20,9 +20,6 @@ import java.util.TimeZone;
  */
 public class BreinTemporalData extends BreinBase<BreinTemporalData> implements ISecretStrategy, IAsyncExecutable {
 
-   // public static final DateTimeFormatter JAVA_SCRIPT_FORMAT =
-   //         DateTimeFormatter.ofPattern("E MMM dd yyyy HH:mm:ss \'GMT\'Z (z)");
-
     /*
      * The following fields are used within the additional
      */
