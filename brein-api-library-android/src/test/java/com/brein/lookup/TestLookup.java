@@ -21,11 +21,6 @@ import static junit.framework.TestCase.fail;
 public class TestLookup {
 
     /**
-     * Contains the BASE URL of the Breinify Backend
-     */
-    private static final String BASE_URL = "https://api.breinify.com";
-
-    /**
      * This has to be a valid api key & secret
      */
     private static final String VALID_API_KEY = "CA8A-8D28-3408-45A8-8E20-8474-06C0-8548";
@@ -81,12 +76,7 @@ public class TestLookup {
         final BreinDimension breinDimension = new BreinDimension(dimensions);
         breinLookup.setBreinDimension(breinDimension);
         breinLookup.setUser(breinUser);
-
-        /**
-         * invoke lookup
-         */
         breinLookup.execute(restCallback);
-
 
         /*
         if (breinResult != null) {

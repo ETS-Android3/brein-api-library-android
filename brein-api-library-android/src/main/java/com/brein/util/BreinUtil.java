@@ -8,15 +8,11 @@ import com.brein.domain.BreinIpInfo;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import javax.crypto.Mac;
@@ -30,6 +26,8 @@ public class BreinUtil {
     private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final Mac mac;
     private static final Random RANDOM = new Random();
+
+    private BreinUtil() {}
 
     static {
         try {

@@ -6,6 +6,8 @@ package com.brein.domain;
  */
 public class BreinCategoryType {
 
+    private BreinCategoryType() {}
+
     // pre-defined category types
     public static final String APPAREL = "apparel";
     public static final String HOME = "home";

@@ -16,6 +16,10 @@ public class BreinHolidayResult {
     private final HolidaySource source;
     private final String name;
 
+    /**
+     * Contains the Holiday result
+     * @param result Map
+     */
     public BreinHolidayResult(final Map<String, Object> result) {
 
         if (result == null || result.isEmpty()) {

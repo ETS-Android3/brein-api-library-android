@@ -98,7 +98,6 @@ public class TestUtil {
 
     }
 
-
     private String getExternalIp2() {
 
         try {

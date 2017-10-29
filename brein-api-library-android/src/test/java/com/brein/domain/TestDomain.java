@@ -174,5 +174,4 @@ public class TestDomain {
         final String externalIp = info.getExternalIp();
         System.out.println("External IP is: " + externalIp);
     }
-
 }

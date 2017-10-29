@@ -17,8 +17,8 @@ import java.util.Map;
  */
 public class BreinActivity extends BreinBase<BreinActivity> implements ISecretStrategy, IAsyncExecutable {
 
-    public static final String ACTIVITY_FIELD = "activity";
-    public static final String TAGS_FIELD = "tags";
+    private static final String ACTIVITY_FIELD = "activity";
+    private static final String TAGS_FIELD = "tags";
 
     /**
      * contains the tags
@@ -251,6 +251,5 @@ public class BreinActivity extends BreinBase<BreinActivity> implements ISecretSt
             activity.set(getName(), value);
         }
     }
-
 }
 

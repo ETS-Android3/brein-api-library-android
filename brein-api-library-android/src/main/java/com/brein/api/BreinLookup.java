@@ -49,9 +49,12 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
         breinDimension = null;
     }
 
-
+    /**
+     *
+     * @param config
+     * @param requestData the request data to be sent to the endpoint
+     */
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
-
     }
 
     /**
@@ -73,9 +76,6 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
             requestData.add("user", userData);
         }
 
-        /*
-         * Dimensions
-         */
         if (BreinUtil.containsValue(getBreinDimension())) {
             final JsonObject lookupData = new JsonObject();
             final JsonArray dimensions = new JsonArray();

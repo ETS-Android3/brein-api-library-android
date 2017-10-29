@@ -64,7 +64,7 @@ public class TestApi {
     class RestResult implements ICallback<BreinResult> {
 
         @Override
-        public void callback(BreinResult data) {
+        public void callback(final BreinResult data) {
 
             assertTrue(data != null);
 
@@ -126,20 +126,11 @@ public class TestApi {
     @Test
     public void testLogin() {
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * additional optional user information
-         */
         breinUser.setFirstName("User");
         breinUser.setLastName("Name");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
@@ -153,20 +144,11 @@ public class TestApi {
     @Test
     public void testWithoutCategoryType() {
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * additional optional user information
-         */
         breinUser.setFirstName("User");
         breinUser.setLastName("Name");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 breinActivityType,
                 null,
@@ -186,15 +168,9 @@ public class TestApi {
         final BreinConfig config = new BreinConfig(null, VALID_SIGNATURE);
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("User")
                 .setLastName("Name");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
@@ -219,7 +195,6 @@ public class TestApi {
     public void testWithoutSecret() {
 
         final BreinConfig config = new BreinConfig(VALID_SIGNATURE_API_KEY, null);
-
         Breinify.setConfig(config);
     }
 
@@ -242,15 +217,9 @@ public class TestApi {
 
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("User");
         breinUser.setLastName("Name");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
@@ -265,24 +234,15 @@ public class TestApi {
     public void testWithWrongEndPoint() {
 
         final String description = "Login-Description";
-
-        /*
-         * set configuration
-         */
         final BreinConfig config = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
+
         config.setActivityEndpoint("/wrongEndPoint");
 
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("User");
         breinUser.setLastName("Name");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
@@ -310,19 +270,10 @@ public class TestApi {
 
         final String description = "Logout-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * additional user information
-         */
         breinUser.setDateOfBirth(12, 31, 2008);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 breinActivityType,
                 breinCategoryType,
@@ -338,14 +289,8 @@ public class TestApi {
 
         final String description = "Search-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.SEARCH,
                 breinCategoryType,
@@ -361,14 +306,8 @@ public class TestApi {
 
         final String description = "AddToCart-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
                 breinCategoryType,
@@ -384,14 +323,8 @@ public class TestApi {
 
         final String description = "RemoveFromCart-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
                 breinCategoryType,
@@ -407,14 +340,8 @@ public class TestApi {
 
         final String description = "Select-Product-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
                 breinCategoryType,
@@ -430,14 +357,8 @@ public class TestApi {
 
         final String description = "Other-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
@@ -453,14 +374,8 @@ public class TestApi {
 
         final String description = "Other-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
@@ -543,63 +458,12 @@ public class TestApi {
 
         final BreinEngine breinEngine = breinConfig.getBreinEngine();
 
-        /*
-         * set connection timeout to 10000 ms
-         */
         breinConfig.setConnectionTimeout(10000);
-
-        /*
-         * set socket timeout to 10000 ms
-         */
         breinConfig.setSocketTimeout(10000);
 
-        /*
-         * configure the engine
-         */
         breinEngine.configure(breinConfig);
     }
 
-    /**
-     * Tests the lookup functionality
-     */
-    @Test
-    public void testLookup() {
-
-        final String[] dimensions = {"firstname",
-                "gender",
-                "age",
-                "agegroup",
-                "digitalfootprint",
-                "images"};
-
-        final BreinDimension breinDimension = new BreinDimension(dimensions);
-
-        /*
-         * set configuration
-         */
-        Breinify.setConfig(breinConfig);
-
-        /*
-         * invoke lookup
-         */
-        // TODO: 25.05.17 provide callback for result
-        // final BreinResult response = Breinify.lookup(breinUser, breinDimension);
-
-        /*
-        if (response != null) {
-            final Object dataFirstname = response.get("firstname");
-            final Object dataGender = response.get("gender");
-            final Object dataAge = response.get("age");
-            final Object dataAgeGroup = response.get("agegroup");
-            final Object dataDigitalFootprinting = response.get("digitalfootprint");
-            final Object dataImages = response.get("images");
-        }
-        */
-    }
-
-    /**
-     * Test a login activity with sign and correct secret
-     */
     /**
      * Test a login activity with sign and correct secret
      */
@@ -608,13 +472,9 @@ public class TestApi {
 
         final String secret = "lmcoj4k27hbbszzyiqamhg==";
         final boolean sign = true;
-
         final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE);
 
-        // set secret
         breinConfig.setSecret(secret);
-
-        // set config
         Breinify.setConfig(breinConfig);
 
         // invoke activity call
@@ -632,13 +492,9 @@ public class TestApi {
     public void testLoginWithSignButWrongSecret() {
 
         final String wrongSecret = "ThisIsAWrongSecret";
-
         final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, wrongSecret);
 
-        // set config
         Breinify.setConfig(breinConfig);
-
-        // invoke activity call
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.HOME,
@@ -656,20 +512,15 @@ public class TestApi {
     @Test
     public void testActivityWithoutCategory() {
 
-        // create configuration
         final BreinConfig breinConfig = new BreinConfig(VALID_SIGNATURE_API_KEY, VALID_SIGNATURE)
                 .setDefaultCategory("DEF-CAT-TYPE");
 
         Breinify.setConfig(breinConfig);
 
-        // create user
         final BreinUser breinUser = new BreinUser()
                 .setSessionId("SESS-ID-IS-THIS");
 
-        // send activity with all fields sets so far
         Breinify.activity(breinUser, "ACT-TYPE", "CAT-TYPE", "DESC", restCallback);
-
-        // send activity without CAT-TYPE => use default
         Breinify.activity(breinUser, "ACT-TYPE", "", "DESC", restCallback);
         Breinify.activity(breinUser, "ACT-TYPE", null, "DESC", restCallback);
         Breinify.activity(breinUser, "ACT-TYPE", "bla", null, restCallback);
@@ -726,7 +577,6 @@ public class TestApi {
                 .setDescription("A Homebody Persident Sits Out His Honeymoon Period");
 
         Breinify.activity(breinActivity);
-
     }
 
     @Test
@@ -763,7 +613,6 @@ public class TestApi {
         });
     }
 
-
     @Test
     public void testForDocTemporalDataGeocoding() {
 
@@ -788,7 +637,6 @@ public class TestApi {
         });
     }
 
-
     @Test
     public void testForDocTemporalDataReverseGeoCoding() {
 
@@ -812,5 +660,4 @@ public class TestApi {
             }
         });
     }
-
 }

@@ -88,9 +88,6 @@ public class TestActivity {
      */
     @AfterClass
     public static void tearDown() {
-        /*
-         * we have to wait some time in order to allow the asynch rest processing
-         */
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
@@ -116,9 +113,6 @@ public class TestActivity {
      */
     @Test
     public void testLogin() {
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("Toni");
         breinUser.setLastName("Maroni");
 
@@ -128,7 +122,6 @@ public class TestActivity {
         breinActivity.setDescription("Bla");
 
         breinActivity.execute(restCallback);
-
     }
 
     /**
@@ -138,7 +131,6 @@ public class TestActivity {
     public void testWith20Logins() {
 
         final int maxLogin = 20;
-
         for (int index = 0; index < maxLogin; index++) {
             testLogin();
         }
@@ -152,14 +144,7 @@ public class TestActivity {
 
         final String description = "Logout-Description";
 
-        /*
-         * additional user information
-         */
         breinUser.setDateOfBirth(12, 31, 2008);
-
-        /*
-         * invoke activity call
-         */
         breinActivity.activity(breinUser,
                 BreinActivityType.LOGOUT,
                 breinCategory, description, restCallback);
@@ -172,10 +157,6 @@ public class TestActivity {
     public void testSearch() {
 
         final String description = "Search-Description";
-
-        /*
-         * invoke activity call
-         */
         breinActivity.activity(breinUser,
                 BreinActivityType.SEARCH,
                 breinCategory, description, restCallback);
@@ -188,10 +169,6 @@ public class TestActivity {
     public void testAddToCart() {
 
         final String description = "AddToCart-Description";
-
-        /*
-         * invoke activity call
-         */
         breinActivity.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
                 breinCategory, description, restCallback);
@@ -204,10 +181,6 @@ public class TestActivity {
     public void testRemoveFromCart() {
 
         final String description = "RemoveFromCart-Description";
-
-        /*
-         * invoke activity call
-         */
         breinActivity.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
                 breinCategory, description, restCallback);
@@ -220,10 +193,6 @@ public class TestActivity {
     public void testSelectProduct() {
 
         final String description = "Select-Product-Description";
-
-        /*
-         * invoke activity call
-         */
         breinActivity.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
                 breinCategory, description, restCallback);
@@ -236,10 +205,6 @@ public class TestActivity {
     public void testOther() {
 
         final String description = "Other-Description";
-
-        /*
-         * invoke activity call
-         */
         breinActivity.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategory, description, restCallback);

@@ -82,7 +82,6 @@ public class BreinIpInfo {
     public String invokeRequest() {
         HttpURLConnection urlConnection = null;
         try {
-            // url = new URL("http://ifcfg.me/ip");
             final URL url = new URL("http://www.ip-api.com/json");
 
             urlConnection = (HttpURLConnection) url

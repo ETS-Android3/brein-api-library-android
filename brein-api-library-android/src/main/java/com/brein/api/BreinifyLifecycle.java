@@ -47,7 +47,7 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
             long timeInApp = System.currentTimeMillis() - userEnteredTime;
 
             // app is now in background
-            Log.d(TAG, "app is now in background");
+            Log.d(TAG, "app is now in background. Time in App was: " + Long.toString(timeInApp));
 
             BreinifyManager.getInstance().appIsInBackground();
         }

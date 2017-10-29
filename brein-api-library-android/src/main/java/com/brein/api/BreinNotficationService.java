@@ -15,9 +15,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-/**
- * Created by marcorecchioni on 27/06/2017.
- */
 
 public class BreinNotficationService extends FirebaseMessagingService {
 
@@ -80,6 +77,8 @@ public class BreinNotficationService extends FirebaseMessagingService {
 
         final NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        }
     }
 }

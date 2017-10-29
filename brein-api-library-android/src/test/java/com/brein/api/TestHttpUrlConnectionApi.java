@@ -39,7 +39,7 @@ public class TestHttpUrlConnectionApi {
     /**
      * Correct configuration
      */
-    final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
+    private final BreinConfig breinConfig = new BreinConfig(VALID_API_KEY, VALID_SECRET);
 
     private final RestCallback restCallback = new RestCallback();
 
@@ -84,20 +84,11 @@ public class TestHttpUrlConnectionApi {
     @Test
     public void testLogin() {
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * additional optional user information
-         */
         breinUser.setFirstName("Marco");
         breinUser.setLastName("Recchioni");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 BreinCategoryType.HOME,
@@ -117,15 +108,9 @@ public class TestHttpUrlConnectionApi {
         final BreinConfig config = new BreinConfig(null, VALID_SECRET);
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("Marco");
         breinUser.setLastName("Recchioni");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
@@ -146,15 +131,9 @@ public class TestHttpUrlConnectionApi {
 
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("Marco");
         breinUser.setLastName("Recchioni");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
@@ -181,15 +160,9 @@ public class TestHttpUrlConnectionApi {
 
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("Marco");
         breinUser.setLastName("Recchioni");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
@@ -205,23 +178,14 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "Login-Description";
 
-        /*
-         * set configuration
-         */
         BreinConfig config = new BreinConfig(VALID_API_KEY, VALID_SECRET);
         config.setActivityEndpoint("/wrongEndPoint");
 
         Breinify.setConfig(config);
 
-        /*
-         * additional user information
-         */
         breinUser.setFirstName("Marco");
         breinUser.setLastName("Recchioni");
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGIN,
                 breinCategoryType,
@@ -235,7 +199,6 @@ public class TestHttpUrlConnectionApi {
     public void testWith20Logins() {
 
         final int maxLogin = 20;
-
         for (int index = 0; index < maxLogin; index++) {
             testLogin();
         }
@@ -249,19 +212,10 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "Logout-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * additional user information
-         */
         breinUser.setDateOfBirth(12, 31, 2008);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.LOGOUT,
                 breinCategoryType,
@@ -276,14 +230,8 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "Search-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
 
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.SEARCH,
                 breinCategoryType,
@@ -298,14 +246,7 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "AddToCart-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
-
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.ADD_TO_CART,
                 breinCategoryType,
@@ -321,7 +262,6 @@ public class TestHttpUrlConnectionApi {
         final String description = "RemoveFromCart-Description";
 
         Breinify.setConfig(breinConfig);
-
         Breinify.activity(breinUser,
                 BreinActivityType.REMOVE_FROM_CART,
                 breinCategoryType,
@@ -336,14 +276,7 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "Select-Product-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
-
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.SELECT_PRODUCT,
                 breinCategoryType,
@@ -358,14 +291,7 @@ public class TestHttpUrlConnectionApi {
 
         final String description = "Other-Description";
 
-        /*
-         * set configuration
-         */
         Breinify.setConfig(breinConfig);
-
-        /*
-         * invoke activity call
-         */
         Breinify.activity(breinUser,
                 BreinActivityType.OTHER,
                 breinCategoryType,
@@ -380,22 +306,9 @@ public class TestHttpUrlConnectionApi {
 
         final BreinEngine breinEngine = breinConfig.getBreinEngine();
 
-        /*
-         * set connection timeout to 30000 ms
-         */
         breinConfig.setConnectionTimeout(30000);
-
-        /*
-         * set socket timeout to 25000 ms
-         */
         breinConfig.setSocketTimeout(25000);
 
-        /*
-         * configure the engine
-         */
         breinEngine.configure(breinConfig);
     }
-
-
-
 }

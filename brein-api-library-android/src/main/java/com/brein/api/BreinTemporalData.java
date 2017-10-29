@@ -347,6 +347,12 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
         return location == null ? null : (T) location.get(key);
     }
 
+    /**
+     *
+     * @param key    Strinng, contains the key
+     * @param value  Object, contains the value
+     * @return
+     */
     public BreinTemporalData setLocation(final String key, final Object value) {
         Map<String, Object> location = getUser().getAdditional(LOCATION_FIELD);
         if (location == null) {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-
 /**
  *
  * A declaration of GcmReceiver, which handles messages sent from GCM to your application.
@@ -26,6 +25,5 @@ public class BreinPushNotificationReceiver extends WakefulBroadcastReceiver {
                 Log.e(TAG, "Key: " + key + " Value: " + value);
             }
         }
-
     }
 }

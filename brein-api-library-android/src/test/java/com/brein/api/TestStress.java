@@ -30,9 +30,7 @@ public class TestStress {
     @AfterClass
     public static void tearDown() {
 
-        /*
-         * we have to wait some time in order to allow the asynch rest processing
-         */
+        // we have to wait some time in order to allow the asynch rest processing
         try {
             Thread.sleep(10000);
             Breinify.shutdown();
@@ -41,12 +39,10 @@ public class TestStress {
         }
     }
 
-
-
     @Test
     public void testActivityStress() {
 
-        // do it 200 times?
+
         int index = 0;
         do {
             new Thread(new Runnable() {

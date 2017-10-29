@@ -68,6 +68,11 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
         return config.getRecommendationEndpoint();
     }
 
+    /**
+     *
+     * @param config      BreinConfig contains the configuration object
+     * @param requestData Map the request data to be sent to the endpoint
+     */
     @Override
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
 
@@ -97,6 +102,10 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
         return BreinUtil.generateSignature(message, config.getSecret());
     }
 
+    /**
+     *
+     * @param callback the callback containing the response of the request, can be {@code null}
+     */
     @Override
     public void execute(ICallback<BreinResult> callback) {
         Breinify.recommendation(this, callback);

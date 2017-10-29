@@ -18,6 +18,10 @@ public class BreinEventResult {
     private final EventCategory category;
     private final Integer size;
 
+    /**
+     * Contains the result of the Event request
+     * @param result Map containing the result data
+     */
     public BreinEventResult(final Map<String, Object> result) {
 
         name = JsonHelper.getOr(result, NAME_KEY, null);
