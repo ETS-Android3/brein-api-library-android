@@ -49,7 +49,7 @@ gradle configuration like this:
 ```gradle
 dependencies {
     ...
-    compile 'com.brein. brein-api-library-android:1.0.1'
+    compile 'com.brein.brein-api-library-android:1.0.1'
     ...
 }
 ```
@@ -309,5 +309,11 @@ Furthermore the `AndroidManifest.xml` needs to contain one additional services t
 ```
 
 That's all.
+
+
+### Further links
+To understand all the capabilities of Breinify's APIs, have a look at:
+
+* [Breinify's Website](https://www.breinify.com).
 
 
