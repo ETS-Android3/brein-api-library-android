@@ -33,7 +33,7 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
     /**
      * set the number of recommendations
      *
-     * @param numberOfRecommendations number of recommendations
+     * @param numberOfRecommendations int number of recommendations
      *
      * @return self
      */
@@ -45,7 +45,7 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
     /**
      * get the recommendation category
      *
-     * @return category
+     * @return String category
      */
     public String getCategory() {
         return category;
@@ -54,7 +54,7 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
     /**
      * set the recommendation category
      *
-     * @param category contains the category
+     * @param category String contains the category
      *
      * @return self
      */
@@ -69,6 +69,7 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
     }
 
     /**
+     * Used to create the request object
      *
      * @param config      BreinConfig contains the configuration object
      * @param requestData Map the request data to be sent to the endpoint
@@ -92,7 +93,9 @@ public class BreinRecommendation extends BreinBase<BreinRecommendation> implemen
     /**
      * Generates the signature for the request
      *
-     * @return full signature
+     * @param config       BreinConfig contains the configuration
+     * @param requestData  Map String - Object
+     * @return             String full signature
      */
     @Override
     public String createSignature(final BreinConfig config, final Map<String, Object> requestData) {

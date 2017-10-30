@@ -260,12 +260,6 @@ public class BreinUtil {
         return i;
     }
 
-    /**
-     * Returns the ipAddress
-     *
-     * @param useIPv4 true if ip4 should be used
-     * @return String -> ipAddress
-     */
     /*
     public static String getIPAddress(boolean useIPv4) {
         try {

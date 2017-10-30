@@ -31,9 +31,9 @@ public class BreinResult {
 
     /**
      * retrieves the object according to the requested key
-     * @param key to look for
-     * @param <T> Object
-     * @return Object retrieved
+     * @param key   String contains the key
+     * @param <T>   Object the value
+     * @return      Object retrieved
      */
     @SuppressWarnings("unchecked")
     public <T> T get(final String key) {
@@ -52,7 +52,7 @@ public class BreinResult {
     /**
      * provides the map containing the results
      *
-     * @return map of String, Object
+     * @return Map of String, Object
      */
     public Map<String, Object> getMap() {
         return map;

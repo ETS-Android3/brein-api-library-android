@@ -85,7 +85,16 @@ public class TestApi {
         }
     }
 
+    class RestFailResult implements ICallback<BreinResult> {
+
+        @Override
+        public void callback(final BreinResult data) {
+            assertTrue(data == null);
+        }
+    }
+
     private final ICallback restCallback = new RestResult();
+    private final ICallback restFailCallback = new RestFailResult();
 
     /**
      * Init part
@@ -159,12 +168,11 @@ public class TestApi {
     /**
      * Testcase with null value as apikey
      */
+
     @Test
     public void testLoginWithNullApiKey() {
 
         final String description = "Login-Description";
-        final boolean sign = false;
-
         final BreinConfig config = new BreinConfig(null, VALID_SIGNATURE);
         Breinify.setConfig(config);
 
@@ -175,7 +183,7 @@ public class TestApi {
                 breinActivityType,
                 breinCategoryType,
                 description,
-                restCallback);
+                restFailCallback);
     }
 
     @Test
@@ -185,7 +193,6 @@ public class TestApi {
                 BreinActivityType.LOGIN,
                 BreinCategoryType.HOME,
                 "Login-Description", null);
-
     }
 
     /**
@@ -534,9 +541,9 @@ public class TestApi {
 
         final BreinUser breinUser = new BreinUser("fred.firestone@email.com")
                 .setFirstName("Fred")
-                .setIpAddress("74.115.209.58");
-        //    .setTimezone("America/Los_Angeles")
-        //    .setLocalDateTime("Sun Jul 2 2017 18:15:48 GMT-0800 (PST)");
+                .setIpAddress("74.115.209.58")
+                .setTimezone("America/Los_Angeles")
+                .setLocalDateTime("Sun Jul 2 2017 18:15:48 GMT-0800 (PST)");
 
         BreinTemporalData breinTemporalData = new BreinTemporalData()
                 .setLocation("san francisco")

@@ -5,45 +5,46 @@ import com.brein.domain.BreinUser;
 import com.brein.util.BreinMapUtil;
 import com.brein.util.BreinUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
 
 /**
- * Sends an activity to the com.brein.engine utilizing the API.
+ * Sends an activity to the Brein engine utilizing the API.
+ *
  * The call is done asynchronously as a POST request. It is important
  * that a valid API-key & secret is configured prior before using this class.
  */
 public class BreinTemporalData extends BreinBase<BreinTemporalData> implements ISecretStrategy, IAsyncExecutable {
 
-    /*
-     * The following fields are used within the additional
-     */
-    public static final String LOCATION_FIELD = "location";
-    public static final String LOCAL_DATE_TIME_FIELD = "localDateTime";
-    public static final String TIMEZONE_FIELD = "timezone";
-    public static final String IP_ADDRESS_FIELD = "ipAddress";
+    // The following fields are used within the additional
+    private static final String LOCATION_FIELD = "location";
+    private static final String LOCAL_DATE_TIME_FIELD = "localDateTime";
+    private static final String TIMEZONE_FIELD = "timezone";
+    private static final String IP_ADDRESS_FIELD = "ipAddress";
 
-    /*
-     * The following fields are used within the location
-     */
-    public static final String LONGITUDE_FIELD = "longitude";
-    public static final String LATITUDE_FIELD = "latitude";
-    public static final String SHAPE_TYPES_FIELD = "shapeTypes";
-    public static final String TEXT_FIELD = "text";
+    // The following fields are used within the location
+    private static final String LONGITUDE_FIELD = "longitude";
+    private static final String LATITUDE_FIELD = "latitude";
+    private static final String SHAPE_TYPES_FIELD = "shapeTypes";
+    private static final String TEXT_FIELD = "text";
 
-    public static final String CITY_TEXT_FIELD = "text";
-    public static final String STATE_TEXT_FIELD = "text";
-    public static final String COUNTRY_TEXT_FIELD = "text";
+    private static final String CITY_TEXT_FIELD = "text";
+    private static final String STATE_TEXT_FIELD = "text";
+    private static final String COUNTRY_TEXT_FIELD = "text";
 
     /**
      * retrieves the configured temporalData endpoint (e.g. \temporalData)
      *
-     * @return endpoint
+     * @return  String endpoint
      */
     @Override
     public String getEndPoint(final BreinConfig config) {
@@ -68,7 +69,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param timezone the value to be set
+     * @param timezone TimeZone the value to be set
      *
      * @return {@code this}
      */
@@ -89,7 +90,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param timezone the value to be set
+     * @param timezone String the value to be set
      *
      * @return {@code this}
      */
@@ -111,7 +112,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param ipAddress the value to be set
+     * @param ipAddress String the value to be set
      *
      * @return {@code this}
      */
@@ -135,7 +136,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param longitude the longitude to be used
+     * @param longitude double the longitude to be used
      *
      * @return {@code this}
      */
@@ -159,7 +160,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param latitude the latitude to be used
+     * @param latitude double the latitude to be used
      *
      * @return {@code this}
      */
@@ -183,7 +184,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param shapeTypes the shapeTypes to be set, if empty the shapeTypes will be removed
+     * @param shapeTypes String the shapeTypes to be set, if empty the shapeTypes will be removed
      *
      * @return {@code this}
      */
@@ -211,7 +212,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param freeText the text describing the location
+     * @param freeText String the text describing the location
      *
      * @return {@code this}
      */
@@ -237,15 +238,15 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *
      */
     public BreinTemporalData setLocalDateTime() {
-        // TODO: implementation missing
+        final TimeZone defTimeZone = TimeZone.getDefault();
+        final Calendar c = Calendar.getInstance();
+        final Date date = c.getTime();
+        final SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss ZZZZ (zz)", Locale.US);
+        df.setTimeZone(defTimeZone);
+        final String strLocalDateTimeValue = df.format(date);
 
-        // TODO: create the magic here
-
-        // setAdditional(LOCAL_DATE_TIME_FIELD, zonedDateTime.format(JAVA_SCRIPT_FORMAT));
-        return this;
-        // return setLocalDateTime(ZonedDateTime.now());
+        return setLocalDateTime(strLocalDateTimeValue);
     }
-
 
     /**
      * Sets the localDateTime, i.e.:
@@ -262,7 +263,6 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *
      * @return {@code this}
      */
-    // TODO: check if needed
     public BreinTemporalData setLocalDateTime(final String localDateTime) {
         setAdditional(LOCAL_DATE_TIME_FIELD, localDateTime);
         return this;
@@ -285,9 +285,9 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param city    the city to look up
-     * @param state   the state to look up (can be {@code null})
-     * @param country the country to look up (can be {@code null})
+     * @param city    String the city to look up
+     * @param state   String the state to look up (can be {@code null})
+     * @param country String the country to look up (can be {@code null})
      *
      * @return {@code this}
      */
@@ -314,7 +314,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
      *     }
      * </pre>
      *
-     * @param shapeTypes the shapeTypes to be added
+     * @param shapeTypes String the shapeTypes to be added
      *
      * @return {@code this}
      */
@@ -336,8 +336,8 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
     /**
      * Gets the current value specified within the location of the request.
      *
-     * @param key the value to retrieve (e.g., {@code "shapeTypes"}, {@code "city"}, or {@code "latitude"})
-     * @param <T> the expected type of the returned value
+     * @param key String the value to retrieve (e.g., {@code "shapeTypes"}, {@code "city"}, or {@code "latitude"})
+     * @param <T> T the expected type of the returned value
      *
      * @return the associated value to the specified key
      */
@@ -349,7 +349,7 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
 
     /**
      *
-     * @param key    Strinng, contains the key
+     * @param key    String, contains the key
      * @param value  Object, contains the value
      * @return
      */
@@ -368,6 +368,8 @@ public class BreinTemporalData extends BreinBase<BreinTemporalData> implements I
     /**
      * Creates the signature for temporaldata
      *
+     * @param config      BreinConfig configuration
+     * @param requestData Map of String-Objects
      * @return signature
      */
     @Override

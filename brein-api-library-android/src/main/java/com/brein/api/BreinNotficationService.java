@@ -20,8 +20,12 @@ public class BreinNotficationService extends FirebaseMessagingService {
 
     private static final String TAG = "BreinNotficationService";
 
+    /**
+     * Invoked in case of ...
+     * @param remoteMessage  RemoteMessage
+     */
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(final RemoteMessage remoteMessage) {
 
         super.onMessageReceived(remoteMessage);
 
@@ -36,7 +40,7 @@ public class BreinNotficationService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param remoteMessage FCM message
+     * @param remoteMessage RemoteMessage FCM message
      */
     private void sendNotification(final RemoteMessage remoteMessage) {
 

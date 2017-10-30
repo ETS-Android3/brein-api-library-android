@@ -43,7 +43,7 @@ public class BreinUser {
     private Map<String, Object> userMap;
 
     /**
-     * create a brein user with mandatory field email.
+     * create a brein user with field email.
      *
      * @param email of the user
      */
@@ -60,7 +60,7 @@ public class BreinUser {
     /**
      * get the email of the user
      *
-     * @return email
+     * @return  String the email
      */
     public String getEmail() {
         return getUserField(UserField.EMAIL);
@@ -69,8 +69,8 @@ public class BreinUser {
     /**
      * sets the email of the user
      *
-     * @param email to set (will not be checked)
-     * @return this
+     * @param email  String contains the email
+     * @return       BreinUser the object itself
      */
     public BreinUser setEmail(final String email) {
         UserField.EMAIL.set(this, email);
@@ -80,7 +80,7 @@ public class BreinUser {
     /**
      * Retrieves the first name of the user
      *
-     * @return first name
+     * @return   String the first name
      */
     public String getFirstName() {
         return getUserField(UserField.FIRST_NAME);
@@ -89,8 +89,8 @@ public class BreinUser {
     /**
      * set the first name of the user
      *
-     * @param firstName name to set
-     * @return this
+     * @param firstName String name to set
+     * @return          BreinUser the object itself
      */
     public BreinUser setFirstName(final String firstName) {
         UserField.FIRST_NAME.set(this, firstName);
@@ -109,8 +109,8 @@ public class BreinUser {
     /**
      * set the last name of the user
      *
-     * @param lastName last name
-     * @return thi
+     * @param lastName  String last name
+     * @return          BreinUser the object itself
      */
     public BreinUser setLastName(final String lastName) {
         UserField.LAST_NAME.set(this, lastName);
@@ -129,8 +129,8 @@ public class BreinUser {
     /**
      * sets the sessionId
      *
-     * @param sessionId value of the sessionId
-     * @return self
+     * @param sessionId  String value of the sessionId
+     * @return           BreinUser the object itself
      */
     public BreinUser setSessionId(final String sessionId) {
         UserField.SESSION_ID.set(this, sessionId);
@@ -140,7 +140,7 @@ public class BreinUser {
     /**
      * Returns the date of birth
      *
-     * @return date of birth
+     * @return String, date of birth
      */
     public String getDateOfBirth() {
         return getUserField(UserField.DATE_OF_BIRTH);
@@ -149,8 +149,8 @@ public class BreinUser {
     /**
      * Sets the value of dateOfBirth as String. This is only used internally.
      *
-     * @param dateOfBirthString contains the date of birth string
-     * @return self
+     * @param dateOfBirthString  String contains the date of birth string
+     * @return                   BreinUser the object itself
      */
     public BreinUser setDateOfBirth(final String dateOfBirthString) {
         UserField.DATE_OF_BIRTH.set(this, dateOfBirthString);
@@ -162,10 +162,10 @@ public class BreinUser {
      * There is no check if the month - day combination is valid, only
      * the range for day, month and year will be checked
      *
-     * @param month (1..12)
-     * @param day   (1..31)
-     * @param year  (1900..2100)
-     * @return self
+     * @param month  int month (1..12)
+     * @param day    int day    (1..31)
+     * @param year   int year  (1900..2100)
+     * @return       BreinUser the object itself
      */
     public BreinUser setDateOfBirth(final int month, final int day, final int year) {
         if ((month >= 1 && month <= 12) &&
@@ -193,7 +193,7 @@ public class BreinUser {
     /**
      * Retrieves imei (International Mobile Equipment Identity)
      *
-     * @return serial number as string
+     * @return String serial number as string
      */
     public String getImei() {
         return getUserField(UserField.IMEI);
@@ -202,8 +202,8 @@ public class BreinUser {
     /**
      * Sets the imei number
      *
-     * @param imei number
-     * @return this -> allows chaining
+     * @param imei   String imei number
+     * @return       BreinUser the object itself
      */
     public BreinUser setImei(final String imei) {
         UserField.IMEI.set(this, imei);
@@ -213,7 +213,7 @@ public class BreinUser {
     /**
      * retrieves the deviceid
      *
-     * @return device id
+     * @return String device id
      */
     public String getDeviceId() {
         return getUserField(UserField.DEVICE_ID);
@@ -222,8 +222,8 @@ public class BreinUser {
     /**
      * sets the device id
      *
-     * @param deviceId the id of the device
-     * @return this -> allows chaining
+     * @param deviceId  String the id of the device
+     * @return          BreinUser the object itself
      */
     public BreinUser setDeviceId(final String deviceId) {
         UserField.DEVICE_ID.set(this, deviceId);
@@ -233,7 +233,7 @@ public class BreinUser {
     /**
      * retrieves the userId
      *
-     * @return userId String
+     * @return String userId String
      */
     public String getUserId() {
         return getUserField(UserField.USER_ID);
@@ -242,8 +242,8 @@ public class BreinUser {
     /**
      * sets the userId
      *
-     * @param userId the id of the user
-     * @return this -> allows chaining
+     * @param userId  String the id of the user
+     * @return        BreinUser the object itself
      */
     public BreinUser setUserId(final String userId) {
         UserField.USER_ID.set(this, userId);
@@ -253,8 +253,8 @@ public class BreinUser {
     /**
      * sets the phone
      *
-     * @param phone the phone of the user
-     * @return this
+     * @param phone  String the phone of the user
+     * @return       BreinUser the object itself
      */
     public BreinUser setPhone(final String phone) {
         UserField.PHONE.set(this, phone);
@@ -262,9 +262,9 @@ public class BreinUser {
     }
 
     /**
-     * retrieves the phone
+     * retrieves the phone number
      *
-     * @return phone String
+     * @return String phone number
      */
     public String getPhone() {
         return getUserField(UserField.PHONE);
@@ -274,7 +274,7 @@ public class BreinUser {
     /**
      * retrieves the additional userAgent value
      *
-     * @return value
+     * @return  String user agent
      */
     public String getUserAgent() {
         return getUserAdditionalField(UserAdditionalField.USER_AGENT);
@@ -283,7 +283,7 @@ public class BreinUser {
     /**
      * sets the additional user agent value
      *
-     * @param userAgent value
+     * @param userAgent  String user agent
      */
     public BreinUser setUserAgent(final String userAgent) {
         UserAdditionalField.USER_AGENT.set(this, userAgent);
@@ -315,7 +315,7 @@ public class BreinUser {
     /**
      * retrieves the ipAddress (additional part)
      *
-     * @return ipAddress
+     * @return  String ipAddress
      */
     public String getIpAddress() {
         return getUserAdditionalField(UserAdditionalField.IPADDRESS);
@@ -324,7 +324,8 @@ public class BreinUser {
     /**
      * sets the ipAddress
      *
-     * @param ipAddress value
+     * @param ipAddress   String ip address value
+     * @return            BreinUser the object itself
      */
     public BreinUser setIpAddress(final String ipAddress) {
         UserAdditionalField.IPADDRESS.set(this, ipAddress);
@@ -334,7 +335,7 @@ public class BreinUser {
     /**
      * retrieves the additional referrer value
      *
-     * @return value
+     * @return String the referrer
      */
     public String getReferrer() {
         return getUserAdditionalField(UserAdditionalField.REFERRER);
@@ -343,7 +344,8 @@ public class BreinUser {
     /**
      * sets the additional referrer value
      *
-     * @param referrer value
+     * @param referrer  String the referrer
+     * @return          BreinUser the object itself
      */
     public BreinUser setReferrer(final String referrer) {
         UserAdditionalField.REFERRER.set(this, referrer);
@@ -353,7 +355,7 @@ public class BreinUser {
     /**
      * retrieves the timezone
      *
-     * @return value
+     * @return  String contains the timezone
      */
     public String getTimezone() {
         return getUserAdditionalField(UserAdditionalField.TIME_ZONE);
@@ -362,8 +364,8 @@ public class BreinUser {
     /**
      * sets the timezone
      *
-     * @param timezone value
-     * @return self
+     * @param timezone  String the time zone
+     * @return          BreinUser the object itself
      */
     public BreinUser setTimezone(final String timezone) {
         UserAdditionalField.TIME_ZONE.set(this, timezone);
@@ -373,7 +375,7 @@ public class BreinUser {
     /**
      * retrieves the additional url
      *
-     * @return value
+     * @return  String the url
      */
     public String getUrl() {
         return getUserAdditionalField(UserAdditionalField.URL);
@@ -382,8 +384,8 @@ public class BreinUser {
     /**
      * sets the additional url
      *
-     * @param url value
-     * @return self
+     * @param url    String the url value
+     * @return       BreinUser the object itself
      */
     public BreinUser setUrl(final String url) {
         UserAdditionalField.URL.set(this, url);
@@ -393,7 +395,7 @@ public class BreinUser {
     /**
      * retrieves the localDateTime
      *
-     * @return value
+     * @return  String the local date time
      */
     public String getLocalDateTime() {
         return getUserAdditionalField(UserAdditionalField.LOCAL_DATE_TIME);
@@ -402,8 +404,8 @@ public class BreinUser {
     /**
      * sets the localDateTime value
      *
-     * @param localDateTime value
-     * @return self
+     * @param localDateTime   String the local date time value
+     * @return                BreinUser the object itself
      */
     public BreinUser setLocalDateTime(final String localDateTime) {
         UserAdditionalField.LOCAL_DATE_TIME.set(this, localDateTime);
@@ -413,7 +415,7 @@ public class BreinUser {
     /**
      * retrieves the pushDeviceToken
      *
-     * @return value
+     * @return    String the deviceRegistration token
      */
     public String getPushDeviceRegistration() {
         return getUserAdditionalField(UserAdditionalField.PUSH_DEVICE_REGISTRATION);
@@ -422,8 +424,8 @@ public class BreinUser {
     /**
      * sets the pushDeviceToken
      *
-     * @param deviceToken value
-     * @return self
+     * @param deviceToken  String the deviceToken
+     * @return             BreinUser the object itself
      */
     public BreinUser setPushDeviceRegistration(final String deviceToken) {
         UserAdditionalField.PUSH_DEVICE_REGISTRATION.set(this, deviceToken);
@@ -542,7 +544,7 @@ public class BreinUser {
     /**
      * provides a nicer output of the user details
      *
-     * @return output
+     * @return String nicer output
      */
     @Override
     public String toString() {
@@ -556,9 +558,9 @@ public class BreinUser {
     /**
      * Sets the users value and overrides any current value. Cannot used to override the {@code additional} field.
      *
-     * @param key   the name of the value to be set
-     * @param value the value to be set
-     * @return self
+     * @param key    String the name of the value to be set
+     * @param value  Object the value to be set
+     * @return       BreinUser the object itself
      */
     public BreinUser set(final String key, final Object value) {
         if (ADDITIONAL_FIELD.equalsIgnoreCase(key)) {
@@ -573,19 +575,22 @@ public class BreinUser {
     }
 
     /**
-     * @param key
-     * @param <T>
-     * @return
+     * Retrieves for a given key the object
+     * @param key   String, contains the key
+     * @param <T>   T contains the object
+     * @return      T contains the object
      */
     public <T> T get(final String key) {
         return get(key, false);
     }
 
     /**
-     * @param key
-     * @param additional
-     * @param <T>
-     * @return
+     * Retrieves for a given key within the additional or userMap the value
+     *
+     * @param key         String, contains the key
+     * @param additional  boolean true if additional part should be used
+     * @param <T>         T contains the value
+     * @return            T contains the value
      */
     @SuppressWarnings("unchecked")
     public <T> T get(final String key, final boolean additional) {
@@ -597,9 +602,11 @@ public class BreinUser {
     }
 
     /**
-     * @param key
-     * @param <T>
-     * @return
+     * Retrieves the additional value
+     *
+     * @param key  String contains the key
+     * @param <T>  T contains the value
+     * @return     T contains the value
      */
     public <T> T getAdditional(final String key) {
         return get(key, true);
@@ -608,9 +615,9 @@ public class BreinUser {
     /**
      * Sets an additional value.
      *
-     * @param key   the name of the additional value to be set
-     * @param value the value to be set
-     * @return self
+     * @param key    String, the name of the additional value to be set
+     * @param value  Object the value to be set
+     * @return       BreinUser the object itself
      */
     public BreinUser setAdditional(final String key, final Object value) {
         if (this.additionalMap == null) {
@@ -624,8 +631,8 @@ public class BreinUser {
     /**
      * prepares the request data
      *
-     * @param config      contains the configuration (if necessary)
-     * @param requestData request destination
+     * @param config      BreinConfig, contains the configuration (if necessary)
+     * @param requestData Map request destination
      */
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
         final Map<String, Object> userRequestData = new HashMap<>();
@@ -665,9 +672,10 @@ public class BreinUser {
     }
 
     /**
-     * @param field
-     * @param <T>
-     * @return
+     * Retrieves the user field data
+     * @param field  UserField the field
+     * @param <T>    T the value
+     * @return       T the value
      */
     protected <T> T getUserField(final UserField field) {
         return get(field.getName());
@@ -704,9 +712,11 @@ public class BreinUser {
     }
 
     /**
-     * @param field
-     * @param <T>
-     * @return
+     * Retrieves the additional data
+     *
+     * @param field  UserAdditionalField the user additional field
+     * @param <T>    T the value
+     * @return       T the value
      */
     protected <T> T getUserAdditionalField(final UserAdditionalField field) {
         return get(field.getName());

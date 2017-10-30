@@ -7,6 +7,11 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -173,5 +178,19 @@ public class TestDomain {
         final BreinIpInfo info = BreinIpInfo.getInstance();
         final String externalIp = info.getExternalIp();
         System.out.println("External IP is: " + externalIp);
+    }
+
+    @Test
+    public void testLocalDateTime() {
+
+        final TimeZone defTimeZone = TimeZone.getDefault();
+        System.out.println("Default Timezone is: " + defTimeZone);
+
+        final Calendar c = Calendar.getInstance();
+        final Date date = c.getTime();
+        final SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss ZZZZ (zz)");
+        df.setTimeZone(defTimeZone);
+        final String strDate = df.format(date);
+        System.out.println("Current LocalTimeZone is: " + strDate);
     }
 }

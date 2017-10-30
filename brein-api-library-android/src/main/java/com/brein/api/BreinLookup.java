@@ -18,15 +18,13 @@ import java.util.Map;
 
 public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStrategy, IAsyncExecutable {
 
-    /**
-     * used for lookup request
-     */
+    // used for lookup request
     private BreinDimension breinDimension;
 
     /**
      * retrieves the Brein dimension object
      *
-     * @return object
+     * @return BreinDimension object
      */
     public BreinDimension getBreinDimension() {
         return breinDimension;
@@ -50,9 +48,10 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
     }
 
     /**
+     * Used to create the request
      *
-     * @param config
-     * @param requestData the request data to be sent to the endpoint
+     * @param config      BreinConfig configuration object
+     * @param requestData Map the request data to be sent to the endpoint
      */
     public void prepareRequestData(final BreinConfig config, final Map<String, Object> requestData) {
     }
@@ -60,7 +59,8 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
     /**
      * prepares a JSON request for a lookup
      *
-     * @return well formed json request
+     * @param config  BreinConfig configuration object
+     * @return        String well formed json request
      */
     @Override
     public String prepareRequestData(final BreinConfig config) {
@@ -98,7 +98,8 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
     /**
      * retrieves the configured lookup endpoint (e.g. \lookup)
      *
-     * @return endpoint
+     * @param config  BreinConfig configuration object
+     * @return        String endpoint
      */
     @Override
     public String getEndPoint(final BreinConfig config) {
@@ -108,7 +109,9 @@ public class BreinLookup extends BreinBase<BreinActivity> implements ISecretStra
     /**
      * Creates the signature for lookup
      *
-     * @return signature
+     * @param config      BreinConfig configuration object
+     * @param requestData Map containing the data
+     * @return            String containing the signature
      */
     @Override
     public String createSignature(final BreinConfig config, final Map<String, Object> requestData) {

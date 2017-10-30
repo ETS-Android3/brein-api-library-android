@@ -13,12 +13,12 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
     private long userEnteredTime = 0;
 
     @Override
-    public void onActivityCreated(Activity activity, Bundle bundle) {
+    public void onActivityCreated(final Activity activity, final Bundle bundle) {
         Log.d(TAG, "onActivityCreated invoked");
     }
 
     @Override
-    public void onActivityStarted(Activity activity) {
+    public void onActivityStarted(final Activity activity) {
         Log.d(TAG, "onActivityStarted invoked");
         if (numStarted == 0) {
             userEnteredTime = System.currentTimeMillis();
@@ -30,17 +30,17 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
     }
 
     @Override
-    public void onActivityResumed(Activity activity) {
+    public void onActivityResumed(final Activity activity) {
         Log.d(TAG, "onActivityResumed invoked");
     }
 
     @Override
-    public void onActivityPaused(Activity activity) {
+    public void onActivityPaused(final Activity activity) {
         Log.d(TAG, "onActivityPaused invoked");
     }
 
     @Override
-    public void onActivityStopped(Activity activity) {
+    public void onActivityStopped(final Activity activity) {
         Log.d(TAG, "onActivityStopped invoked");
         numStarted--;
         if (numStarted == 0) {
@@ -54,12 +54,12 @@ public class BreinifyLifecycle implements Application.ActivityLifecycleCallbacks
     }
 
     @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+    public void onActivitySaveInstanceState(final Activity activity, final Bundle bundle) {
         Log.d(TAG, "onActivitySaveInstanceState invoked");
     }
 
     @Override
-    public void onActivityDestroyed(Activity activity) {
+    public void onActivityDestroyed(final Activity activity) {
         Log.d(TAG, "onActivityDestroyed invoked");
     }
 }

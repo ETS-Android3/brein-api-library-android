@@ -18,8 +18,15 @@ public class BreinBackgroundService extends Service {
         return null;
     }
 
+    /**
+     *
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(final Intent intent, int flags, int startId) {
         while (true) {
             try {
                 Thread.sleep(10000);
@@ -31,6 +38,9 @@ public class BreinBackgroundService extends Service {
         }
     }
 
+    /**
+     *
+     */
     private class BreinBackgroundTask extends AsyncTask<String, String, String> {
 
         @Override
@@ -53,5 +63,4 @@ public class BreinBackgroundService extends Service {
             }, 10000);
         }
     }
-
 }

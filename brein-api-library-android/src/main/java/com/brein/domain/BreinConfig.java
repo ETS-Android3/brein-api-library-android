@@ -16,42 +16,42 @@ public class BreinConfig {
     /**
      * contains the current version of the usage library
      */
-    public static final String VERSION = "1.0.1";
+    public static final String VERSION = "1.0.2";
 
     /**
      * default endpoint of activity
      */
-    public static final String DEFAULT_ACTIVITY_ENDPOINT = "/activity";
+    private static final String DEFAULT_ACTIVITY_ENDPOINT = "/activity";
 
     /**
      * default endpoint for temporalData
      */
-    public static final String DEFAULT_TEMPORALDATA_ENDPOINT = "/temporaldata";
+    private static final String DEFAULT_TEMPORALDATA_ENDPOINT = "/temporaldata";
 
     /**
      * default endpoint for recommendation
      */
-    public static final String DEFAULT_RECOMMENDATION_ENDPOINT = "/recommendation";
+    private static final String DEFAULT_RECOMMENDATION_ENDPOINT = "/recommendation";
 
     /**
      * default endpoint of lookup
      */
-    public static final String DEFAULT_LOOKUP_ENDPOINT = "/lookup";
+    private static final String DEFAULT_LOOKUP_ENDPOINT = "/lookup";
 
     /**
      * default connection timeout in ms
      */
-    public static final long DEFAULT_CONNECTION_TIMEOUT = 10000;
+    private static final long DEFAULT_CONNECTION_TIMEOUT = 10000;
 
     /**
      * default socket timeout in ms
      */
-    public static final long DEFAULT_SOCKET_TIMEOUT = 10000;
+    private static final long DEFAULT_SOCKET_TIMEOUT = 10000;
 
     /**
      * default breinify base url
      */
-    public static final String DEFAULT_BASE_URL = "https://api.breinify.com";
+    private static final String DEFAULT_BASE_URL = "https://api.breinify.com";
 
     /**
      * BASE URL
@@ -130,8 +130,8 @@ public class BreinConfig {
     }
 
     /**
-     * @param apiKey  contains the Breinify com.brein.api-key
-     * @param secret contains the secret
+     * @param apiKey  String contains the Breinify com.brein.api-key
+     * @param secret  String contains the secret
      */
     public BreinConfig(final String apiKey,
                        final String secret) {
@@ -144,9 +144,9 @@ public class BreinConfig {
     /**
      * Configuration object
      *
-     * @param apiKey            contains the Breinify com.brein.api-key
-     * @param secret            contains the secret
-     * @param breinEngineType   selected com.brein.engine
+     * @param apiKey            String contains the Breinify com.brein.api-key
+     * @param secret            String contains the secret
+     * @param breinEngineType   BreinEngineType selected com.brein.engine
      */
     public BreinConfig(final String apiKey,
                        final String secret,
@@ -174,7 +174,7 @@ public class BreinConfig {
     /**
      * retrieves the base url
      *
-     * @return base url
+     * @return  String base url
      */
     public String getBaseUrl() {
         return baseUrl;
@@ -184,8 +184,8 @@ public class BreinConfig {
      * set the base url of the breinify backend and will check
      * if the URL is valid.
      *
-     * @param baseUrl contains the url
-     * @return the config object itself
+     * @param baseUrl  String contains the url
+     * @return         BreinConfig the config object itself
      */
     public BreinConfig setBaseUrl(final String baseUrl) {
         this.baseUrl = baseUrl;
@@ -197,7 +197,7 @@ public class BreinConfig {
      * checks if the url is valid. If not a BreinInvalidConfigurationException will
      * be thrown.
      *
-     * @param baseUrl url to check
+     * @param baseUrl String url to check
      */
     public void checkBaseUrl(final String baseUrl) throws BreinInvalidConfigurationException {
 
@@ -213,7 +213,7 @@ public class BreinConfig {
     /**
      * retrieves rest type client
      *
-     * @return configured rest type client
+     * @return  BreinEngineType configured rest type client
      */
     public BreinEngineType getRestEngineType() {
         return restEngineType;
@@ -222,8 +222,8 @@ public class BreinConfig {
     /**
      * set rest type client
      *
-     * @param restEngineType of the rest impl
-     * @return the config object itself
+     * @param restEngineType  BreinEngineType rest impl
+     * @return                BreinConfig the config object itself
      */
     public BreinConfig setRestEngineType(final BreinEngineType restEngineType) {
         this.restEngineType = restEngineType;
@@ -231,9 +231,9 @@ public class BreinConfig {
     }
 
     /**
-     * returns the configured brein com.brein.engine for the rest calls
+     * returns the configured BreinEngine for the rest calls
      *
-     * @return brein com.brein.engine
+     * @return   BreinEngine
      */
     public BreinEngine getBreinEngine() {
         return breinEngine;
@@ -242,7 +242,7 @@ public class BreinConfig {
     /**
      * retrieves the apikey
      *
-     * @return apikey
+     * @return  String apikey
      */
     public String getApiKey() {
         return apiKey;
@@ -251,8 +251,8 @@ public class BreinConfig {
     /**
      * sets the apikey
      *
-     * @param apiKey the apikey
-     * @return the config object itself
+     * @param apiKey   String the apikey
+     * @return         BreinConfig the config object itself
      */
     public BreinConfig setApiKey(final String apiKey) {
 
@@ -265,7 +265,7 @@ public class BreinConfig {
     /**
      * retrieves the url for the post requests
      *
-     * @return base url
+     * @return String base url
      */
     public String getUrl() {
         return baseUrl;
@@ -274,7 +274,7 @@ public class BreinConfig {
     /**
      * retrieves the configured timeout values
      *
-     * @return connection time out
+     * @return long connection time out
      */
     public long getConnectionTimeout() {
         return connectionTimeout;
@@ -283,7 +283,7 @@ public class BreinConfig {
     /**
      * set the connection timeout
      *
-     * @param connectionTimeout value
+     * @param connectionTimeout long value
      */
     public void setConnectionTimeout(final long connectionTimeout) {
         this.connectionTimeout = connectionTimeout;
@@ -292,7 +292,7 @@ public class BreinConfig {
     /**
      * socket timeout values
      *
-     * @return connection time out values
+     * @return long connection time out values
      */
     public long getSocketTimeout() {
         return socketTimeout;
@@ -301,7 +301,7 @@ public class BreinConfig {
     /**
      * set the socket timeout
      *
-     * @param socketTimeout value
+     * @param socketTimeout long value
      */
     public void setSocketTimeout(final long socketTimeout) {
         this.socketTimeout = socketTimeout;
@@ -310,7 +310,7 @@ public class BreinConfig {
     /**
      * retrieves the activity endpoint
      *
-     * @return endpoint
+     * @return String endpoint
      */
     public String getActivityEndpoint() {
         return activityEndpoint;
@@ -319,8 +319,8 @@ public class BreinConfig {
     /**
      * sets the activity endpoint
      *
-     * @param activityEndpoint endpoint
-     * @return the config object itself
+     * @param activityEndpoint String endpoint
+     * @return                 BreinConfig the config object itself
      */
     public BreinConfig setActivityEndpoint(final String activityEndpoint) {
         this.activityEndpoint = activityEndpoint;
@@ -330,7 +330,7 @@ public class BreinConfig {
     /**
      * retrieves the lookup endpoint
      *
-     * @return lookup endpoint
+     * @return String lookup endpoint
      */
     public String getLookupEndpoint() {
         return lookupEndpoint;
@@ -339,8 +339,8 @@ public class BreinConfig {
     /**
      * sets the lookup endpoint
      *
-     * @param lookupEndpoint endpoint
-     * @return the config object itself
+     * @param lookupEndpoint String endpoint
+     * @return               BreinConfig the config object itself
      */
     public BreinConfig setLookupEndpoint(final String lookupEndpoint) {
         this.lookupEndpoint = lookupEndpoint;
@@ -350,7 +350,7 @@ public class BreinConfig {
     /**
      * retrieves the temporalData endpoint
      *
-     * @return temporalData endpoint
+     * @return String temporalData endpoint
      */
     public String getTemporalDataEndpoint() {
         return this.temporalDataEndpoint;
@@ -359,7 +359,7 @@ public class BreinConfig {
     /**
      * sets the temporalData endpoint
      *
-     * @param temporalDataEndpoint endpoint
+     * @param temporalDataEndpoint String endpoint
      */
     public void setTemporalDataEndpoint(final String temporalDataEndpoint) {
         this.temporalDataEndpoint = temporalDataEndpoint;
@@ -368,7 +368,7 @@ public class BreinConfig {
     /**
      * retrieves the recommendation endpoint
      *
-     * @return recommendationEndpoint endpoint
+     * @return String recommendationEndpoint endpoint
      */
     public String getRecommendationEndpoint() {
         return this.recommendationEndpoint;
@@ -377,8 +377,8 @@ public class BreinConfig {
     /**
      * sets the recommendation endpoint
      *
-     * @param recommendationEndpoint endpoint
-     * @return the config object itself
+     * @param recommendationEndpoint String endpoint
+     * @return                       BreinConfig the config object itself
      */
     public BreinConfig setRecommendationEndpoint(final String recommendationEndpoint) {
         this.recommendationEndpoint = recommendationEndpoint;
@@ -388,7 +388,7 @@ public class BreinConfig {
     /**
      * returns the configured secret
      *
-     * @return raw secret
+     * @return String raw secret
      */
     public String getSecret() {
         return secret;
@@ -397,7 +397,8 @@ public class BreinConfig {
     /**
      * set the secret
      *
-     * @param secret raw secret
+     * @param secret String raw secret
+     * @return       BreinConfig the config object itself
      */
     public BreinConfig setSecret(final String secret) {
         this.secret = secret;
@@ -407,7 +408,7 @@ public class BreinConfig {
     /**
      * returns the default category (if set)
      *
-     * @return default category
+     * @return String default category
      */
     public String getDefaultCategory() {
         return defaultCategory;
@@ -416,7 +417,7 @@ public class BreinConfig {
     /**
      * sets the default category
      *
-     * @param defaultCategory default to set
+     * @param defaultCategory String default to set
      */
     public BreinConfig setDefaultCategory(final String defaultCategory) {
         this.defaultCategory = defaultCategory;
@@ -424,9 +425,19 @@ public class BreinConfig {
     }
 
     /**
+     * Sets the Android Application
+     * @param application  Application instance
+     * @return             BreinConfig the object itself
+     */
+    public BreinConfig setApplication(final Application application) {
+        this.application = application;
+        return this;
+    }
+
+    /**
      * Provides the Android Application Object
      *
-     * @return Android Application Object
+     * @return Application Android Application Object
      */
     public Application getApplication() {
         return BreinifyManager.getInstance().getApplication();
@@ -455,8 +466,8 @@ public class BreinConfig {
     /**
      * Validates if the URL is correct.
      *
-     * @param url to check
-     * @return true if ok otherwise false
+     * @param url String to check
+     * @return boolean true if ok otherwise false
      */
     public boolean isUrlValid(final String url) {
         return BreinUtil.isUrlValid(url);

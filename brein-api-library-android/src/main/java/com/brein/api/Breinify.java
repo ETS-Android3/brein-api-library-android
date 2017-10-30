@@ -82,10 +82,10 @@ public class Breinify {
     /**
      * Initializes the instance
      *
-     * @param application contains the application context
-     * @param mainActivity contains the main activity
-     * @param apiKey contains the apiKey
-     * @param secret contains the secret
+     * @param application   Application contains the application context
+     * @param mainActivity  Activity contains the main activity
+     * @param apiKey        String contains the apiKey
+     * @param secret        String contains the secret
      */
     public static void initialize(final Application application,
                                   final Activity mainActivity,
@@ -99,11 +99,11 @@ public class Breinify {
     /**
      * Initializes the instance
      *
-     * @param application contains the application context
-     * @param mainActivity contains the main activity
-     * @param apiKey contains the apiKey
-     * @param secret contains the secret
-     * @param backgroundInterval sets a background interval
+     * @param application        Application contains the application context
+     * @param mainActivity       Activity contains the main activity
+     * @param apiKey             String contains the apiKey
+     * @param secret             String contains the secret
+     * @param backgroundInterval long sets a background interval
      */
     public static void initialize(final Application application,
                                   final Activity mainActivity,
@@ -120,7 +120,7 @@ public class Breinify {
     /**
      * configures the deviceToken
      *
-     * @param deviceToken contains the deviceToken
+     * @param deviceToken String contains the deviceToken
      */
     public static void configureDeviceToken(final String deviceToken) {
         BreinifyManager.getInstance().configureDeviceToken(deviceToken);
@@ -129,7 +129,7 @@ public class Breinify {
     /**
      * gets the config
      *
-     * @return config
+     * @return BreinConfig config
      */
     public static BreinConfig getConfig() {
         return lastConfig;
@@ -138,21 +138,21 @@ public class Breinify {
     /**
      * returns the  version
      *
-     * @return version
+     * @return String version
      */
     public String getVersion() {
         return VERSION;
     }
 
     /**
-     * @return breinActivity instance
+     * @return BreinActivity instance
      */
     public static BreinActivity getBreinActivity() {
         return breinActivity;
     }
 
     /**
-     * @return breinLookup instance
+     * @return BreinLookup instance
      */
     public static BreinLookup getBreinLookup() {
         return breinLookup;
@@ -165,7 +165,8 @@ public class Breinify {
     /**
      * Service method to set the email property that is part of the
      * BreinifyManager instance
-     * @param email contains the email
+     *
+     * @param email String contains the email
      */
     public static void setEmail(final String email) {
         BreinifyManager.getInstance().setUserEmail(email);
@@ -174,7 +175,8 @@ public class Breinify {
     /**
      * Service method to set the userId property that is part of the
      * BreinifyManager instance
-     * @param userId contaisns the userId
+     *
+     * @param userId String contains the userId
      */
     public static void setUserId(final String userId) {
         BreinifyManager.getInstance().setUserId(userId);
@@ -182,7 +184,7 @@ public class Breinify {
 
     /**
      * returns user's email as part of BreinifyManager
-     * @return email
+     * @return String email
      */
     public static String getEmail() {
         return BreinifyManager.getInstance().getUserEmail();
@@ -190,7 +192,7 @@ public class Breinify {
 
     /**
      * returns userId as part of BreinifyManager
-     * @return userId
+     * @return String userId
      */
     public static String getUserId() {
         return BreinifyManager.getInstance().getUserId();
@@ -198,7 +200,7 @@ public class Breinify {
 
     /**
      * sets the pushDeviceToken
-     * @param token contains the token
+     * @param token String contains the token
      */
     public static void setPushDeviceRegistration(final String token) {
         BreinifyManager.getInstance().setPushDeviceRegistration(token);
@@ -213,8 +215,8 @@ public class Breinify {
 
     /**
      * Delegate to send activities
-     * @param activityType contains the type of activity
-     * @param additionalContent contains optional additional content
+     * @param activityType      String contains the type of activity
+     * @param additionalContent Map contains optional additional content
      */
     public static void sendActivity(final String activityType,
                                     final Map<String, Object> additionalContent) {
@@ -227,13 +229,14 @@ public class Breinify {
      * <p>
      * This request is asynchronous.
      *
-     * @param user         a plain object specifying the user information the activity belongs to
-     * @param activityType the type of the activity collected, i.e., one of search, login, logout, addToCart,
+     * @param user         BreinUser a plain object specifying the user information the activity belongs to
+     * @param activityType String the type of the activity collected, i.e., one of search, login, logout, addToCart,
      *                     removeFromCart, checkOut, selectProduct, or other. if not specified, the default other will
      *                     be used
-     * @param category     the category of the platform/service/products, i.e., one of apparel, home, education, family,
+     * @param category     String the category of the platform/service/products, i.e., one of apparel, home, education, family,
      *                     food, health, job, services, or other
-     * @param description  a string with further information about the activity performed
+     * @param description  String a string with further information about the activity performed
+     * @param callback     ICallback function
      */
     public static void activity(final BreinUser user,
                                 final String activityType,
@@ -260,13 +263,13 @@ public class Breinify {
      * <p>
      * This request is asynchronous.
      *
-     * @param user         a plain object specifying the user information the activity belongs to
-     * @param activityType the type of the activity collected, i.e., one of search, login, logout, addToCart,
+     * @param user         BreinUser a plain object specifying the user information the activity belongs to
+     * @param activityType String the type of the activity collected, i.e., one of search, login, logout, addToCart,
      *                     removeFromCart, checkOut, selectProduct, or other. if not specified, the default other will
      *                     be used
-     * @param category     the category of the platform/service/products, i.e., one of apparel, home, education, family,
+     * @param category     String the category of the platform/service/products, i.e., one of apparel, home, education, family,
      *                     food, health, job, services, or other
-     * @param description  a string with further information about the activity performed
+     * @param description  String a string with further information about the activity performed
      */
     public static void activity(final BreinUser user,
                                 final String activityType,
@@ -280,7 +283,7 @@ public class Breinify {
     /**
      * Method to send an activity asynchronous.
      *
-     * @param activityType the activty type to be sent
+     * @param activityType String the activity type to be sent
      * @see BreinActivity
      */
     public static void activity(final String activityType) {
@@ -294,7 +297,7 @@ public class Breinify {
     /**
      * Method to send an activity asynchronous.
      *
-     * @param activity the {@code BreinActivity} to be sent
+     * @param activity BreinActivity the {@code BreinActivity} to be sent
      * @see BreinActivity
      */
     public static void activity(final BreinActivity activity) {
@@ -304,8 +307,8 @@ public class Breinify {
     /**
      * Method to send an activity asynchronous.
      *
-     * @param activity the {@code BreinActivity} to be sent
-     * @param callback callback to get informed whenever the activity was sent, the callback retrieves the {@code
+     * @param activity BreinActivity the {@code BreinActivity} to be sent
+     * @param callback ICallback callback to get informed whenever the activity was sent, the callback retrieves the {@code
      *                 BreinResult}
      * @see BreinActivity
      * @see BreinResult
@@ -318,6 +321,8 @@ public class Breinify {
      * Method to retrieve temporal information based on temporal data. This method uses the available information from
      * the system it is running on to be passed to the API, which resolves the temporal information. Normally (if not
      * using a VPN) the ip-address is a good source to determine, e.g., the location.
+     *
+     * @param callback ICallback to be invoked
      */
     public static void temporalData(final ICallback<BreinResult> callback) {
 
@@ -329,9 +334,10 @@ public class Breinify {
      * Method to retrieve temporal information based on temporal data. This method uses the {@code latitude} and {@code
      * longitude} to determine further information, i.e., weather, location, events, time, timezone, and holidays.
      *
-     * @param latitude   the latitude of the geo-coordinates to resolve
-     * @param longitude  the longitude of the geo-coordinates to resolve
-     * @param shapeTypes the shape-types to retrieve (if empty, no shape-types will be returned), e.g., CITY,
+     * @param latitude   double the latitude of the geo-coordinates to resolve
+     * @param longitude  double the longitude of the geo-coordinates to resolve
+     * @param callback   ICallback to be invoked
+     * @param shapeTypes String the shape-types to retrieve (if empty, no shape-types will be returned), e.g., CITY,
      *                   NEIGHBORHOOD, ZIP-CODES
      */
     public static void temporalData(final double latitude,
@@ -350,7 +356,8 @@ public class Breinify {
      * Method to retrieve temporal information based on temporal data. This method uses the {@code ipAddress} to
      * determine further information, i.e., weather, location, events, time, timezone, and holidays.
      *
-     * @param ipAddress the address to resolve the information for
+     * @param ipAddress  String the address to resolve the information for
+     * @param callback   ICallback to be invoked
      */
     public static void temporalData(final String ipAddress, final ICallback<BreinResult> callback) {
         final BreinTemporalData data = new BreinTemporalData().setLookUpIpAddress(ipAddress);
@@ -362,6 +369,9 @@ public class Breinify {
      * Method to retrieve temporal information based on temporal data. This method uses the available information from
      * the system it is running on to be passed to the API, which resolves the temporal information. Normally (if not
      * using a VPN) the ip-address is a good source to determine, e.g., the location.
+     *
+     * @param data      BreinTemporalData contains the object
+     * @param callback  ICallback to be invoked
      */
     public static void temporalData(final BreinTemporalData data, final ICallback<BreinResult> callback) {
         getBrein().temporalData(data, callback);
@@ -370,7 +380,7 @@ public class Breinify {
     /**
      * Invokes recommendation request
      *
-     * @param data BreinRecommendation instance
+     * @param data     BreinRecommendation instance
      * @param callback ICallback constains callback handler
      */
     public static void recommendation(final BreinRecommendation data, final ICallback<BreinResult> callback) {
@@ -382,16 +392,17 @@ public class Breinify {
      * <p>
      * This request is synchronous.
      *
-     * @param data     a plain object specifying information about the brein lookup data.
-     * @param callback a method invoked with the result set.
+     * @param data     BreinLookup a plain object specifying information about the brein lookup data.
+     * @param callback ICallback a method invoked with the result set.
      */
     public static void lookUp(final BreinLookup data, final ICallback<BreinResult> callback) {
         getBrein().lookup(data, callback);
     }
 
     /**
+     * Returns the last brein object
      *
-     * @return
+     * @return Brein
      */
     protected static Brein getBrein() {
         if (lastBrein == null) {
@@ -407,7 +418,6 @@ public class Breinify {
         if (getConfig() != null) {
             getConfig().shutdownEngine();
         }
-
         BreinifyManager.getInstance().shutdown();
     }
 }
