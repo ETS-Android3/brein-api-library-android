@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 19
@@ -52,6 +52,10 @@ android {
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://maven.google.com'
+        // Alternative URL is 'https://dl.google.com/dl/android/maven2/'
+    }
 }
 
 dependencies {
@@ -59,10 +63,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.json:json:20140107'
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.google.code.gson:gson:2.6.2'
+    // compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.google.code.gson:gson:2.8.0'
 
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.google.firebase:firebase-messaging:11.4.2'
 }
 
 task deleteJar(type: Delete) {
