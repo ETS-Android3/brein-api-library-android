@@ -37,7 +37,7 @@ It is recommended to use signed messages when utilizing the Android library. A s
 ### Targets
 
 - min Android Version: 21
-- default target: 24
+- default target: 26
 
 ### Installation
 
@@ -49,7 +49,7 @@ gradle configuration like this:
 ```gradle
 dependencies {
     ...
-    compile 'com.brein.brein-api-library-android:1.0.1'
+    compile 'com.brein.brein-api-library-android:1.0.2'
     ...
 }
 ```
