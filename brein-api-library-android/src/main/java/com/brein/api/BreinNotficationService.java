@@ -25,9 +25,9 @@ public class BreinNotficationService extends FirebaseMessagingService {
      * @param remoteMessage  RemoteMessage
      */
     @Override
-    public void onMessageReceived(final RemoteMessage remoteMessage) {
+    public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        super.onMessageReceived(remoteMessage);
+        // super.onMessageReceived(remoteMessage);
 
         final Map<String, String> dataMap = remoteMessage.getData();
         for (Map.Entry<String, String> entry : dataMap.entrySet()) {
@@ -35,6 +35,16 @@ public class BreinNotficationService extends FirebaseMessagingService {
         }
 
         sendNotification(remoteMessage);
+    }
+
+    @Override
+    public void onDeletedMessages() {
+        Log.d(TAG, "onDeleteMessage invoked");
+    }
+
+    @Override
+    public void onMessageSent(String data) {
+        Log.d(TAG, "onMessageSent invoked");
     }
 
     /**

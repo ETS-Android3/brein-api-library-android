@@ -207,6 +207,24 @@ public class Breinify {
     }
 
     /**
+     * Contains the push device registration
+     *
+     * @return String containing the pushDeviceRegistration
+     */
+    public static String getPushDeviceRegistration() {
+        return BreinifyManager.getInstance().getPushDeviceRegistration();
+    }
+
+    /**
+     * Returns the session id
+     *
+     * @return String containing the session id
+     */
+    public static String getSessionId() {
+        return Breinify.getUser().getSessionId();
+    }
+
+    /**
      * Delegate to save userDefaults
      */
     public static void saveUserDefaults() {
