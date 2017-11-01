@@ -202,6 +202,13 @@ State is: NY
 City is: New York
 ```
 
+Or shown as an Apple Map result:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Breinify/brein-api-library-android/master/documentation/img/geomap.png" alt="Sample Map of the results from the geocoding requests." width="400"><br/>
+  <sup>Map output by utilizing the result of reverse geocoding requests.</sup>
+</p>
+
 ### Reverse Geocoding (retrieve GeoJsons for, e.g., Cities, Neighborhoods, or Zip-Codes)
 
 The library also offers the feature of reverse geocoding. Having a specific geo-location and resolving the coordinates
