@@ -12,16 +12,13 @@
     <!-- For Wifi information -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!-- Got an issue with the Wifi Connection @office in SF -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- permission if the application needs to keep the processor from sleeping when a message is received -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
-
     </application>
 
 </manifest>
