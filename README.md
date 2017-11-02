@@ -283,7 +283,7 @@ The Breinify SDK needs some permission in order to retrieve the appropriate info
 <uses-permission android:name="android.permission.WAKE_LOCK" />
 ```
 
-Android user's must be prompted for those permissions. This can be done like this:
+Android user's must be prompted and grant those permissions. This can be done like this:
 
 ```java
 private void checkAppPermission() {
@@ -302,20 +302,30 @@ private void checkAppPermission() {
 }
 ```
 
-Furthermore the `AndroidManifest.xml` needs to contain one additional services to handle the PushNotification:
+Furthermore `AndroidManifest.xml` needs to contain the following additional services to handle the PushNotification:
 
 ```xml
    ...
-   <service
-      android:name="com.brein.api.BreinNotficationService">
-      <intent-filter>
-         <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-      </intent-filter>
+   <service android:name="com.brein.api.BreinNotificationIdService">
+         <intent-filter>
+             <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+         </intent-filter>
+   </service>
+
+   <service android:name="com.brein.api.BreinNotficationService">
+         <intent-filter>
+             <action android:name="com.google.firebase.MESSAGING_EVENT" />
+         </intent-filter>
    </service>
    ...
 ```
 
-That's all.
+When sending a Push Notification it will appear like this:
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Breinify/brein-api-library-android/master/documentation/img/android-push-sample.png" alt="Sample Map of the results from the geocoding requests." width="400"><br/>
+  <sup>Map output by utilizing the result of reverse geocoding requests.</sup>
+</p>
 
 
 ### Further links
