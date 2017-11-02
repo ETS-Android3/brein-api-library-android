@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0.2"
@@ -63,49 +63,26 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.json:json:20140107'
 
-    // compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.google.code.gson:gson:2.8.0'
-
     compile 'com.google.firebase:firebase-messaging:11.4.2'
 }
 
 task deleteJar(type: Delete) {
-    delete 'libs/brein-api-library-android'
+    delete 'libs/brein-api-library-android.jar'
 }
 
 task createJar(type: Copy) {
-    from('build/intermediates/bundles/default')
+    from('build/intermediates/bundles/debug')
     into('libs/')
     include('classes.jar')
+    delete 'libs/brein-api-library-android.jar'
     rename('classes.jar', 'brein-api-library-android.jar')
 }
 
-
-createJar.dependsOn(deleteJar, build)
-
-task jarTask(type: Jar) {
-    baseName="brein-api-library-android"
-    from 'src/main/java'
-}
-
-task createJarWithDependencies(type: Jar) {
-    baseName = "my-sdk-android-jar-with-dependencies"
-
-    from {
-        configurations.compile.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-
-    }
-
-    with jarTask
-}
+createJar.dependsOn(build)
 
 configurations {
     jarConfiguration
 }
 
-artifacts {
-    jarConfiguration jarTask
-}
